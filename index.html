@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>テニプリ部 | 新テニスの王子様 公式情報＆推し活ポータル</title>
+  <meta name="description" content="『テニスの王子様』『新テニスの王子様』の公式最新ニュース、グッズ、コラボ、イベント、キャラクター誕生日を完全網羅した推し活応援ポータルサイトです。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=Noto+Sans+JP:wght@300;400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --bg-main: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #fafafa;
+      --border: rgba(226, 232, 240, 0.85);
+      --border-light: rgba(241, 245, 249, 0.9);
+      --text: #1e293b;
+      --text-sub: #475569;
+      --text-muted: #64748b;
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --rose-pink: #f472b6;
+      --soft-peach: #ffe4e6;
+      --pastel-lavender: #e9d5ff;
+      --gold-accent: #f59e0b;
+      --card-shadow: 0 4px 18px rgba(148, 163, 184, 0.12);
+      --card-hover-shadow: 0 10px 28px rgba(148, 163, 184, 0.22);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg-main);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 10% 10%, rgba(254, 205, 211, 0.25) 0%, transparent 40%),
+        radial-gradient(circle at 90% 20%, rgba(216, 180, 254, 0.2) 0%, transparent 40%),
+        radial-gradient(circle at 50% 80%, rgba(186, 230, 253, 0.18) 0%, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    /* ===== HERO HEADER (明るく上品・推し活カフェ風) ===== */
+    .fan-header {
+      position: relative;
+      padding: 38px 20px 24px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.85);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+    }
+    .header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .brand-subline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      letter-spacing: 2.5px;
+      color: #ec4899;
+      margin-bottom: 2px;
+      display: inline-block;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .fan-header h1 {
+      font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #0f172a 0%, #3b82f6 50%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+    }
+    .fan-lead {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+      font-weight: 500;
+    }
+
+    /* 公式ナビゲーションバー（大人可愛いパステルピル） */
+    .official-nav-bar {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .official-nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+      font-size: 0.76rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 6px rgba(148, 163, 184, 0.08);
+    }
+    .official-nav-link:hover {
+      background: #fff1f2;
+      color: #e11d48;
+      border-color: #fda4af;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.15);
+    }
+
+    /* ===== BIRTHDAY SECTION (推し活トレカ・手帳風カードボード) ===== */
+    .birthday-section {
+      background: rgba(255, 255, 255, 0.65);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 20px;
+      backdrop-filter: blur(12px);
+    }
+    .birthday-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .bday-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .bday-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .bday-title i {
+      color: #f43f5e;
+    }
+    .bday-subtitle {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+    }
+    
+    /* カレンダーグリッド */
+    .bday-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
+      gap: 8px;
+    }
+    .bday-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 9px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 8px rgba(148, 163, 184, 0.08);
+      position: relative;
+    }
+    .bday-card:hover {
+      background: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(148, 163, 184, 0.18);
+      border-color: #cbd5e1;
+    }
+    .bday-card-date {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+    .bday-card-name {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .bday-card-school {
+      font-size: 0.68rem;
+      font-weight: 700;
+    }
+    .bday-card.today {
+      background: linear-gradient(135deg, #fff1f2 0%, #fef3c7 100%);
+      border: 1.5px solid #fb7185;
+      box-shadow: 0 4px 16px rgba(251, 113, 133, 0.25);
+    }
+
+    /* ===== STICKY CONTROL BAR ===== */
+    .filter-sticky-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+    .filter-container {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .search-action-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .search-box {
+      flex: 1;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 16px;
+      color: var(--text);
+      font-size: 0.88rem;
+      outline: none;
+      transition: all 0.25s ease;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .search-box:focus {
+      border-color: #38bdf8;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+    }
+    .search-box::placeholder { color: var(--text-muted); font-weight: 400; }
+
+    /* 最新情報更新ボタン */
+    .refresh-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #eff6ff 0%, #fdf2f8 100%);
+      border: 1px solid #bfdbfe;
+      color: #2563eb;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.25s ease;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.08);
+    }
+    .refresh-btn:hover {
+      background: linear-gradient(135deg, #3b82f6 0%, #ec4899 100%);
+      color: #ffffff;
+      border-color: transparent;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+    }
+    .refresh-btn i.rotating {
+      animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    /* 学校フィルター（推しカラー・明るめバッジ） */
+    .school-filters-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+    .school-btn {
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1.2px solid transparent;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      background: #ffffff;
+      border-color: var(--border);
+      color: var(--text-sub);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .school-btn.active {
+      box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+      font-weight: 800;
+    }
+
+    /* カテゴリフィルター */
+    .cat-filters {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .cat-btn {
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.74rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      color: var(--text-sub);
+      transition: all 0.2s ease;
+    }
+    .cat-btn.active, .cat-btn:hover {
+      border-color: #38bdf8;
+      color: #0284c7;
+      background: #f0f9ff;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .page-shell {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+    }
+
+    .section-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding: 0 4px;
+    }
+    .section-counter {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 600;
+    }
+
+    /* ===== NEWS CARD LIST (明るく清潔感あるカードデザイン) ===== */
+    .fan-event-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .day-event-card {
+      display: flex;
+      align-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: 14px;
+      padding: 16px 20px;
+      color: var(--text);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      gap: 16px;
+      position: relative;
+      box-shadow: var(--card-shadow);
+      animation: cardFadeIn 0.35s ease-out backwards;
+    }
+    @keyframes cardFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .day-event-card:hover {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      transform: translateY(-2px);
+      box-shadow: var(--card-hover-shadow);
+    }
+
+    .day-event-time {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 78px;
+      flex-shrink: 0;
+    }
+    .event-list-date {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: 0.3px;
+    }
+    .event-list-media {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+      font-weight: 600;
+    }
+
+    .day-event-main {
+      flex: 1;
+      min-width: 0;
+    }
+    .news-title-link {
+      color: #0f172a;
+      text-decoration: none;
+      font-size: 0.94rem;
+      font-weight: 700;
+      line-height: 1.5;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s ease;
+    }
+    .news-title-link:hover {
+      color: #0284c7;
+      text-decoration: underline;
+    }
+    .day-event-main p {
+      font-size: 0.82rem;
+      color: var(--text-sub);
+      line-height: 1.55;
+      margin-top: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      font-weight: 400;
+    }
+
+    .day-event-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .member-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 12px;
+      color: #ffffff;
+      white-space: nowrap;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+    }
+    .source-jump-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.75rem;
+      color: #0f172a;
+      font-weight: 700;
+      padding: 6px 13px;
+      border-radius: 20px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: all 0.25s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .source-jump-btn:hover {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      color: #2563eb;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15);
+    }
+
+    @media (max-width: 640px) {
+      .day-event-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .day-event-right {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .bday-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .fan-header h1 {
+        font-size: 2.1rem;
+      }
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      padding: 36px 20px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+    .footer-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      color: #ec4899;
+      margin-bottom: 12px;
+      font-style: italic;
+      font-weight: 600;
+    }
+    .footer-text {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      max-width: 660px;
+      margin: 0 auto;
+    }
+    .footer-text a { color: #2563eb; text-decoration: none; font-weight: 600; }
+    .footer-text a:hover { text-decoration: underline; }
+
+    /* TOAST & EMPTY STATE */
+    .empty-state { text-align: center; padding: 48px 20px; color: var(--text-muted); }
+    .empty-state .emoji { font-size: 2.2rem; margin-bottom: 8px; }
+    .toast {
+      position: fixed; bottom: 24px; right: 24px;
+      background: #ffffff;
+      border: 1px solid #93c5fd;
+      border-radius: 12px;
+      padding: 12px 18px;
+      font-size: 0.84rem;
+      color: #0f172a;
+      font-weight: 600;
+      z-index: 2000;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+
+<!-- HERO HEADER (明るく上品・推し活カフェスタイル) -->
+<header class="fan-header">
+  <div class="header-inner">
+    <div class="brand-subline">The Prince of Tennis Fan Portal & Archive</div>
+    <h1>テニプリ部</h1>
+    <p class="fan-lead">新テニ・テニミュ・コラボ・グッズ・誕生日の直近3ヶ月最新情報をひとまとめに。</p>
+    
+    <!-- 公式サイト クイックリンクバー -->
+    <div class="official-nav-bar">
+      <a class="official-nav-link" href="http://tenipuri.jp/" target="_blank" rel="noopener noreferrer">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> 新テニ公式 (tenipuri.jp)
+      </a>
+      <a class="official-nav-link" href="https://www.tennimu.com/" target="_blank" rel="noopener noreferrer">
+        <i class="fa-solid fa-masks-theater"></i> テニミュ公式 (tennimu.com)
+      </a>
+      <a class="official-nav-link" href="https://twitter.com/shintenianime" target="_blank" rel="noopener noreferrer">
+        <i class="fa-brands fa-x-twitter"></i> アニメ公式X
+      </a>
+      <a class="official-nav-link" href="http://tenipuri.jp/news/category/goods/" target="_blank" rel="noopener noreferrer">
+        <i class="fa-solid fa-bag-shopping"></i> 公式グッズNEWS
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- キャラ誕生日＆記念日カレンダーボード（各校独立カラー・手帳風カード） -->
+<div class="birthday-section">
+  <div class="birthday-container">
+    <div class="bday-header">
+      <div class="bday-title"><i class="fa-solid fa-cake-candles"></i> 🎂 今月・近日誕生日のキャラクター</div>
+      <div class="bday-subtitle" id="current-month-label"></div>
+    </div>
+    <div class="bday-grid" id="birthday-grid">
+      <!-- JSでカレンダーグリッドを一括動的生成 -->
+    </div>
+  </div>
+</div>
+
+<!-- STICKY FILTER & SEARCH BAR -->
+<div class="filter-sticky-bar">
+  <div class="filter-container">
+    <!-- 検索バー ＋ 最新情報更新ボタン -->
+    <div class="search-action-row">
+      <input type="text" class="search-box" id="search-input" placeholder="🔍 キャラ名（越前、跡部、幸村、宍戸、白石...）・キーワード（アベイル、Fever、パジャマ、テニミュなど）で検索..." />
+      <button class="refresh-btn" id="refresh-btn" title="公式サイトから最新情報を取得します">
+        <i class="fa-solid fa-rotate" id="refresh-icon"></i>
+        <span>最新情報に更新</span>
+      </button>
+    </div>
+
+    <!-- 学校フィルター（六角＝朱色、U-17＝深紅で明確に区別） -->
+    <div class="school-filters-grid" id="school-filters">
+      <button class="school-btn active" data-school="all">🎾 全校</button>
+    </div>
+
+    <!-- カテゴリフィルター -->
+    <div class="cat-filters" id="cat-filters">
+      <button class="cat-btn active" data-cat="all">ALL すべて</button>
+      <button class="cat-btn" data-cat="goods">🛍️ グッズ・コラボ</button>
+      <button class="cat-btn" data-cat="anime">📺 アニメ</button>
+      <button class="cat-btn" data-cat="stage">🎭 テニミュ</button>
+      <button class="cat-btn" data-cat="event">🏢 イベント・ライブ</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="page-shell">
+  <div class="section-meta-bar">
+    <span class="section-counter" id="news-count-label">Recent 3 Months</span>
+  </div>
+  <div class="day-events-list fan-event-list" id="news-list">
+    <!-- JSで動的生成 -->
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">テニプリ部</div>
+  <div class="footer-sub">Prince of Tennis Unofficial Fan Portal</div>
+  <div class="footer-text">
+    当サイトは『テニスの王子様』『新テニスの王子様』（© 許斐 剛／集英社）のファン応援情報まとめサイトです。<br>
+    各ニュースの「公式ソースへ」ボタンより公式サイトの個別詳細ページへ直接ジャンプできます。<br><br>
+    📌 公式リンク：
+    <a href="http://tenipuri.jp/news/" target="_blank" rel="noopener noreferrer">テニプリ公式NEWS</a> ／
+    <a href="https://www.tennimu.com/" target="_blank" rel="noopener noreferrer">テニミュ公式サイト</a> ／
+    <a href="https://twitter.com/shintenianime" target="_blank" rel="noopener noreferrer">アニメ公式X (@shintenianime)</a> ／
+    <a href="https://twitter.com/gravail" target="_blank" rel="noopener noreferrer">アベイル公式X (@gravail)</a>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== SCHOOLS DATA (大人可愛い上品なパレット・六角とU-17を明確に区別) =====
+const schools = [
+  { id:'seigaku', name:'青春学園中等部', kanji:'青学', color:'#2563eb', symbol:'🎾' },
+  { id:'hyotei', name:'氷帝学園中等部', kanji:'氷帝', color:'#0284c7', symbol:'❄️' },
+  { id:'rikkai', name:'立海大附属中学校', kanji:'立海', color:'#ca8a04', symbol:'👑' },
+  { id:'shitenhoji', name:'四天宝寺中学校', kanji:'四天宝寺', color:'#16a34a', symbol:'🐆' },
+  { id:'higa', name:'比嘉中学校', kanji:'比嘉', color:'#9333ea', symbol:'🌺' },
+  { id:'yamabuki', name:'山吹中学校', kanji:'山吹', color:'#65a30d', symbol:'🍀' },
+  { id:'fudomine', name:'不動峰中学校', kanji:'不動峰', color:'#475569', symbol:'⚡' },
+  { id:'rudolph', name:'聖ルドルフ学院中学校', kanji:'聖ルドルフ', color:'#047857', symbol:'✝️' },
+  // 六角：海の夕焼け・木製ラケットを象徴する鮮やかなテラコッタ朱赤
+  { id:'rokkaku', name:'六角中学校', kanji:'六角', color:'#ea580c', symbol:'🌊' },
+  // U-17日本代表：代表ブレザーの格調高い深紅・ワインレッド
+  { id:'u17', name:'U-17日本代表選抜', kanji:'U-17選抜', color:'#881337', symbol:'🇯🇵' },
+];
+
+// ===== キャラクター誕生日データベース =====
+const characterBirthdays = [
+  { month:8, day:15, name:'橘 桔平', school:'fudomine' },
+  { month:8, day:26, name:'神尾 アキラ', school:'fudomine' },
+  { month:8, day:31, name:'樹 希彦', school:'rokkaku' },
+  { month:9, day:10, name:'東方 雅美', school:'yamabuki' },
+  { month:9, day:25, name:'堀尾 聡史', school:'seigaku' },
+  { month:9, day:29, name:'宍戸 亮', school:'hyotei' },
+  { month:10, day:1, name:'佐伯 虎次郎', school:'rokkaku' },
+  { month:10, day:4, name:'跡部 景吾', school:'hyotei' },
+  { month:10, day:7, name:'手塚 国光', school:'seigaku' },
+  { month:10, day:15, name:'忍足 侑士', school:'hyotei' },
+  { month:10, day:23, name:'田仁志 慧', school:'higa' },
+  { month:10, day:28, name:'内村 京介', school:'fudomine' },
+  { month:11, day:3, name:'ジャッカル 桑原', school:'rikkai' },
+  { month:11, day:18, name:'河村 隆', school:'seigaku' },
+  { month:11, day:25, name:'千石 清純', school:'yamabuki' },
+  { month:11, day:28, name:'菊丸 英二', school:'seigaku' },
+  { month:12, day:4, name:'仁王 雅治', school:'rikkai' },
+  { month:12, day:5, name:'日吉 若', school:'hyotei' },
+  { month:12, day:24, name:'越前 リョーマ', school:'seigaku' },
+  { month:1, day:3, name:'樺地 崇弘', school:'hyotei' },
+  { month:1, day:15, name:'杉本 一豊', school:'seigaku' },
+  { month:2, day:14, name:'鳳 長太郎', school:'hyotei' },
+  { month:2, day:29, name:'不二 周助', school:'seigaku' },
+  { month:3, day:3, name:'平古場 凛', school:'higa' },
+  { month:3, day:5, name:'幸村 精市', school:'rikkai' },
+  { month:4, day:14, name:'白石 蔵ノ介', school:'shitenhoji' },
+  { month:4, day:30, name:'大石 秀一郎', school:'seigaku' },
+  { month:5, day:11, name:'海堂 薫', school:'seigaku' },
+  { month:5, day:21, name:'真田 弦一郎', school:'rikkai' },
+  { month:6, day:3, name:'乾 貞治', school:'seigaku' },
+  { month:6, day:4, name:'柳 蓮二', school:'rikkai' },
+  { month:7, day:23, name:'桃城 武', school:'seigaku' }
+];
+
+const categoryIcons = { anime:'📺', stage:'🎭', goods:'🛍️', event:'🏢' };
+const categoryLabels = { anime:'アニメ', stage:'テニミュ', goods:'グッズ・コラボ', event:'イベント・ライブ' };
+
+const STORAGE_KEY = 'tenipuri_news_v23_bright_fever';
+
+// ===== 直近3ヶ月（2026年6月中旬〜9月中旬）の実在する個別記事パーマリンク一覧（テニプリFever・グッズ・コラボ網羅） =====
+const defaultNews = [
+  {
+    id:'news-19048', date:'09/07', category:'goods', media:'FEEL MEE・主題歌', icon:'💿',
+    title:'FEEL MEE：『新テニスの王子様 U-17 WORLD CUP 決勝メンバー決定戦』OP＆ED ジャケット＆アクスタ解禁！',
+    description:'青酢が歌うOPテーマ「Walls And Bridges」＆跡部景吾＆忍足侑士が歌うEDテーマ「金環蝕 phenomenal」のジャケット写真と限定アクリルスタンドデザインが公開！',
+    schoolIds:['seigaku','hyotei','u17'], characters:['越前リョーマ','手塚国光','大石秀一郎','不二周助','跡部景吾','忍足侑士'],
+    sourceUrl:'http://tenipuri.jp/news/goods/19048.html'
+  },
+  {
+    id:'news-fever-special', date:'09/05', category:'event', media:'FEEL MEE・イベント', icon:'🔥',
+    title:'イベント＆配信企画：伝説の全体曲「テニプリ☆Fever」スペシャル応援企画＆配信決定！',
+    description:'テニプリフェスタの名曲「テニプリ☆Fever」のコール＆レスポンス応援上映・配信企画が開催決定！各校代表メンバー（越前、手塚、跡部、幸村、白石、木手、橘）の限定グッズ＆特典も登場。',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa','fudomine','u17'],
+    characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介','木手永四郎','橘桔平'],
+    sourceUrl:'http://tenipuri.jp/news/news/19019.html'
+  },
+  {
+    id:'news-19041', date:'09/02', category:'goods', media:'メガハウス', icon:'🛍️',
+    title:'メガハウス：「いるすた」から『新テニスの王子様vol.2』が登場！',
+    description:'お部屋やデスクにちょこんと飾れる人気フィギュアシリーズ「いるすた」に新テニ第2弾がラインナップ！各校人気メンバーが集結。',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji'], characters:['越前リョーマ','跡部景吾','幸村精市','白石蔵ノ介'],
+    sourceUrl:'http://tenipuri.jp/news/goods/19041.html'
+  },
+  {
+    id:'news-19019', date:'09/01', category:'event', media:'ラジオ・文化放送', icon:'📻',
+    title:'FEEL MEE：『新テニスの王子様 オン・ザ・レイディオ』2026年9月度のOP&EDテーマソングのお知らせ！',
+    description:'文化放送ラジプリの9月度オープニング＆エンディング曲が解禁！最新キャラソンや注目ナンバーがオンエアされます。',
+    schoolIds:['seigaku','hyotei','u17'], characters:['宍戸亮','越知月光','越前リョーマ'],
+    sourceUrl:'http://tenipuri.jp/news/news/19019.html'
+  },
+  {
+    id:'news-19025', date:'08/31', category:'goods', media:'ショウワノート', icon:'🛍️',
+    title:'ショウワノート：「おきがえぬいといっしょ」イラストのバングルが新発売！',
+    description:'描きおろし「おきがえぬいといっしょ」イラストを使用したスタイリッシュなメタルバングルが登場。青学・氷帝・立海・四天宝寺・比嘉の各校デザイン。',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa'], characters:['越前リョーマ','手塚国光','跡部景吾','忍足侑士','幸村精市','丸井ブン太','白石蔵ノ介','木手永四郎'],
+    sourceUrl:'http://tenipuri.jp/news/goods/19025.html'
+  },
+  {
+    id:'news-19014', date:'08/27', category:'goods', media:'PROOF・フィギュア', icon:'👑',
+    title:'PROOF：跡部景吾スケールフィギュア登場！圧倒的な気品と躍動感を再現',
+    description:'氷帝学園テニス部部長・跡部景吾の決定版ハイクオリティスケールフィギュアが登場！全国ホビーショップ・通販にて予約受付開始。',
+    schoolIds:['hyotei'], characters:['跡部景吾'],
+    sourceUrl:'http://tenipuri.jp/news/goods/19014.html'
+  },
+  {
+    id:'news-18988', date:'08/25', category:'event', media:'ナンジャタウン', icon:'🐱',
+    title:'『新テニスの王子様祭り』 in NAMJATOWN 第４弾 開催決定！コラボフード＆限定ミニゲーム',
+    description:'池袋ナンジャタウンにてコラボイベント第4弾が開催！猫耳ちびキャライラストのオリジナルグッズやコラボデザートが多数登場。',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa','u17'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介','徳川カズヤ'],
+    sourceUrl:'http://tenipuri.jp/news/news/18988.html'
+  },
+  {
+    id:'news-18980', date:'08/24', category:'goods', media:'アベイル(Avail)', icon:'🛍️',
+    title:'バンダイ：アベイルにて新商品発売！メンズTシャツ（リストバンド付）登場',
+    description:'全国のアベイル店舗および公式オンラインストアにて、青学・氷帝・立海・四天宝寺のメンズTシャツ（リストバンド付き）が発売開始！',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji'], characters:['越前リョーマ','跡部景吾','幸村精市','白石蔵ノ介'],
+    sourceUrl:'http://tenipuri.jp/news/news/18980.html'
+  },
+  {
+    id:'news-18967', date:'08/24', category:'goods', media:'ムービック', icon:'🛍️',
+    title:'ムービック：クリアポーチとペットボトルホルダーが登場！各校部長陣ラインナップ',
+    description:'各校をイメージしたクリアポーチおよびペットボトルホルダーの発売が決定。アニメイト・通販にて予約受付中。',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介','木手永四郎'],
+    sourceUrl:'http://tenipuri.jp/news/goods/18967.html'
+  },
+  {
+    id:'news-18974', date:'08/24', category:'event', media:'音プリ・FEEL MEE', icon:'💿',
+    title:'FEEL MEE：宍戸 亮ラジフェス開催記念 音プリCD購入キャンペーンのお知らせ！',
+    description:'ラジフェス開催を記念し、音プリにて宍戸 亮・越知月光・白井裕紀・UZA関連CDをご購入で「宍戸 亮ラジフェス チケット風カード」をプレゼント！',
+    schoolIds:['hyotei','u17'], characters:['宍戸亮','越知月光'],
+    sourceUrl:'http://tenipuri.jp/news/news/18974.html'
+  },
+  {
+    id:'news-18937', date:'08/18', category:'event', media:'セガ・英傑大戦', icon:'🎮',
+    title:'アーケードゲーム『英傑大戦』×アニメ『新テニスの王子様』コラボ開催決定！',
+    description:'全国のアミューズメント施設で稼働中の『英傑大戦』にテニプリの人気キャラクターたちがコラボ武将カードとして参戦！',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','u17'], characters:['越前リョーマ','手塚国光','不二周助','跡部景吾','幸村精市','真田弦一郎','白石蔵ノ介','徳川カズヤ'],
+    sourceUrl:'http://tenipuri.jp/news/news/18937.html'
+  },
+  {
+    id:'news-18920', date:'08/18', category:'goods', media:'ショウワノート', icon:'🛍️',
+    title:'ショウワノート：リョーマとリョーガの新規描きおろし＆描きおこし＜ゆるスタ＞が登場！',
+    description:'越前リョーマ＆越前リョーガの新規描きおろしイラストグッズおよび、ゆるっと可愛い＜ゆるスタ＞グッズが全国ホビーショップ・通販にて登場。',
+    schoolIds:['seigaku','u17'], characters:['越前リョーマ','越前リョーガ'],
+    sourceUrl:'http://tenipuri.jp/news/news/18920.html'
+  },
+  {
+    id:'news-18916', date:'08/17', category:'goods', media:'ショウワノート', icon:'🛍️',
+    title:'ショウワノート：「おきがえぬいといっしょ」イラストのミニクリアポーチが新発売！',
+    description:'描き下ろし「おきがえぬいといっしょ」イラストを使用したミニクリアポーチが登場。各校人気キャラのおきがえぬいぐるみと連動。',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa'], characters:['越前リョーマ','手塚国光','跡部景吾','忍足侑士','幸村精市','丸井ブン太','白石蔵ノ介','木手永四郎'],
+    sourceUrl:'http://tenipuri.jp/news/news/18916.html'
+  },
+  {
+    id:'news-18911', date:'08/17', category:'goods', media:'エンスカイ', icon:'🛍️',
+    title:'エンスカイ：ちみけもますこっと【U-17】登場！',
+    description:'U-17ジャージ姿の代表メンバーたちが可愛いデフォルメ「ちみけも」マスコットになって登場。',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','u17'], characters:['越前リョーマ','跡部景吾','幸村精市','白石蔵ノ介','徳川カズヤ'],
+    sourceUrl:'http://tenipuri.jp/news/news/18911.html'
+  },
+  {
+    id:'news-18953', date:'08/14', category:'anime', media:'TVアニメ', icon:'📺',
+    title:'『新テニスの王子様 U-17 WORLD CUP 決勝メンバー決定戦』キービジュアル＆PV解禁！',
+    description:'2026年9月30日(水)テレ東系列にて放送開始！スペイン代表ビジュアル＆キャストとOP/ED楽曲が解禁。',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa','u17'], characters:['越前リョーマ','手塚国光','跡部景吾','忍足侑士','幸村精市','真田弦一郎','白石蔵ノ介','徳川カズヤ','平等院鳳凰','越前リョーガ'],
+    sourceUrl:'http://tenipuri.jp/news/news/18953.html'
+  },
+  {
+    id:'news-18934', date:'08/13', category:'goods', media:'ムービック', icon:'🛍️',
+    title:'新テニスの王子様 学園祭の王子様＆ドキドキサバイバル 20周年 記念展の事後通販詳細決定！',
+    description:'大好評を博した20周年リマスター版発売記念展の限定グッズ事後通販が決定！全主要校の描き下ろし・記念グッズがラインナップ。',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa','yamabuki','fudomine','rudolph','rokkaku'],
+    characters:['越前リョーマ','不二周助','跡部景吾','幸村精市','白石蔵ノ介','木手永四郎','佐伯虎次郎'],
+    sourceUrl:'http://tenipuri.jp/news/news/18934.html'
+  },
+  {
+    id:'news-18890', date:'07/31', category:'goods', media:'アベイル(Avail)', icon:'🛍️',
+    title:'【アベイル】『新テニスの王子様』コラボ！巾着付制服風レディースパジャマ発売！',
+    description:'全国のアベイル店舗および公式オンラインストアにて、青学・氷帝・立海各校の制服風パジャマ（巾着セット）が発売！',
+    schoolIds:['seigaku','hyotei','rikkai'], characters:['越前リョーマ','跡部景吾','幸村精市'],
+    sourceUrl:'http://tenipuri.jp/news/news/18890.html'
+  },
+  {
+    id:'news-18883', date:'07/30', category:'goods', media:'LINE公式', icon:'💬',
+    title:'『学園祭の王子様』『ドキドキサバイバル』オリジナル公式LINEスタンプ配信開始！',
+    description:'名作恋愛アドベンチャーゲーム『学プリ』『ドキサバ』の魅力的なセリフや名シーンがLINEスタンプになって登場！',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介'],
+    sourceUrl:'http://tenipuri.jp/news/news/18883.html'
+  },
+  {
+    id:'news-18853', date:'07/23', category:'goods', media:'公式グッズ', icon:'🐱',
+    title:'バンダイナムコ：「カルピンとおうち時間」シリーズ 第３弾が登場！癒やしのルームアイテム',
+    description:'リョーマの愛猫カルピンをモチーフにした大人気リラックス雑貨シリーズ第3弾！お部屋で使える可愛いクッション＆ルームウェア。',
+    schoolIds:['seigaku'], characters:['越前リョーマ'],
+    sourceUrl:'http://tenipuri.jp/news/news/18853.html'
+  },
+  {
+    id:'news-tennimu-2026', date:'08/22～', category:'stage', media:'テニミュ4th', icon:'🎭',
+    title:'ミュージカル『テニスの王子様』4thシーズン 全国大会 青学vs立海 前編 東京凱旋公演！',
+    description:'立海大附属との激闘を描く全国大会前編。TACHIKAWA STAGE GARDENにて大好評上演！',
+    schoolIds:['seigaku','rikkai','rokkaku'], characters:['越前リョーマ','手塚国光','幸村精市','真田弦一郎','切原赤也','葵剣太郎','佐伯虎次郎'],
+    sourceUrl:'https://www.tennimu.com/4th_2026rikkai_1/'
+  }
+];
+
+// ===== STATE =====
+let newsList = [];
+let selectedSchool = 'all';
+let selectedCategory = 'all';
+let searchQuery = '';
+
+function loadNews() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  return [...defaultNews];
+}
+function saveNews() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(newsList)); } catch(e) {}
+}
+function getSchool(id) { return schools.find(s => s.id === id); }
+
+// ===== RENDER BIRTHDAYS (独立カラー設定：学校選択の影響を一切受けない) =====
+function renderBirthdays() {
+  const container = document.getElementById('birthday-grid');
+  const monthLabel = document.getElementById('current-month-label');
+  const now = new Date();
+  const currentMonth = now.getMonth() + 1;
+  const currentDay = now.getDate();
+
+  monthLabel.textContent = `Current: ${currentMonth}月 / Pick Up`;
+
+  const upcoming = characterBirthdays.filter(c => {
+    return c.month === currentMonth || c.month === (currentMonth % 12 + 1);
+  }).sort((a, b) => {
+    const aMonthDiff = a.month === currentMonth ? 0 : 1;
+    const bMonthDiff = b.month === currentMonth ? 0 : 1;
+    if (aMonthDiff !== bMonthDiff) return aMonthDiff - bMonthDiff;
+    return a.day - b.day;
+  });
+
+  container.innerHTML = upcoming.slice(0, 10).map(c => {
+    const isToday = c.month === currentMonth && c.day === currentDay;
+    const s = getSchool(c.school);
+    const badgeColor = s ? s.color : '#38bdf8';
+    const schoolName = s ? s.kanji : '';
+    
+    return `
+      <div class="bday-card ${isToday ? 'today' : ''}" style="border-left: 3.5px solid ${badgeColor};">
+        <div class="bday-card-date" style="color: ${isToday ? '#e11d48' : badgeColor};">
+          ${isToday ? '🎉 TODAY!' : `${c.month}/${c.day}`}
+        </div>
+        <div class="bday-card-name">${c.name}</div>
+        <div class="bday-card-school" style="color: ${badgeColor}; font-weight: 700;">${schoolName}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ===== RENDER SCHOOL FILTERS =====
+function renderSchoolFilters() {
+  const container = document.getElementById('school-filters');
+  const allBtn = container.querySelector('.school-btn[data-school="all"]');
+  if (allBtn) {
+    allBtn.addEventListener('click', () => setSchool('all'));
+  }
+
+  schools.forEach(s => {
+    const btn = document.createElement('button');
+    btn.className = 'school-btn';
+    btn.dataset.school = s.id;
+    btn.textContent = `${s.symbol} ${s.kanji}`;
+    btn.style.color = s.color;
+    btn.style.borderColor = `${s.color}40`;
+    btn.addEventListener('click', () => setSchool(s.id));
+    container.appendChild(btn);
+  });
+}
+
+function setSchool(id) {
+  selectedSchool = id;
+  const root = document.documentElement;
+  
+  if (id === 'all') {
+    root.style.setProperty('--accent', '#38bdf8');
+  } else {
+    const s = getSchool(id);
+    if (s) {
+      root.style.setProperty('--accent', s.color);
+    }
+  }
+
+  document.querySelectorAll('.school-btn').forEach(b => {
+    const isThis = b.dataset.school === id;
+    if (b.dataset.school === 'all') {
+      b.classList.toggle('active', isThis);
+      b.style.background = isThis ? '#eff6ff' : '#ffffff';
+      b.style.color = isThis ? '#2563eb' : 'var(--text-sub)';
+      b.style.borderColor = isThis ? '#3b82f6' : 'var(--border)';
+    } else {
+      const s = getSchool(b.dataset.school);
+      if (s) {
+        b.classList.toggle('active', isThis);
+        b.style.background = isThis ? `${s.color}15` : '#ffffff';
+        b.style.color = isThis ? s.color : s.color;
+        b.style.borderColor = isThis ? s.color : `${s.color}40`;
+      }
+    }
+  });
+  renderNewsList();
+}
+
+function setCat(cat) {
+  selectedCategory = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
+  renderNewsList();
+}
+
+function getFilteredNews() {
+  return newsList.filter(item => {
+    if (selectedSchool !== 'all' && !item.schoolIds.includes(selectedSchool)) return false;
+    if (selectedCategory !== 'all' && item.category !== selectedCategory) return false;
+    
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase();
+      const inChar = item.characters && item.characters.some(c => c.toLowerCase().includes(q) || q.includes(c.toLowerCase()));
+      const inTitle = item.title.toLowerCase().includes(q);
+      const inDesc = item.description.toLowerCase().includes(q);
+      const inMedia = item.media && item.media.toLowerCase().includes(q);
+      const inSchool = schools.some(s => item.schoolIds.includes(s.id) && (s.name.toLowerCase().includes(q) || s.kanji.includes(q)));
+      
+      if (!inChar && !inTitle && !inDesc && !inMedia && !inSchool) return false;
+    }
+    return true;
+  });
+}
+
+// ===== RENDER NEWS LIST =====
+function renderNewsList() {
+  const list = document.getElementById('news-list');
+  const countLabel = document.getElementById('news-count-label');
+  const filtered = getFilteredNews();
+
+  countLabel.textContent = `表示中: ${filtered.length}件 (直近3ヶ月分アーカイブ)`;
+
+  if (filtered.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="emoji">🎾</div><p>該当するニュース・情報が見つかりませんでした。</p></div>`;
+    return;
+  }
+
+  list.innerHTML = filtered.map((item, index) => {
+    const mainSchool = item.schoolIds[0] ? getSchool(item.schoolIds[0]) : null;
+    const accentColor = mainSchool ? mainSchool.color : '#38bdf8';
+    const schoolBadges = item.schoolIds.map(id => {
+      const s = getSchool(id);
+      return s ? `<span class="member-badge" style="background-color:${s.color}">${s.kanji}</span>` : '';
+    }).join(' ');
+
+    const delay = Math.min(index * 0.04, 0.35);
+
+    return `
+      <div class="day-event-card" style="border-left-color:${accentColor}; animation-delay: ${delay}s;">
+        <div class="day-event-time">
+          <span class="event-list-date">${item.date}</span>
+          <span class="event-list-media">${item.media || categoryLabels[item.category]}</span>
+        </div>
+        <div class="day-event-main">
+          <a class="news-title-link" href="${item.sourceUrl}" target="_blank" rel="noopener noreferrer">
+            <span>${item.icon || categoryIcons[item.category] || '📢'}</span>
+            <span>${item.title}</span>
+          </a>
+          <p>${item.description}</p>
+        </div>
+        <div class="day-event-right">
+          <div>${schoolBadges}</div>
+          <a class="source-jump-btn" href="${item.sourceUrl}" target="_blank" rel="noopener noreferrer">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> 公式ソースへ
+          </a>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ===== 公式サイト記事抽出ロジック =====
+async function fetchOfficialNews(isManual = false) {
+  const refreshIcon = document.getElementById('refresh-icon');
+  if (refreshIcon) refreshIcon.classList.add('rotating');
+
+  let fetchedCount = 0;
+  let success = false;
+
+  const proxies = [
+    url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
+  ];
+
+  for (const getProxyUrl of proxies) {
+    try {
+      const proxyUrl = getProxyUrl('http://tenipuri.jp/news/');
+      const response = await fetch(proxyUrl, { cache: 'no-cache' });
+      if (!response.ok) continue;
+      const htmlText = await response.text();
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(htmlText, 'text/html');
+      const articles = doc.querySelectorAll('article.news-entry');
+
+      if (articles && articles.length > 0) {
+        articles.forEach((art, idx) => {
+          if (idx > 9) return;
+          const linkEl = art.querySelector('h1.entry-title a, .entry-title a, a');
+          const dateEl = art.querySelector('.news-date, time, .date');
+          const catEl = art.querySelector('h3, .category');
+
+          if (!linkEl) return;
+          const title = linkEl.textContent.trim();
+          let href = linkEl.getAttribute('href');
+          if (href && !href.startsWith('http')) {
+            href = 'http://tenipuri.jp' + (href.startsWith('/') ? '' : '/') + href;
+          }
+
+          let dateStr = '最新';
+          if (dateEl) {
+            const rawDate = dateEl.textContent.trim();
+            const m = rawDate.match(/(\d{1,2})月(\d{1,2})日/);
+            if (m) dateStr = `${m[1].padStart(2,'0')}/${m[2].padStart(2,'0')}`;
+            else dateStr = rawDate.substring(5);
+          }
+
+          if (title && href && !newsList.some(n => n.sourceUrl === href || n.title === title)) {
+            let sIds = ['seigaku'];
+            let chars = [];
+            if (title.includes('宍戸')) { sIds = ['hyotei']; chars.push('宍戸亮'); }
+            if (title.includes('跡部')) { sIds = ['hyotei']; chars.push('跡部景吾'); }
+            if (title.includes('幸村')) { sIds = ['rikkai']; chars.push('幸村精市'); }
+            if (title.includes('リョーマ')) { sIds = ['seigaku']; chars.push('越前リョーマ'); }
+            if (title.includes('白石')) { sIds = ['shitenhoji']; chars.push('白石蔵ノ介'); }
+            if (title.includes('木手')) { sIds = ['higa']; chars.push('木手永四郎'); }
+            if (title.includes('橘')) { sIds = ['fudomine']; chars.push('橘桔平'); }
+
+            const catText = catEl ? catEl.textContent.trim() : '';
+            const category = catText.includes('テニミュ') || title.includes('テニミュ') ? 'stage' :
+                             catText.includes('グッズ') || title.includes('グッズ') || title.includes('アベイル') ? 'goods' :
+                             catText.includes('アニメ') || title.includes('アニメ') ? 'anime' : 'event';
+
+            newsList.unshift({
+              id: `news-auto-${Date.now()}-${idx}`,
+              date: dateStr,
+              category: category,
+              media: catText || '公式NEWS',
+              icon: categoryIcons[category] || '📢',
+              title: title,
+              description: '公式サイト tenipuri.jp にて発表された公式新着情報です。「公式ソースへ」から個別記事詳細をご確認いただけます。',
+              schoolIds: sIds,
+              characters: chars,
+              sourceUrl: href
+            });
+            fetchedCount++;
+          }
+        });
+
+        success = true;
+        break;
+      }
+    } catch (e) {
+      console.warn('Proxy fetch attempt failed, trying next...');
+    }
+  }
+
+  if (fetchedCount > 0) {
+    saveNews();
+    renderNewsList();
+    showToast(`✨ 新着の公式記事（${fetchedCount}件）を受信しました！`);
+  } else if (isManual) {
+    if (success) {
+      showToast('🌸 最新の公式ニュースを取得済みです（更新なし）');
+    } else {
+      showToast('⚠️ 通信環境を確認してください（公式サイトへの接続を再試行します）');
+    }
+  }
+
+  if (refreshIcon) refreshIcon.classList.remove('rotating');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// ===== INIT =====
+function init() {
+  newsList = loadNews();
+  renderBirthdays();
+  renderSchoolFilters();
+  renderNewsList();
+
+  fetchOfficialNews(false);
+
+  document.getElementById('refresh-btn').addEventListener('click', () => {
+    fetchOfficialNews(true);
+  });
+
+  document.getElementById('search-input').addEventListener('input', e => {
+    searchQuery = e.target.value;
+    renderNewsList();
+  });
+
+  document.querySelectorAll('.cat-btn').forEach(b => {
+    b.addEventListener('click', () => setCat(b.dataset.cat));
+  });
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
