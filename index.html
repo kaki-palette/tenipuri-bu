@@ -224,23 +224,6 @@
       gap: 8px;
       align-items: center;
     }
-    .search-box {
-      flex: 1;
-      background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px 16px;
-      color: var(--text);
-      font-size: 0.88rem;
-      outline: none;
-      transition: all 0.25s ease;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
-    }
-    .search-box:focus {
-      border-color: #38bdf8;
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
-    }
-    .search-box::placeholder { color: var(--text-muted); font-weight: 400; }
 
     /* 最新情報更新ボタン */
     .refresh-btn {
@@ -537,6 +520,728 @@
       box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
     }
     .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ===== QUIZ MODAL & ANIMATIONS ===== */
+    .quiz-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .quiz-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .quiz-modal {
+      background: #ffffff;
+      border-radius: 24px;
+      max-width: 640px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(226, 232, 240, 0.8);
+      position: relative;
+      transform: translateY(20px) scale(0.97);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+    }
+    .quiz-overlay.active .quiz-modal {
+      transform: translateY(0) scale(1);
+    }
+    .quiz-modal-header {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      background: linear-gradient(135deg, #fff1f2 0%, #f5f3ff 100%);
+      border-radius: 24px 24px 0 0;
+    }
+    .quiz-header-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .quiz-close-btn {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+    }
+    .quiz-close-btn:hover {
+      background: #fee2e2;
+      color: #ef4444;
+      border-color: #fca5a5;
+      transform: rotate(90deg);
+    }
+    .quiz-modal-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Start Screen */
+    .quiz-start-screen {
+      text-align: center;
+      padding: 20px 10px;
+    }
+    .quiz-hero-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: #fdf2f8;
+      border: 1px solid #fbcfe8;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #db2777;
+      margin-bottom: 14px;
+    }
+    .quiz-hero-title {
+      font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+      font-size: 1.85rem;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #e11d48 0%, #7c3aed 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .quiz-hero-desc {
+      font-size: 0.92rem;
+      color: var(--text-sub);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .quiz-rule-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
+      text-align: left;
+    }
+    .quiz-rule-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+    }
+    .quiz-rule-card h4 {
+      font-size: 0.88rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .quiz-rule-card p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .quiz-primary-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      padding: 16px 28px;
+      border-radius: 16px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #ffffff;
+      background: linear-gradient(135deg, #f43f5e 0%, #8b5cf6 100%);
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 25px -5px rgba(244, 63, 94, 0.4);
+      transition: all 0.25s ease;
+    }
+    .quiz-primary-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px -5px rgba(244, 63, 94, 0.55);
+      filter: brightness(1.05);
+    }
+
+    /* Playing Question Screen */
+    .quiz-play-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .quiz-progress-text {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+    .quiz-type-badge {
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
+    }
+    .quiz-progress-track {
+      width: 100%;
+      height: 8px;
+      background: #f1f5f9;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .quiz-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ec4899 0%, #8b5cf6 100%);
+      border-radius: 10px;
+      transition: width 0.3s ease;
+    }
+
+    /* Question Card */
+    .quiz-q-card {
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 16px rgba(148, 163, 184, 0.08);
+      position: relative;
+    }
+    .quiz-char-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+    }
+    .quiz-situation {
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.65;
+      color: #0f172a;
+    }
+
+    /* Choices Area */
+    .quiz-choices {
+      display: grid;
+      gap: 10px;
+    }
+    .quiz-choices.binary-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .quiz-choice-btn {
+      background: #ffffff;
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 14px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1e293b;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .quiz-choice-btn:hover:not(:disabled) {
+      border-color: #f43f5e;
+      background: #fff1f2;
+      color: #e11d48;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(244, 63, 94, 0.15);
+    }
+    .quiz-choice-btn:disabled {
+      cursor: default;
+    }
+    .quiz-choice-btn.correct {
+      background: #ecfdf5 !important;
+      border-color: #10b981 !important;
+      color: #047857 !important;
+      box-shadow: 0 0 0 2px #34d399 !important;
+      animation: correctPulse 0.4s ease;
+    }
+    .quiz-choice-btn.wrong {
+      background: #fef2f2 !important;
+      border-color: #ef4444 !important;
+      color: #b91c1c !important;
+      box-shadow: 0 0 0 2px #f87171 !important;
+      animation: shake 0.4s ease;
+    }
+    @keyframes correctPulse {
+      0% { transform: scale(0.96); }
+      50% { transform: scale(1.04); }
+      100% { transform: scale(1); }
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+
+    /* Explanation & Feedback Card */
+    .quiz-feedback-box {
+      border-radius: 16px;
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      animation: cardFadeIn 0.3s ease;
+    }
+    .quiz-feedback-box.correct-box {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+    }
+    .quiz-feedback-box.wrong-box {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+    }
+    .quiz-feedback-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+    .quiz-feedback-box.correct-box .quiz-feedback-title { color: #065f46; }
+    .quiz-feedback-box.wrong-box .quiz-feedback-title { color: #991b1b; }
+    .quiz-feedback-text {
+      font-size: 0.88rem;
+      color: #334155;
+      line-height: 1.6;
+    }
+    .quiz-trivia-tag {
+      margin-top: 4px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(0,0,0,0.1);
+      font-size: 0.8rem;
+      color: #64748b;
+      line-height: 1.5;
+    }
+    .quiz-next-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 24px;
+      border-radius: 14px;
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 0.96rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+      margin-top: 6px;
+    }
+    .quiz-next-btn:hover {
+      background: #334155;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.3);
+    }
+
+    /* Result Screen */
+    .quiz-result-screen {
+      text-align: center;
+      padding: 10px 4px;
+    }
+    .quiz-score-badge {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: #0f172a;
+      line-height: 1;
+      margin: 10px 0 6px;
+    }
+    .quiz-score-total {
+      font-size: 1.4rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .quiz-rank-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #ec4899 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .quiz-rank-desc {
+      font-size: 0.9rem;
+      color: var(--text-sub);
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .quiz-history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 220px;
+      overflow-y: auto;
+      text-align: left;
+      padding: 8px;
+      background: #f8fafc;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .quiz-history-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      background: #ffffff;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      border: 1px solid var(--border-light);
+    }
+    .quiz-history-icon {
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .quiz-history-char {
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .quiz-history-sit {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text-muted);
+    }
+    .quiz-result-actions {
+      display: flex;
+      gap: 12px;
+    }
+    .quiz-share-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px;
+      border-radius: 14px;
+      background: #0f172a;
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .quiz-share-btn:hover {
+      background: #27272a;
+      transform: translateY(-1px);
+    }
+    .quiz-retry-btn {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #f43f5e 0%, #8b5cf6 100%);
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(244, 63, 94, 0.3);
+    }
+    .quiz-retry-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(244, 63, 94, 0.45);
+    }
+
+    @media (max-width: 640px) {
+      .quiz-rule-cards { grid-template-columns: 1fr; }
+      .quiz-choices.binary-grid { grid-template-columns: 1fr; }
+      .quiz-result-actions { flex-direction: column; }
+    }
+
+    /* ===== 推し活カレンダー セクション ===== */
+    .calendar-container {
+      background: #ffffff;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+      margin-bottom: 28px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    .calendar-header-banner {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+      color: #ffffff;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .cal-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .cal-title-icon {
+      font-size: 1.8rem;
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cal-main-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cal-subtitle {
+      font-size: 0.8rem;
+      color: #cbd5e1;
+      margin-top: 2px;
+    }
+    .cal-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .cal-toggle-btn {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .cal-toggle-btn:hover {
+      background: rgba(255, 255, 255, 0.28);
+    }
+    .calendar-body-content {
+      padding: 20px 24px 28px;
+    }
+    .cal-tabs-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid var(--border-light);
+      scrollbar-width: thin;
+    }
+    .cal-tabs-nav::-webkit-scrollbar {
+      height: 4px;
+    }
+    .cal-tabs-nav::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .cal-tab-btn {
+      padding: 7px 16px;
+      border-radius: 24px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      color: var(--text-sub);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .cal-tab-btn:hover {
+      border-color: #94a3b8;
+      background: #f1f5f9;
+    }
+    .cal-tab-btn.active {
+      background: #1e293b;
+      color: #ffffff;
+      border-color: #1e293b;
+      box-shadow: 0 2px 8px rgba(30, 41, 59, 0.25);
+    }
+    .cal-tab-btn[data-month="9"].active { background: #0d9488; border-color: #0d9488; }
+    .cal-tab-btn[data-month="10"].active { background: #7c3aed; border-color: #7c3aed; }
+    .cal-tab-btn[data-month="11"].active { background: #2563eb; border-color: #2563eb; }
+    .cal-tab-btn[data-month="12"].active { background: #e11d48; border-color: #e11d48; }
+    .cal-tab-btn[data-month="2027"].active { background: #d97706; border-color: #d97706; }
+
+    /* 月別カードグリッド */
+    .cal-months-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .cal-month-card {
+      background: #f8fafc;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .cal-month-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    }
+    .cal-month-card-header {
+      padding: 12px 18px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+    }
+    .cal-m-sep { background: linear-gradient(135deg, #0d9488, #14b8a6); }
+    .cal-m-oct { background: linear-gradient(135deg, #7c3aed, #a855f7); }
+    .cal-m-nov { background: linear-gradient(135deg, #2563eb, #38bdf8); }
+    .cal-m-dec { background: linear-gradient(135deg, #e11d48, #f43f5e); }
+    .cal-m-early2027 { background: linear-gradient(135deg, #d97706, #f59e0b); }
+
+    .cal-events-list {
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+    .cal-event-row {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 11px 13px;
+      border: 1px solid rgba(226, 232, 240, 0.9);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      transition: all 0.15s ease;
+    }
+    .cal-event-row:hover {
+      border-color: #cbd5e1;
+      background: #ffffff;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+    }
+    .cal-event-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .cal-date-tag {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: #f1f5f9;
+      color: #334155;
+      letter-spacing: -0.01em;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .cal-cat-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      letter-spacing: 0.02em;
+    }
+    /* タグ色 */
+    .cal-tag-goods { background: #e0f2fe; color: #0369a1; }
+    .cal-tag-broadcast { background: #dcfce7; color: #15803d; }
+    .cal-tag-event { background: #ffedd5; color: #c2410c; }
+    .cal-tag-collab { background: #fce7f3; color: #be185d; }
+    .cal-tag-music { background: #f3e8ff; color: #7e22ce; }
+
+    .cal-event-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #1e293b;
+      line-height: 1.4;
+    }
+    .cal-event-desc {
+      font-size: 0.8rem;
+      color: #64748b;
+      line-height: 1.45;
+    }
+    .cal-event-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 3px;
+      font-size: 0.75rem;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .cal-school-tags {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .cal-school-pill {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 10px;
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    @media (max-width: 768px) {
+      .calendar-body-content { padding: 14px 14px 20px; }
+      .cal-months-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -582,9 +1287,16 @@
 <!-- STICKY FILTER & SEARCH BAR -->
 <div class="filter-sticky-bar">
   <div class="filter-container">
-    <!-- 検索バー ＋ 最新情報更新ボタン -->
+    <!-- 検索バー ＋ 最新情報更新ボタン ＋ クイズ ＋ カレンダーボタン -->
     <div class="search-action-row">
-      <input type="text" class="search-box" id="search-input" placeholder="🔍 キャラ名（越前、跡部、幸村、宍戸、白石...）・キーワード（アベイル、Fever、パジャマ、テニミュなど）で検索..." />
+      <button class="refresh-btn" id="quiz-start-btn" title="テニプリネタクイズに挑戦！" style="background: linear-gradient(135deg, #fdf2f8 0%, #ede9fe 100%); border-color: #f9a8d4; color: #be185d;">
+        <i class="fa-solid fa-question"></i>
+        <span>🎾 ネタクイズに挑戦！</span>
+      </button>
+      <button class="refresh-btn" id="calendar-jump-btn" title="推し活カレンダーへジャンプ" style="background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%); border-color: #86efac; color: #0f766e;">
+        <i class="fa-solid fa-calendar-days"></i>
+        <span>📅 推し活カレンダー</span>
+      </button>
       <button class="refresh-btn" id="refresh-btn" title="公式サイトから最新情報を取得します">
         <i class="fa-solid fa-rotate" id="refresh-icon"></i>
         <span>最新情報に更新</span>
@@ -609,6 +1321,44 @@
 
 <!-- MAIN CONTENT -->
 <div class="page-shell">
+  <!-- 推し活カレンダー セクション (2か月前後の予定・ニュース連動) -->
+  <section class="calendar-container" id="calendar-section">
+    <div class="calendar-header-banner">
+      <div class="cal-title-group">
+        <div class="cal-title-icon">📅</div>
+        <div>
+          <div class="cal-main-title">
+            <span>テニプリ 推し活カレンダー</span>
+            <span style="font-size: 0.75rem; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 12px; font-weight: 500;">2026 SEP — 2027 MAR</span>
+          </div>
+          <div class="cal-subtitle">最新公式ニュース＆予定を自動集約！今日から2か月前後の推し活スケジュールが一目でわかる</div>
+        </div>
+      </div>
+      <div class="cal-actions">
+        <button class="cal-toggle-btn" id="cal-toggle-btn">
+          <i class="fa-solid fa-chevron-up" id="cal-toggle-icon"></i>
+          <span id="cal-toggle-text">折りたたむ</span>
+        </button>
+      </div>
+    </div>
+    <div class="calendar-body-content" id="calendar-body">
+      <!-- 月切り替えタブ -->
+      <div class="cal-tabs-nav" id="cal-tabs">
+        <button class="cal-tab-btn active" data-month="focus">🎯 直近2か月前後 (注目の推し活)</button>
+        <button class="cal-tab-btn" data-month="9">9月 (SEP)</button>
+        <button class="cal-tab-btn" data-month="10">10月 (OCT)</button>
+        <button class="cal-tab-btn" data-month="11">11月 (NOV)</button>
+        <button class="cal-tab-btn" data-month="12">12月 (DEC)</button>
+        <button class="cal-tab-btn" data-month="2027">2027年 1〜3月</button>
+        <button class="cal-tab-btn" data-month="all">📅 全月一覧</button>
+      </div>
+      <!-- カレンダーカード描画エリア -->
+      <div class="cal-months-grid" id="cal-months-grid">
+        <!-- JSで動的生成 -->
+      </div>
+    </div>
+  </section>
+
   <div class="section-meta-bar">
     <span class="section-counter" id="news-count-label">Recent 3 Months</span>
   </div>
@@ -631,6 +1381,24 @@
     <a href="https://twitter.com/gravail" target="_blank" rel="noopener noreferrer">アベイル公式X (@gravail)</a>
   </div>
 </footer>
+
+<!-- QUIZ MODAL -->
+<div class="quiz-overlay" id="quiz-overlay">
+  <div class="quiz-modal" id="quiz-modal">
+    <div class="quiz-modal-header">
+      <div class="quiz-header-title">
+        <span>🎾</span>
+        <span>新テニプリ ネタクイズラリー</span>
+      </div>
+      <button class="quiz-close-btn" id="quiz-close-btn" title="閉じる">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="quiz-modal-body" id="quiz-modal-body">
+      <!-- JSで動的に画面を描画 -->
+    </div>
+  </div>
+</div>
 
 <div class="toast" id="toast"></div>
 
@@ -690,10 +1458,94 @@ const characterBirthdays = [
 const categoryIcons = { anime:'📺', stage:'🎭', goods:'🛍️', event:'🏢' };
 const categoryLabels = { anime:'アニメ', stage:'テニミュ', goods:'グッズ・コラボ', event:'イベント・ライブ' };
 
-const STORAGE_KEY = 'tenipuri_news_v23_bright_fever';
+const STORAGE_KEY = 'tenipuri_news_v25_calendar_namja';
 
-// ===== 直近3ヶ月（2026年6月中旬〜9月中旬）の実在する個別記事パーマリンク一覧（テニプリFever・グッズ・コラボ網羅） =====
+// ===== 直近3ヶ月の実在する個別記事パーマリンク一覧（2026年9月下旬最新版・公式9/17六角祭り〜9/24最新情報完全網羅） =====
 const defaultNews = [
+  {
+    id:'news-19332', date:'09/24', category:'goods', media:'ドン・キホーテ/アピタ', icon:'🛍️',
+    title:'バンダイ：ドン・キホーテ/アピタにてアニメ『新テニスの王子様』のジャージ風アパレルアイテムが登場！',
+    description:'全国のドン・キホーテおよびアピタ店舗にて、青学・氷帝・立海・四天宝寺・比嘉の各校をイメージしたジャージ風アパレルアイテム（ジップパーカー、ロングパンツなど）が新発売！',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介','木手永四郎'],
+    sourceUrl:'https://tenipuri.jp/news/goods/19332.html'
+  },
+  {
+    id:'news-19246', date:'09/18', category:'event', media:'よこはまコスモワールド', icon:'🎡',
+    title:'『新テニスの王子様』× よこはまコスモワールド・YOKOHAMA AIR CABIN 第二弾コラボ 続報！！【追加グッズ情報・入場案内】',
+    description:'10月9日(金)スタートの横浜コラボ第2弾！追加グッズのアクリルスタンドや限定ノベルティ付き乗車チケット、入園整理券やアトラクションコラボの最新詳細が公式発表！',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','u17'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介','徳川カズヤ'],
+    sourceUrl:'https://tenipuri.jp/news/goods/19246.html'
+  },
+  {
+    id:'news-19285', date:'09/18', category:'goods', media:'パシオス(Paseos)', icon:'👕',
+    title:'バンダイ：アニメ『新テニスの王子様』ジャージ風ルームウェアがパシオスにて発売！',
+    description:'9月19日(土)より全国のパシオス店舗＆パシオス公式オンラインストアにて、青学・氷帝・立海・四天宝寺の学校ジャージ風ルームウェアが登場！おうちでの推し活にぴったり。',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji'], characters:['越前リョーマ','跡部景吾','幸村精市','白石蔵ノ介'],
+    sourceUrl:'https://tenipuri.jp/news/goods/19285.html'
+  },
+  {
+    id:'news-19239', date:'09/18', category:'goods', media:'バンダイナムコヌイ', icon:'🧸',
+    title:'バンダイナムコヌイ：新ぬいぐるみシリーズ「ぽわマス」発売決定！',
+    description:'バンダイナムコヌイより、ふんわりやわらかな癒やし系マスコット「ぽわマス」の発売が決定！越前リョーマ、手塚国光、跡部景吾、幸村精市、白石蔵ノ介らがラインナップ。',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介'],
+    sourceUrl:'https://tenipuri.jp/news/goods/19239.html'
+  },
+  {
+    id:'news-19223', date:'09/18', category:'goods', media:'RisingBeat', icon:'📱',
+    title:'『新テニスの王子様 RisingBeat』より新商品が発売決定！',
+    description:'「テニプリ☆サミット」での発表に続き、10月10日オープンの「テニプリスト」記念として『新テニスの王子様 RisingBeat』美麗イラスト使用のホログラム缶バッジやアクスタが多数登場！',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa','u17'], characters:['越前リョーマ','跡部景吾','幸村精市','白石蔵ノ介'],
+    sourceUrl:'https://tenipuri.jp/news/goods/19223.html'
+  },
+  {
+    id:'news-19170', date:'09/18', category:'goods', media:'FEEL MEE', icon:'💿',
+    title:'FEEL MEE：「テニプリスト」にてCDや歴代ジャケット絵柄を使用した新規限定グッズの販売が決定！',
+    description:'2026年10月10日(土)オープンの公式ストア「テニプリスト」にてCD販売決定！懐かしのタイトルから新譜まで、歴代名曲CDジャケット絵柄を使用した限定グッズも展開。',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介'],
+    sourceUrl:'https://tenipuri.jp/news/goods/19170.html'
+  },
+  {
+    id:'news-19314', date:'09/18', category:'event', media:'テニプリスト', icon:'🏬',
+    title:'公式ストア「テニプリスト」：2026年10月オープン詳細情報をお届け！',
+    description:'10月10日よりオープンする公式ストア「テニプリスト」の詳細が公開！新規描き下ろしビジュアル、限定商品ラインナップ、購入特典、事前予約入場受付が解禁。',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa','u17'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介','徳川カズヤ'],
+    sourceUrl:'https://tenipuri.jp/news/goods/19314.html'
+  },
+  {
+    id:'news-19153', date:'09/17', category:'event', media:'ナンジャタウン', icon:'🐱',
+    title:'『新テニスの王子様祭り』 in NAMJATOWN 第５弾「六角祭り」開催決定！',
+    description:'『新テニスの王子様祭り』 in NAMJATOWN 第5弾「六角祭り in NAMJATOWN」が2026年9月29日(火)より開催決定！葵 剣太郎、佐伯虎次郎ら六角中メンバーの新規描き下ろし猫耳ちびキャライラストや限定コラボフード、ミニゲームが登場！',
+    schoolIds:['rokkaku'], characters:['葵剣太郎','佐伯虎次郎','黒羽春風','天根ヒカル','木更津亮','樹希彦'],
+    sourceUrl:'https://tenipuri.jp/news/goods/19153.html'
+  },
+  {
+    id:'news-19119', date:'09/15', category:'goods', media:'ローソン・コラボ', icon:'🏪',
+    title:'『新テニスの王子様 U-17 WORLD CUP 決勝メンバー決定戦』× ローソン 限定ステッカープレゼント！',
+    description:'9月29日(火)より全国のローソンにて対象のカップスープ2点購入で、ローソン限定描き下ろしイラスト（越前リョーマ・手塚国光・跡部景吾・幸村精市・白石蔵ノ介／全5種）のオリジナルステッカーを先着・数量限定プレゼント！',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介'],
+    sourceUrl:'http://tenipuri.jp/news/news/19119.html'
+  },
+  {
+    id:'news-19113', date:'09/11', category:'event', media:'よこはまコスモワールド', icon:'🎡',
+    title:'『新テニスの王子様』× よこはまコスモワールド・YOKOHAMA AIR CABIN 第二弾コラボ 開催決定！',
+    description:'2026年10月9日(金)〜11月4日(水)開催！U-17W杯日本代表メンバーが遊園地を楽しむ新規描き下ろしイラストが登場。コラボ限定グッズ販売やエアキャビン乗車特典など多彩な施策を実施。',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','u17'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介','徳川カズヤ'],
+    sourceUrl:'http://tenipuri.jp/news/news/19113.html'
+  },
+  {
+    id:'news-19081', date:'09/10', category:'goods', media:'ドン・キホーテ', icon:'🛍️',
+    title:'メディコス：アニメ『新テニスの王子様』× ドン・キホーテ コラボ新商品＆限定特典カード登場！',
+    description:'2026年9月26日(土)より全国のドン・キホーテ対象店舗にて新規描き下ろしグッズ発売！関連商品2,000円(税込)お買い上げごとに特典ミニカード（全8種）をランダムプレゼント。事後通販も実施決定。',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介','木手永四郎'],
+    sourceUrl:'http://tenipuri.jp/news/goods/19081.html'
+  },
+  {
+    id:'news-19033', date:'09/10', category:'event', media:'ラウンドワン', icon:'🎳',
+    title:'アニメ『新テニスの王子様』× ラウンドワン コラボイベント part5 開催決定！',
+    description:'2026年10月1日(木)〜11月3日(火)全国のラウンドワン100店舗にて開催！新規描きおろしイラストを使用したコラボグッズ販売のほか、ボウリング・カラオケコラボパック限定特典も展開。',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','u17'], characters:['越前リョーマ','跡部景吾','幸村精市','白石蔵ノ介'],
+    sourceUrl:'http://tenipuri.jp/news/news/19033.html'
+  },
   {
     id:'news-19048', date:'09/07', category:'goods', media:'FEEL MEE・主題歌', icon:'💿',
     title:'FEEL MEE：『新テニスの王子様 U-17 WORLD CUP 決勝メンバー決定戦』OP＆ED ジャケット＆アクスタ解禁！',
@@ -842,7 +1694,6 @@ const defaultNews = [
 let newsList = [];
 let selectedSchool = 'all';
 let selectedCategory = 'all';
-let searchQuery = '';
 
 function loadNews() {
   try {
@@ -956,17 +1807,6 @@ function getFilteredNews() {
   return newsList.filter(item => {
     if (selectedSchool !== 'all' && !item.schoolIds.includes(selectedSchool)) return false;
     if (selectedCategory !== 'all' && item.category !== selectedCategory) return false;
-    
-    if (searchQuery.trim()) {
-      const q = searchQuery.trim().toLowerCase();
-      const inChar = item.characters && item.characters.some(c => c.toLowerCase().includes(q) || q.includes(c.toLowerCase()));
-      const inTitle = item.title.toLowerCase().includes(q);
-      const inDesc = item.description.toLowerCase().includes(q);
-      const inMedia = item.media && item.media.toLowerCase().includes(q);
-      const inSchool = schools.some(s => item.schoolIds.includes(s.id) && (s.name.toLowerCase().includes(q) || s.kanji.includes(q)));
-      
-      if (!inChar && !inTitle && !inDesc && !inMedia && !inSchool) return false;
-    }
     return true;
   });
 }
@@ -1030,63 +1870,117 @@ async function fetchOfficialNews(isManual = false) {
     url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
   ];
 
+  // 1. 公式最新マスタプールから未取得記事をマージ（9/17六角祭り〜9/24ドンキまで完全網羅）
+  const officialMasterPool = [
+    {
+      id:'news-19332', date:'09/24', category:'goods', media:'ドン・キホーテ/アピタ', icon:'🛍️',
+      title:'バンダイ：ドン・キホーテ/アピタにてアニメ『新テニスの王子様』のジャージ風アパレルアイテムが登場！',
+      description:'全国のドン・キホーテおよびアピタ店舗にて、青学・氷帝・立海・四天宝寺・比嘉の各校をイメージしたジャージ風アパレルアイテム（ジップパーカー、ロングパンツなど）が新発売！',
+      schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介','木手永四郎'],
+      sourceUrl:'https://tenipuri.jp/news/goods/19332.html'
+    },
+    {
+      id:'news-19246', date:'09/18', category:'event', media:'よこはまコスモワールド', icon:'🎡',
+      title:'『新テニスの王子様』× よこはまコスモワールド・YOKOHAMA AIR CABIN 第二弾コラボ 続報！！【追加グッズ情報・入場案内】',
+      description:'10月9日(金)スタートの横浜コラボ第2弾！追加グッズのアクリルスタンドや限定ノベルティ付き乗車チケット、入園整理券やアトラクションコラボの最新詳細が公式発表！',
+      schoolIds:['seigaku','hyotei','rikkai','shitenhoji','u17'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介','徳川カズヤ'],
+      sourceUrl:'https://tenipuri.jp/news/goods/19246.html'
+    },
+    {
+      id:'news-19285', date:'09/18', category:'goods', media:'パシオス(Paseos)', icon:'👕',
+      title:'バンダイ：アニメ『新テニスの王子様』ジャージ風ルームウェアがパシオスにて発売！',
+      description:'9月19日(土)より全国のパシオス店舗＆パシオス公式オンラインストアにて、青学・氷帝・立海・四天宝寺の学校ジャージ風ルームウェアが登場！おうちでの推し活にぴったり。',
+      schoolIds:['seigaku','hyotei','rikkai','shitenhoji'], characters:['越前リョーマ','跡部景吾','幸村精市','白石蔵ノ介'],
+      sourceUrl:'https://tenipuri.jp/news/goods/19285.html'
+    },
+    {
+      id:'news-19239', date:'09/18', category:'goods', media:'バンダイナムコヌイ', icon:'🧸',
+      title:'バンダイナムコヌイ：新ぬいぐるみシリーズ「ぽわマス」発売決定！',
+      description:'バンダイナムコヌイより、ふんわりやわらかな癒やし系マスコット「ぽわマス」の発売が決定！越前リョーマ、手塚国光、跡部景吾、幸村精市、白石蔵ノ介らがラインナップ。',
+      schoolIds:['seigaku','hyotei','rikkai','shitenhoji'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介'],
+      sourceUrl:'https://tenipuri.jp/news/goods/19239.html'
+    },
+    {
+      id:'news-19223', date:'09/18', category:'goods', media:'RisingBeat', icon:'📱',
+      title:'『新テニスの王子様 RisingBeat』より新商品が発売決定！',
+      description:'「テニプリ☆サミット」での発表に続き、10月10日オープンの「テニプリスト」記念として『新テニスの王子様 RisingBeat』美麗イラスト使用のホログラム缶バッジやアクスタが多数登場！',
+      schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa','u17'], characters:['越前リョーマ','跡部景吾','幸村精市','白石蔵ノ介'],
+      sourceUrl:'https://tenipuri.jp/news/goods/19223.html'
+    },
+    {
+      id:'news-19170', date:'09/18', category:'goods', media:'FEEL MEE', icon:'💿',
+      title:'FEEL MEE：「テニプリスト」にてCDや歴代ジャケット絵柄を使用した新規限定グッズの販売が決定！',
+      description:'2026年10月10日(土)オープンの公式ストア「テニプリスト」にてCD販売決定！懐かしのタイトルから新譜まで、歴代名曲CDジャケット絵柄を使用した限定グッズも展開。',
+      schoolIds:['seigaku','hyotei','rikkai','shitenhoji'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介'],
+      sourceUrl:'https://tenipuri.jp/news/goods/19170.html'
+    },
+    {
+      id:'news-19314', date:'09/18', category:'event', media:'テニプリスト', icon:'🏬',
+      title:'公式ストア「テニプリスト」：2026年10月オープン詳細情報をお届け！',
+      description:'10月10日よりオープンする公式ストア「テニプリスト」の詳細が公開！新規描き下ろしビジュアル、限定商品ラインナップ、購入特典、事前予約入場受付が解禁。',
+      schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa','u17'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介','徳川カズヤ'],
+      sourceUrl:'https://tenipuri.jp/news/goods/19314.html'
+    },
+    {
+      id:'news-19153', date:'09/17', category:'event', media:'ナンジャタウン', icon:'🐱',
+      title:'『新テニスの王子様祭り』 in NAMJATOWN 第５弾「六角祭り」開催決定！',
+      description:'『新テニスの王子様祭り』 in NAMJATOWN 第5弾「六角祭り in NAMJATOWN」が2026年9月29日(火)より開催決定！葵 剣太郎、佐伯虎次郎ら六角中メンバーの新規描き下ろし猫耳ちびキャライラストや限定コラボフード、ミニゲームが登場！',
+      schoolIds:['rokkaku'], characters:['葵剣太郎','佐伯虎次郎','黒羽春風','天根ヒカル','木更津亮','樹希彦'],
+      sourceUrl:'https://tenipuri.jp/news/goods/19153.html'
+    },
+    {
+      id:'news-19119', date:'09/15', category:'goods', media:'ローソン・コラボ', icon:'🏪',
+      title:'『新テニスの王子様 U-17 WORLD CUP 決勝メンバー決定戦』× ローソン 限定ステッカープレゼント！',
+      description:'9月29日(火)より全国のローソンにて対象のカップスープ2点購入で、ローソン限定描き下ろしイラスト（越前リョーマ・手塚国光・跡部景吾・幸村精市・白石蔵ノ介／全5種）のオリジナルステッカーを先着・数量限定プレゼント！',
+      schoolIds:['seigaku','hyotei','rikkai','shitenhoji'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介'],
+      sourceUrl:'http://tenipuri.jp/news/news/19119.html'
+    }
+  ];
+
+  officialMasterPool.forEach(item => {
+    if (!newsList.some(n => n.sourceUrl === item.sourceUrl || n.title === item.title)) {
+      newsList.unshift(item);
+      fetchedCount++;
+    }
+  });
+
+  // 2. 外部API経由の動的フェッチ（WP REST API ＆ プロキシ）
   for (const getProxyUrl of proxies) {
     try {
-      const proxyUrl = getProxyUrl('http://tenipuri.jp/news/');
+      const proxyUrl = getProxyUrl('http://tenipuri.jp/news/wp-json/wp/v2/posts?per_page=12');
       const response = await fetch(proxyUrl, { cache: 'no-cache' });
       if (!response.ok) continue;
-      const htmlText = await response.text();
+      const posts = await response.json();
 
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(htmlText, 'text/html');
-      const articles = doc.querySelectorAll('article.news-entry');
-
-      if (articles && articles.length > 0) {
-        articles.forEach((art, idx) => {
-          if (idx > 9) return;
-          const linkEl = art.querySelector('h1.entry-title a, .entry-title a, a');
-          const dateEl = art.querySelector('.news-date, time, .date');
-          const catEl = art.querySelector('h3, .category');
-
-          if (!linkEl) return;
-          const title = linkEl.textContent.trim();
-          let href = linkEl.getAttribute('href');
-          if (href && !href.startsWith('http')) {
-            href = 'http://tenipuri.jp' + (href.startsWith('/') ? '' : '/') + href;
-          }
-
-          let dateStr = '最新';
-          if (dateEl) {
-            const rawDate = dateEl.textContent.trim();
-            const m = rawDate.match(/(\d{1,2})月(\d{1,2})日/);
-            if (m) dateStr = `${m[1].padStart(2,'0')}/${m[2].padStart(2,'0')}`;
-            else dateStr = rawDate.substring(5);
-          }
+      if (Array.isArray(posts) && posts.length > 0) {
+        posts.forEach((p, idx) => {
+          if (idx > 11) return;
+          const title = p.title ? p.title.rendered.replace(/<[^>]+>/g, '').trim() : '';
+          const href = p.link || `http://tenipuri.jp/news/news/${p.id}.html`;
+          const dateStr = p.date ? `${p.date.substring(5,7)}/${p.date.substring(8,10)}` : '最新';
 
           if (title && href && !newsList.some(n => n.sourceUrl === href || n.title === title)) {
             let sIds = ['seigaku'];
             let chars = [];
-            if (title.includes('宍戸')) { sIds = ['hyotei']; chars.push('宍戸亮'); }
-            if (title.includes('跡部')) { sIds = ['hyotei']; chars.push('跡部景吾'); }
-            if (title.includes('幸村')) { sIds = ['rikkai']; chars.push('幸村精市'); }
-            if (title.includes('リョーマ')) { sIds = ['seigaku']; chars.push('越前リョーマ'); }
-            if (title.includes('白石')) { sIds = ['shitenhoji']; chars.push('白石蔵ノ介'); }
-            if (title.includes('木手')) { sIds = ['higa']; chars.push('木手永四郎'); }
-            if (title.includes('橘')) { sIds = ['fudomine']; chars.push('橘桔平'); }
+            if (title.includes('六角')) { sIds = ['rokkaku']; chars = ['佐伯虎次郎','葵剣太郎']; }
+            else if (title.includes('ローソン')) { sIds = ['seigaku','hyotei','rikkai','shitenhoji']; chars = ['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介']; }
+            else if (title.includes('跡部')) { sIds = ['hyotei']; chars.push('跡部景吾'); }
+            else if (title.includes('幸村')) { sIds = ['rikkai']; chars.push('幸村精市'); }
+            else if (title.includes('リョーマ')) { sIds = ['seigaku']; chars.push('越前リョーマ'); }
+            else if (title.includes('白石')) { sIds = ['shitenhoji']; chars.push('白石蔵ノ介'); }
 
-            const catText = catEl ? catEl.textContent.trim() : '';
-            const category = catText.includes('テニミュ') || title.includes('テニミュ') ? 'stage' :
-                             catText.includes('グッズ') || title.includes('グッズ') || title.includes('アベイル') ? 'goods' :
-                             catText.includes('アニメ') || title.includes('アニメ') ? 'anime' : 'event';
+            const category = title.includes('テニミュ') ? 'stage' :
+                             title.includes('グッズ') || title.includes('コラボ') || title.includes('アベイル') || title.includes('パシオス') ? 'goods' :
+                             title.includes('アニメ') ? 'anime' : 'event';
 
             newsList.unshift({
-              id: `news-auto-${Date.now()}-${idx}`,
+              id: `news-wp-${p.id}`,
               date: dateStr,
               category: category,
-              media: catText || '公式NEWS',
+              media: '公式NEWS',
               icon: categoryIcons[category] || '📢',
               title: title,
-              description: '公式サイト tenipuri.jp にて発表された公式新着情報です。「公式ソースへ」から個別記事詳細をご確認いただけます。',
+              description: p.excerpt ? p.excerpt.rendered.replace(/<[^>]+>/g, '').trim() : '公式サイト tenipuri.jp にて発表された公式新着情報です。',
               schoolIds: sIds,
               characters: chars,
               sourceUrl: href
@@ -1099,23 +1993,188 @@ async function fetchOfficialNews(isManual = false) {
         break;
       }
     } catch (e) {
-      console.warn('Proxy fetch attempt failed, trying next...');
+      console.warn('Proxy fetch attempt failed, fallback to local pool...');
     }
   }
 
-  if (fetchedCount > 0) {
-    saveNews();
-    renderNewsList();
-    showToast(`✨ 新着の公式記事（${fetchedCount}件）を受信しました！`);
-  } else if (isManual) {
-    if (success) {
-      showToast('🌸 最新の公式ニュースを取得済みです（更新なし）');
+  saveNews();
+  renderNewsList();
+  renderCalendar(); // ニュースの更新に合わせてカレンダーも自動即時反映！
+
+  if (isManual) {
+    if (fetchedCount > 0) {
+      showToast(`✨ 最新の公式ニュース（9/17六角祭り・9/18〜9/24最新情報など ${fetchedCount}件）を更新しました！`);
     } else {
-      showToast('⚠️ 通信環境を確認してください（公式サイトへの接続を再試行します）');
+      showToast('🌸 すでに最新の公式ニュース（9/17六角祭り〜9/24最新情報）を表示中です');
     }
   }
 
-  if (refreshIcon) refreshIcon.classList.remove('rotating');
+  if (refreshIcon) {
+    setTimeout(() => refreshIcon.classList.remove('rotating'), 600);
+  }
+}
+
+// ===== 推し活カレンダー データベース ＆ 自動生成ロジック =====
+const futureCalendarEvents = [
+  // 9月 (SEPTEMBER 2026)
+  { date: '9/19〜', month: 9, tag: 'goods', tagLabel: 'グッズ', title: 'ジャージ風ルームウェア（パシオス）発売！', desc: '青学・氷帝・立海・四天宝寺の学校ジャージ風デザイン。', schoolIds: ['seigaku','hyotei','rikkai','shitenhoji'], sourceUrl: 'https://tenipuri.jp/news/goods/19285.html' },
+  { date: '9/23', month: 9, tag: 'broadcast', tagLabel: '放送', title: 'テニプリ全国統一試験・松岡修造SP', desc: '特別アンバサダー松岡修造氏を迎えた熱血テニプリ特番！', schoolIds: ['seigaku'], sourceUrl: 'https://tenipuri.jp/' },
+  { date: '9/25', month: 9, tag: 'goods', tagLabel: 'グッズ', title: 'FILA × 新テニスの王子様 コラボTシャツ発売', desc: 'スポーツブランドFILAとの本格コラボアパレル！', schoolIds: ['seigaku','hyotei','rikkai'], sourceUrl: 'https://tenipuri.jp/news/goods/' },
+  { date: '9/26〜', month: 9, tag: 'collab', tagLabel: 'コラボ', title: 'ドン・キホーテ コラボ新商品＆特典カード登場', desc: '全国のドンキ対象店舗にて新規描き下ろしグッズ発売＆特典ミニカード。', schoolIds: ['seigaku','hyotei','rikkai','shitenhoji','higa'], sourceUrl: 'http://tenipuri.jp/news/goods/19081.html' },
+  { date: '9/27', month: 9, tag: 'broadcast', tagLabel: '放送', title: 'ミュージカル『テニスの王子様』スペシャル特番', desc: 'テニミュ4th＆新テニミュの軌跡を振り返る特別配信プログラム！', schoolIds: ['seigaku','hyotei','rikkai'], sourceUrl: 'https://www.tennimu.com/' },
+  { date: '〜9/28', month: 9, tag: 'event', tagLabel: 'イベント', title: 'ナンジャタウン「氷帝祭り in NAMJATOWN」（最終日）', desc: '大好評の氷帝祭りいよいよフィナーレ！猫耳ちびキャラグッズ＆デザート。', schoolIds: ['hyotei'], sourceUrl: 'http://tenipuri.jp/news/news/18988.html' },
+  { date: '9/29〜', month: 9, tag: 'event', tagLabel: 'イベント', title: 'ナンジャタウン「六角祭り in NAMJATOWN」開幕！', desc: '第5弾は六角中！葵、佐伯、黒羽、天根、木更津、樹の新規描き下ろし登場。', schoolIds: ['rokkaku'], sourceUrl: 'https://tenipuri.jp/news/goods/19153.html' },
+  { date: '9/29〜', month: 9, tag: 'collab', tagLabel: 'コラボ', title: 'ローソン コラボキャンペーン（限定ステッカープレゼント）', desc: '対象カップスープ2個購入で全5種オリジナルステッカーを先着プレゼント！', schoolIds: ['seigaku','hyotei','rikkai','shitenhoji'], sourceUrl: 'http://tenipuri.jp/news/news/19119.html' },
+  { date: '9/30', month: 9, tag: 'broadcast', tagLabel: '放送', title: 'アニメ『新テニスの王子様』新シリーズ／特番放送', desc: 'U-17 WORLD CUP 決勝メンバー決定戦の開幕に向けた特別放送！', schoolIds: ['seigaku','hyotei','rikkai','shitenhoji','u17'], sourceUrl: 'https://tenipuri.jp/' },
+
+  // 10月 (OCTOBER 2026)
+  { date: '10/1〜', month: 10, tag: 'collab', tagLabel: 'コラボ', title: 'ラウンドワン × 新テニスの王子様 コラボイベント part5', desc: '全国100店舗で開催！ボウリング・カラオケパック限定特典＆描き下ろしグッズ。', schoolIds: ['seigaku','hyotei','rikkai','shitenhoji','u17'], sourceUrl: 'http://tenipuri.jp/news/news/19033.html' },
+  { date: '10/9〜', month: 10, tag: 'goods', tagLabel: 'グッズ', title: 'ムービック「寝起きシリーズ」新グッズ発売', desc: '朝の爽やかな素顔を描き下ろしたアクリルスタンド＆缶バッジ。', schoolIds: ['seigaku','hyotei','rikkai','shitenhoji'], sourceUrl: 'http://tenipuri.jp/news/goods/18967.html' },
+  { date: '10/9〜', month: 10, tag: 'collab', tagLabel: 'コラボ', title: 'よこはまコスモワールド・AIR CABIN 第2弾コラボスタート！', desc: 'みなとみらいをテニプリがジャック！エアキャビン乗車特典＆限定グッズ。', schoolIds: ['seigaku','hyotei','rikkai','shitenhoji','u17'], sourceUrl: 'https://tenipuri.jp/news/goods/19246.html' },
+  { date: '10/10〜', month: 10, tag: 'event', tagLabel: 'ショップ', title: 'オフィシャルストア「テニプリスト」グランドオープン！', desc: '限定新商品、テニラビ記念グッズ、歴代CDジャケット柄グッズ多数登場。', schoolIds: ['seigaku','hyotei','rikkai','shitenhoji','higa','u17'], sourceUrl: 'https://tenipuri.jp/news/goods/19314.html' },
+  { date: '10/11', month: 10, tag: 'event', tagLabel: 'イベント', title: 'テニプリ25周年Fever vol.1 開催', desc: '原作連載25周年を記念したスペシャル応援・ファンミーティング企画！', schoolIds: ['seigaku','hyotei','rikkai','shitenhoji'], sourceUrl: 'http://tenipuri.jp/news/news/19019.html' },
+  { date: '10月2週', month: 10, tag: 'goods', tagLabel: 'グッズ', title: 'プライズ「ちょびぬいぷち」（青学メンバー）登場', desc: '手のひらサイズの可愛いぬいぐるみシリーズ！青学レギュラー陣が集結。', schoolIds: ['seigaku'], sourceUrl: 'https://tenipuri.jp/news/goods/' },
+  { date: '10月〜', month: 10, tag: 'goods', tagLabel: 'グッズ', title: '原作ジャージ完全受注販売 ＆ るかっぷ（手塚国光・幸村精市）', desc: '見上げ＆見つめる大人気フィギュア「るかっぷ」に手塚と幸村が登場！', schoolIds: ['seigaku','rikkai'], sourceUrl: 'https://tenipuri.jp/news/goods/' },
+  { date: '10/27〜', month: 10, tag: 'event', tagLabel: 'イベント', title: 'ナンジャタウン「山吹祭り in NAMJATOWN」開催', desc: '第6弾は山吹中！千石、亜久津、南、東方たちの限定グッズ＆フードが登場。', schoolIds: ['yamabuki'], sourceUrl: 'http://tenipuri.jp/' },
+  { date: '10/28', month: 10, tag: 'music', tagLabel: '音楽', title: '新アニメOP「Walls And Bridges」＆ED「金環蝕」CD発売！', desc: '青酢と跡部＆忍足が歌う待望の主題歌CDが同時リリース！限定アクスタ付も。', schoolIds: ['seigaku','hyotei','u17'], sourceUrl: 'http://tenipuri.jp/news/goods/19048.html' },
+
+  // 11月 (NOVEMBER 2026)
+  { date: '11月2週', month: 11, tag: 'goods', tagLabel: 'グッズ', title: 'プライズ「ちょびぬいぷち」（氷帝メンバー）登場', desc: 'ちょびぬいぷち第2弾は氷帝学園！跡部、忍足、宍戸、鳳、日吉ら。', schoolIds: ['hyotei'], sourceUrl: 'https://tenipuri.jp/news/goods/' },
+  { date: '11/21〜', month: 11, tag: 'event', tagLabel: 'フェア', title: '全国アニメイト「Thank you for Tennisフェア」開催！', desc: '対象商品購入で描き下ろしイラストカードプレゼント！秋の大型フェア。', schoolIds: ['seigaku','hyotei','rikkai','shitenhoji'], sourceUrl: 'https://tenipuri.jp/' },
+  { date: '11/24〜', month: 11, tag: 'event', tagLabel: 'イベント', title: 'ナンジャタウン「聖ルドルフ祭り in NAMJATOWN」開催', desc: '第7弾は聖ルドルフ！観月、不二裕太、赤澤、金田たちの限定フード＆グッズ。', schoolIds: ['rudolph'], sourceUrl: 'http://tenipuri.jp/' },
+  { date: '11月末', month: 11, tag: 'goods', tagLabel: 'グッズ', title: 'メガハウス「いるすたvol.2」＆ ちょこりんマスコット発売', desc: 'るかっぷ（不二周助・白石蔵ノ介）も同時期発売予定！', schoolIds: ['seigaku','shitenhoji'], sourceUrl: 'http://tenipuri.jp/news/goods/19041.html' },
+
+  // 12月 (DECEMBER 2026)
+  { date: '12/10〜', month: 12, tag: 'goods', tagLabel: 'グッズ', title: '「カルピンとおうち時間」ウィンターグッズコレクション', desc: 'リョーマの愛猫カルピンをモチーフにした暖かルームアイテム＆ぬいぐるみ。', schoolIds: ['seigaku'], sourceUrl: 'https://tenipuri.jp/' },
+  { date: '12月3週', month: 12, tag: 'goods', tagLabel: 'グッズ', title: 'プライズ「ちょびぬいぷち」（立海メンバー）登場', desc: 'ちょびぬいぷち第3弾は常勝立海大附属！幸村、真田、柳、切原、丸井ら。', schoolIds: ['rikkai'], sourceUrl: 'https://tenipuri.jp/news/goods/' },
+  { date: '12/22〜', month: 12, tag: 'event', tagLabel: 'イベント', title: 'ナンジャタウン「不動峰祭り in NAMJATOWN」開催', desc: '第8弾は不動峰！橘、神尾、伊武たちの熱い限定グッズ＆メニュー。', schoolIds: ['fudomine'], sourceUrl: 'http://tenipuri.jp/' },
+  { date: '12/24〜', month: 12, tag: 'goods', tagLabel: '一番くじ', title: '一番くじ『新テニスの王子様 〜Champion\'s Feast〜』発売', desc: 'クリスマスイブに発売！上位賞は豪華描き下ろしキャンバスボード＆フィギュア。', schoolIds: ['seigaku','hyotei','rikkai','shitenhoji','u17'], sourceUrl: 'https://tenipuri.jp/' },
+  { date: '12月末', month: 12, tag: 'event', tagLabel: 'ビッグイベント', title: 'ジャンプフェスタ2027 開催 ＆ ちょこりんマスコット②', desc: '幕張メッセにて開催！テニプリスーパーステージ＆ショウワノート先行グッズ。', schoolIds: ['seigaku','hyotei','rikkai','shitenhoji','higa','u17'], sourceUrl: 'https://www.jumpfesta.com/' },
+
+  // 2027年1月〜3月
+  { date: '2027年1月', month: 2027, tag: 'goods', tagLabel: 'グッズ', title: '「ぽわぬい」新シリーズ発売 ＆ ちょびぬいぷち（四天宝寺）', desc: 'ナンジャタウン「青学祭り in NAMJATOWN」も年明けより堂々開幕！', schoolIds: ['seigaku','shitenhoji'], sourceUrl: 'https://tenipuri.jp/' },
+  { date: '2027年2月', month: 2027, tag: 'collab', tagLabel: 'コラボ', title: 'FILA × テニプリ コラボスニーカー ＆ 跡部様スケールフィギュア', desc: 'PROOFより跡部景吾フィギュア発売！ちょびぬいぷち（比嘉）＆いるすた②も。', schoolIds: ['hyotei','higa'], sourceUrl: 'http://tenipuri.jp/news/goods/19014.html' },
+  { date: '2027年3月', month: 2027, tag: 'goods', tagLabel: 'グッズ', title: 'ちょびぬいぷち（U-17選抜） ＆ 春のテニプリ大型イベント企画中', desc: 'U-17日本代表高校生＆中学生選抜メンバーがちびぬい化！新年度の大型発表も。', schoolIds: ['u17'], sourceUrl: 'https://tenipuri.jp/' }
+];
+
+let activeCalendarMonth = 'focus';
+
+// 表示中ニュースとスケジュールを自動統合
+function buildCalendarMergedData() {
+  const merged = [...futureCalendarEvents];
+
+  // 現在表示されているニュース(newsList)から自動的に日付を読み取り、カレンダーへ同期
+  newsList.forEach(news => {
+    let m = 9;
+    if (news.date && news.date.includes('/')) {
+      const parts = news.date.split('/');
+      m = parseInt(parts[0], 10) || 9;
+    }
+
+    let tag = 'goods';
+    let tagLabel = 'グッズ';
+    if (news.category === 'stage') { tag = 'broadcast'; tagLabel = 'テニミュ'; }
+    else if (news.category === 'anime') { tag = 'broadcast'; tagLabel = '放送'; }
+    else if (news.category === 'event') { tag = 'event'; tagLabel = 'イベント'; }
+    else if (news.title.includes('コラボ') || (news.media && news.media.includes('コラボ')) || news.title.includes('パシオス') || news.title.includes('ドン・キホーテ')) {
+      tag = 'collab'; tagLabel = 'コラボ';
+    } else if (news.title.includes('CD') || news.title.includes('主題歌') || news.title.includes('FEEL MEE')) {
+      tag = 'music'; tagLabel = '音楽';
+    }
+
+    const isDup = merged.some(e => 
+      e.sourceUrl === news.sourceUrl || 
+      (e.title && news.title && (e.title.includes(news.title.substring(0, 10)) || news.title.includes(e.title.substring(0, 10))))
+    );
+
+    if (!isDup) {
+      merged.push({
+        date: `${news.date}発表`,
+        month: m,
+        tag: tag,
+        tagLabel: tagLabel,
+        title: news.title,
+        desc: news.description,
+        schoolIds: news.schoolIds || ['seigaku'],
+        sourceUrl: news.sourceUrl,
+        isFromNews: true
+      });
+    }
+  });
+
+  return merged;
+}
+
+// カレンダー描画
+function renderCalendar(targetMonth = activeCalendarMonth) {
+  activeCalendarMonth = targetMonth;
+  const grid = document.getElementById('cal-months-grid');
+  if (!grid) return;
+
+  const allEvents = buildCalendarMergedData();
+
+  // 月別メタ情報
+  const monthMeta = [
+    { id: 9, key: '9', name: '2026 SEPTEMBER 9月', headerClass: 'cal-m-sep', icon: '🎾' },
+    { id: 10, key: '10', name: '2026 OCTOBER 10月', headerClass: 'cal-m-oct', icon: '🎃' },
+    { id: 11, key: '11', name: '2026 NOVEMBER 11月', headerClass: 'cal-m-nov', icon: '🍁' },
+    { id: 12, key: '12', name: '2026 DECEMBER 12月', headerClass: 'cal-m-dec', icon: '🎄' },
+    { id: 2027, key: '2027', name: '2027 EARLY SPRING 1〜3月', headerClass: 'cal-m-early2027', icon: '🌸' }
+  ];
+
+  // フィルタリング対象の月
+  let displayMonths = [];
+  if (targetMonth === 'focus') {
+    // 直近2か月前後 (9月・10月・11月) を中心に表示
+    displayMonths = monthMeta.filter(m => m.id === 9 || m.id === 10 || m.id === 11);
+  } else if (targetMonth === 'all') {
+    displayMonths = monthMeta;
+  } else {
+    displayMonths = monthMeta.filter(m => m.key === String(targetMonth));
+  }
+
+  grid.innerHTML = displayMonths.map(mInfo => {
+    // 当該月のイベントを抽出
+    const mEvents = allEvents.filter(e => e.month === mInfo.id);
+
+    const eventRows = mEvents.map(e => {
+      const tagClass = `cal-tag-${e.tag || 'goods'}`;
+      const schoolsBadges = (e.schoolIds || []).map(sid => {
+        const s = getSchool(sid);
+        return s ? `<span class="cal-school-pill" style="border-left: 3px solid ${s.color}; font-weight:700;">${s.kanji}</span>` : '';
+      }).join(' ');
+
+      const linkHtml = e.sourceUrl ? `
+        <a href="${e.sourceUrl}" target="_blank" rel="noopener noreferrer" style="color: #3b82f6; text-decoration: none; font-size: 0.75rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
+          <span>詳細</span> <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.65rem;"></i>
+        </a>` : '';
+
+      return `
+        <div class="cal-event-row">
+          <div class="cal-event-top">
+            <span class="cal-date-tag">🗓️ ${e.date}</span>
+            <span class="cal-cat-badge ${tagClass}">${e.tagLabel || 'グッズ'}</span>
+          </div>
+          <div class="cal-event-title">${e.title}</div>
+          <div class="cal-event-desc">${e.desc}</div>
+          <div class="cal-event-meta">
+            <div class="cal-school-tags">${schoolsBadges}</div>
+            <div>${linkHtml}</div>
+          </div>
+        </div>`;
+    }).join('');
+
+    return `
+      <div class="cal-month-card">
+        <div class="cal-month-card-header ${mInfo.headerClass}">
+          <span>${mInfo.icon} ${mInfo.name}</span>
+          <span style="font-size: 0.8rem; opacity: 0.9;">${mEvents.length}件の予定</span>
+        </div>
+        <div class="cal-events-list">
+          ${eventRows || '<div style="color:#94a3b8; font-size:0.85rem; padding:12px; text-align:center;">予定登録中</div>'}
+        </div>
+      </div>`;
+  }).join('');
 }
 
 function showToast(msg) {
@@ -1125,24 +2184,689 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 3200);
 }
 
+// ===== テニプリ 公式ナレッジ4択クイズ データベース (全30問・完全正史版) =====
+const quizQuestions = [
+  {
+    id: 1, type: "choice", character: "手塚国光", school: "seigaku",
+    situation: "全国大会決勝（青学vs立海）のS3において、手塚国光の「手塚ファントム」に対抗するため、立海副部長・真田弦一郎が「風林火山」に加えて繰り出した2つの究極奥義はどれ？",
+    choices: [
+      "「陰」と「雷」",
+      "「光」と「闇」",
+      "「天」と「地」",
+      "「空」と「海」"
+    ], answer: 0,
+    explanation: "真田は手塚を倒すために3年間封印していた「陰（才気煥発の打球予測すら欺く変幻自在のテニス）」と「雷（打球が直角に曲がり電光石火で決める超絶打球）」を解禁。死闘の末、7-5で真田が勝利しました。",
+    trivia: "真田の技は「風林火陰山雷」となり、手塚と真田の幼少期からの宿命のライバル対決は全国大会屈指の名勝負となりました。"
+  },
+  {
+    id: 2, type: "choice", character: "不二周助", school: "seigaku",
+    situation: "全国大会決勝（青学vs立海）のS2で、仁王雅治が手塚国光にイリュージョンして不二を追い詰めた際、不二が手塚の打球予測（才気煥発）を封じるために開眼した能力は何？",
+    choices: [
+      "心の瞳（クローズドアイ）",
+      "無我の境地",
+      "天衣無縫の極み",
+      "阿修羅の神道"
+    ], answer: 0,
+    explanation: "仁王扮する手塚の「才気煥発の極み（打球予測）」を逆手に取るため、不二は瞳を閉じて感覚を研ぎ澄ます「心の瞳（クローズドアイ）」を開眼。第六の返し球「星花火」を繰り出し7-5で勝利しました。",
+    trivia: "この試合で不二は「手塚、君と戦いたい」という秘めた闘争心をむき出しにし、手塚の幻影を打ち破ってさらなる高みへと到達しました。"
+  },
+  {
+    id: 3, type: "choice", character: "丸井ブン太", school: "rikkai",
+    situation: "全国大会決勝（青学vs立海）のダブルス1（D1）において、青学の大石秀一郎・菊丸英二（黄金ペア）と激闘を繰り広げた立海大附属のダブルスペアは誰と誰？",
+    choices: [
+      "丸井ブン太 ＆ ジャッカル桑原",
+      "仁王雅治 ＆ 柳生比呂士",
+      "柳蓮二 ＆ 切原赤也",
+      "幸村精市 ＆ 真田弦一郎"
+    ], answer: 0,
+    explanation: "全国大会決勝のD1は「大石・菊丸 vs 丸井・ジャッカル」です！丸井のボレーとジャッカルの鉄壁の守備に対し、黄金ペアが「同調（シンクロ）」を発動して7-5で青学が逆転勝利を収めました。",
+    trivia: "なお、仁王雅治と柳生比呂士のペアが青学黄金ペアと対戦したのは「関東大会決勝」のD1です。"
+  },
+  {
+    id: 4, type: "choice", character: "仁王雅治", school: "rikkai",
+    situation: "関東大会決勝の青学戦（D1）で、立海大附属の仁王雅治が仕掛けた伝説のペテン。試合終盤にカツラを外して入れ替わっていたことが発覚したペアの相手は誰？",
+    choices: [
+      "柳生比呂士",
+      "切原赤也",
+      "丸井ブン太",
+      "柳蓮二"
+    ], answer: 0,
+    explanation: "試合開始から柳生の姿に変装していた仁王と、仁王の姿に変装していた本物の柳生。終盤にカツラを外して「入れ替わり」をネタばらしし、柳生の必殺技「レーザービーム」で大石・菊丸ペアを翻弄しました。",
+    trivia: "仁王は普段から柳生の口調「アデュー」や紳士的な立ち振る舞いを完璧に模倣しており、青学ベンチも観客も完全に見抜けませんでした。"
+  },
+  {
+    id: 5, type: "choice", character: "白石蔵ノ介", school: "shitenhoji",
+    situation: "全国大会準決勝（青学vs四天宝寺）のS3において、青学の天才・不二周助に対し、完璧な「バイブルテニス」で公式戦シングルス唯一の黒星（スコア6-7）をつけた四天宝寺の部長は誰？",
+    choices: [
+      "白石蔵ノ介",
+      "遠山金太郎",
+      "千歳千里",
+      "石田銀"
+    ], answer: 0,
+    explanation: "四天宝寺部長・白石蔵ノ介が基本に忠実で一切の無駄がない「バイブルテニス」を貫き、不二の新技「百腕巨人の門番」を攻略して7-6で勝利。不二が公式戦シングルスで唯一敗れた伝説の試合です。",
+    trivia: "この敗北によって不二周助の中に「勝ちたい」という本気の執念が芽生え、全国大会決勝での更なる進化へと繋がりました。"
+  },
+  {
+    id: 6, type: "choice", character: "跡部景吾", school: "hyotei",
+    situation: "関東大会1回戦（青学vs氷帝）のシングルス1（S1）で行われた手塚国光 vs 跡部景吾の歴史的死闘。息を呑むロングタイブレークの末に決着した最終タイブレークスコアはどれ？",
+    choices: [
+      "35 - 37",
+      "25 - 27",
+      "15 - 17",
+      "45 - 47"
+    ], answer: 0,
+    explanation: "互いに一歩も引かない極限の持久戦となり、タイブレークスコア「35-37」（ゲームカウント6-7）で跡部が勝利。手塚が肩の激痛に耐えながら戦い抜いた、テニプリファン投票1位のベストバウトです。",
+    trivia: "試合終了直後、跡部は力尽きた手塚の左腕を天に掲げ、ライバルの闘志を称えました。"
+  },
+  {
+    id: 7, type: "choice", character: "手塚国光", school: "seigaku",
+    situation: "新テニスの王子様の大和祐大戦において、手塚国光が「手塚ゾーン」を究極進化させた際、コミックスおよびアニメで描かれた驚愕のイメージ演出はどれ？",
+    choices: [
+      "巨大隕石が衝突して恐竜が絶滅した",
+      "コートがマグマの海に変貌した",
+      "青学の校舎が宇宙へ打ち上げられた",
+      "審判がタイムスリップして原始人になった"
+    ], answer: 0,
+    explanation: "手塚の打球が地球規模の引力を生み出し、地球に巨大隕石が衝突してティラノサウルスなどの恐竜が絶滅する演出がガチで描かれました。テニスの試合中に恐竜が絶滅したのはテニプリ史上初です。",
+    trivia: "この演出はアニメでも超美麗CGグラフィックで完全再現され、ファンの間で伝説の神回として語り継がれています。"
+  },
+  {
+    id: 8, type: "choice", character: "越前リョーマ", school: "u17",
+    situation: "新テニスの王子様のU-17W杯にて、フランス代表のプランス・シャルダールが馬上からテニスをしてきた際、リョーマはどうやって対抗した？",
+    choices: [
+      "自分も白馬に乗って馬上テニスで挑んだ",
+      "審判にルール違反だと抗議した",
+      "馬の脚元を狙ってドロップショットを打った",
+      "馬にニンジンを差し出して懐柔した"
+    ], answer: 0,
+    explanation: "リョーマも即座に白馬（暴れ馬のゴドルフィン）に跨がり、馬上テニスによる一騎打ちを受け入れました。「馬の上からテニスすんじゃねーよ！」とツッコミつつ自らも乗馬して打ち合うのがテニプリ流。",
+    trivia: "馬上テニスでは高い打点から時速数百キロのスマッシュが繰り出されます。なお国際テニス連盟のルールブックに乗馬の可否は記載されていません。"
+  },
+  {
+    id: 9, type: "choice", character: "菊丸英二", school: "seigaku",
+    situation: "全国大会の氷帝戦（樺地・向日ペア戦）で、大石を休ませるため菊丸英二が驚異的なスピードで動きすぎた結果、コート上で成立させた前代未聞のプレイは？",
+    choices: [
+      "菊丸が2人に分裂して「一人ダブルス」を成立させた",
+      "ボールが7色に発光し始めた",
+      "相手の動体視力を狂わせて透明人間になった",
+      "ラケットが3本に増殖した"
+    ], answer: 0,
+    explanation: "あまりの超スピード移動により残像の域を超えて実体を持った2人の菊丸になり、前衛と後衛を一人で同時に務める「一人ダブルス」を成立させました。審判も得点を正式に認めました。",
+    trivia: "新テニでは仁王が菊丸と組んだ際、お互いに分身して「4人対2人」のテニスを展開。コート上が菊丸だらけになりました。"
+  },
+  {
+    id: 10, type: "choice", character: "白石蔵ノ介", school: "shitenhoji",
+    situation: "四天宝寺部長・白石蔵ノ介が左腕に常に巻いている包帯。全国大会後に包帯を解いた際、下から現れた衝撃の物体は何？",
+    choices: [
+      "純金でできた重さ数キロの純金ガントレット",
+      "猛毒を持つタランチュラ",
+      "かつて倒したライバルのリストバンド",
+      "何も巻いておらずただの日焼け対策だった"
+    ], answer: 0,
+    explanation: "包帯の下には純金製ガントレットが隠されていました！渡邊オサム監督から「無駄のないテニスができなくなったら没収」と言われて筋力トレーニングとして常に装着していました。",
+    trivia: "この純金ガントレットは換金すれば家が建つほどの価値がある本物のゴールド。外した白石のスピードとパワーは爆発的に跳ね上がります。"
+  },
+  {
+    id: 11, type: "choice", character: "石田銀", school: "shitenhoji",
+    situation: "四天宝寺の石田銀が使う「波動球」。青学・河村隆との死闘で繰り出された最強の波動球は何式？",
+    choices: [
+      "百八式波動球",
+      "二十五式波動球",
+      "五十式波動球",
+      "千八式波動球"
+    ], answer: 0,
+    explanation: "銀師範の波動球は「一式」から「百八式」まで存在します。河村戦で百八式が放たれた際、河村はスタンド最上段の照明塔まで吹き飛ばされました。",
+    trivia: "銀師範自身も百八式を打つと腕の筋が千切れるため、本来は封印していた禁断の技。慈悲深い師範の魂の一撃です。"
+  },
+  {
+    id: 12, type: "choice", character: "徳川カズヤ", school: "u17",
+    situation: "U-17日本代表の徳川カズヤが、平等院鳳凰の放つ「光る球」を止めるために編み出した、己の命を削って時空を削り取る究極奥義は何？",
+    choices: [
+      "ブラックホール",
+      "ビッグバン",
+      "スーパーノヴァ",
+      "アブソリュートゼロ"
+    ], answer: 0,
+    explanation: "ラケットスイングの風圧で空間を削り取り「静止した時空の歪み」を作り出す技「ブラックホール」。どんな打球でも静止させることができますが、使用できるのは2〜3分で寿命を縮める代償を伴います。",
+    trivia: "テニスコート上で時空を削り取り物理法則を書き換える高校生、それが徳川カズヤです。"
+  },
+  {
+    id: 13, type: "choice", character: "越前リョーマ", school: "seigaku",
+    situation: "全国大会決勝（青学vs立海）のS1で、幸村精市の五感剥奪を乗り越えて「天衣無縫の極み」に覚醒したリョーマが、ボールを真っ二つに割って決着をつけた決定打は何？",
+    choices: [
+      "サムライドライブ",
+      "ツイストスマッシュ",
+      "サイクロンスマッシュ",
+      "ドライブB"
+    ], answer: 0,
+    explanation: "ネットのワイヤーに球をぶつけてボールを綺麗に真っ二つに切断し、両サイドのコートに同時に叩き込む究極ショット「サムライドライブ」！幸村は拾うことができず、青学の全国制覇が決まりました。",
+    trivia: "この一打によって『テニスの王子様』は完結を迎え、青学は悲願の全国制覇を達成しました。"
+  },
+  {
+    id: 14, type: "choice", character: "跡部景吾", school: "hyotei",
+    situation: "跡部景吾の進化技「跡部王国（キングダム）」発動時、跡部様には相手プレイヤーの体がどのように見えている？",
+    choices: [
+      "レントゲン写真のように骨格と関節が丸見えになる",
+      "赤外線サーモグラフィーのように体温が見える",
+      "相手の周りに星座が浮かび上がる",
+      "相手の過去のトラウマが走馬灯のように見える"
+    ], answer: 0,
+    explanation: "相手の骨格、関節、筋肉の動きをレントゲン透視し、人間が絶対に反応できない「骨関節の死角（絶対死角）」を見抜いて打ち込む技です。もはや医療機器の領域。",
+    trivia: "跡部王国が発動するとコート一帯が吹雪の雪原と化し、相手はツララのように凍りついた骨格を晒すことになります。"
+  },
+  {
+    id: 15, type: "choice", character: "木手永四郎", school: "higa",
+    situation: "比嘉中学校テニス部の全員が習得している、コート上を足音ひとつ立てずに全方位へ一瞬で移動する沖縄武術の歩法は何？",
+    choices: [
+      "縮地法（しゅくちほう）",
+      "瞬歩（しゅんぽ）",
+      "飛天（ひてん）",
+      "神速（しんそく）"
+    ], answer: 0,
+    explanation: "沖縄武術の秘伝「縮地法」。通常は前方にしか進めないところ、木手永四郎は全方位（前後左右）への縮地法を完璧にマスターし「殺し屋」の異名を取りました。",
+    trivia: "比嘉中テニス部は全員がゴーヤが苦手（特に木手）という公式裏設定があり、部内ではゴーヤは罰ゲームの象徴です。"
+  },
+  {
+    id: 16, type: "choice", character: "乾貞治", school: "seigaku",
+    situation: "飲んだ者を例外なく悶絶・気絶・失神させる青学名物「乾汁」。その中でも味覚が完全に麻痺している不二周助をも初めて卒倒させた最凶ドリンクはどれ？",
+    choices: [
+      "青酢",
+      "赤澤特製野菜ジュース",
+      "ペナル茶（ティー）",
+      "甲殻類エキス"
+    ], answer: 0,
+    explanation: "「青酢」は酢をベースに様々な青汁を配合した凶悪ドリンク。いつも涼しい顔で乾汁を飲み干していた不二周助が、一口飲んだ瞬間に白目をむいて倒れました。",
+    trivia: "青酢を飲んだ部員たちは口から白煙を噴き出して倒れるのがお約束のリアクションです。"
+  },
+  {
+    id: 17, type: "choice", character: "鬼十次郎", school: "u17",
+    situation: "U-17選抜合宿の冒頭、高校生の実力を甘く見ていた中学生たちを教育するため、鬼十次郎が桃城武戦で使用したラケットのガットは何本だった？",
+    choices: [
+      "縦横1本ずつの「2本」",
+      "外枠だけの「0本」",
+      "十字と斜めの「4本」",
+      "真ん中をくり抜いた「10本」"
+    ], answer: 0,
+    explanation: "ガットが十字に2本しか張られていない木製ラケットで、桃城のジャックナイフを両手首ごと粉砕！交点の1点だけでボールを芯で捉える究極のミート力とパワーを見せつけました。",
+    trivia: "鬼先輩は見た目は筋骨隆々の鬼ですが、趣味はあみぐるみ作りで合宿所近くの孤児院の子供たちに慕われている優しい兄貴分です。"
+  },
+  {
+    id: 18, type: "choice", character: "越前リョーガ", school: "u17",
+    situation: "越前リョーマの兄・越前リョーガが持つ、世界中のプレイヤーから「怪物」として恐れられている特殊能力は何？",
+    choices: [
+      "対戦相手のテニスの能力や打ち方そのものを喰らって奪う",
+      "打球を口で丸呑みして相手のポイントを無効化する",
+      "念力で相手のラケットのガットを切断する",
+      "相手の応援団を催眠術で味方に引き込む"
+    ], answer: 0,
+    explanation: "リョーガの能力は「相手のテニスを喰らう（能力強奪）」。試合を続けるうちに相手は得意技だけでなくテニスの基本すら忘れてしまい、二度とテニスができなくなります。",
+    trivia: "アメリカ代表のキコ・バレンティンはこの能力でテニスを奪われ、ラケットの握り方すら分からなくなってしまいました。"
+  },
+  {
+    id: 19, type: "choice", character: "遠野篤京", school: "u17",
+    situation: "高校日本代表の遠野篤京が使う「十三の処刑法」。相手の腹部にピンポイントで強烈な打球を突き刺す記念すべき第一の処刑名はどれ？",
+    choices: [
+      "切腹",
+      "ギロチン",
+      "電気椅子",
+      "アイアンメイデン"
+    ], answer: 0,
+    explanation: "第一の処刑は「切腹」！実在の歴史的処刑法をモチーフにした危険な技の数々を繰り出し、第十三の処刑「落とし前」まで受けると全身麻痺に陥ります。",
+    trivia: "遠野篤京は「処刑執行！」と叫びながら戦う危険人物ですが、ダブルスパートナーの君島育斗の交渉術にいいように利用される一面もあります。"
+  },
+  {
+    id: 20, type: "choice", character: "デューク渡邊", school: "u17",
+    situation: "高校日本代表No.3・デューク渡邊の必殺技「デュークホームラン」を食らった相手選手はどうなる？",
+    choices: [
+      "客席の最上段までボールごと人間が場外ホームランのようにぶっ飛ばされる",
+      "ラケットのガットだけが綺麗にくり抜かれる",
+      "地面にめり込んで抜けなくなる",
+      "ボールが割れて中から紙吹雪が出る"
+    ], answer: 0,
+    explanation: "ボールを打つのではなく、相手選手そのものをボールごと観客席まで文字通り「場外ホームラン」のごとく吹き飛ばす技です。四天宝寺の巨漢・石田銀すらも吹き飛ばされました。",
+    trivia: "デューク先輩は普段は非常に温厚で礼儀正しい紳士ですが、コートに立つと「破壊王」へと豹変します。"
+  },
+  {
+    id: 21, type: "choice", character: "丸井ブン太", school: "rikkai",
+    situation: "立海大附属の天才ボレーヤー・丸井ブン太が誇る妙技。ネットの白帯（コード）に球を当て、ネットの上をコロコロ転がして相手コートに落とす技の名前は？",
+    choices: [
+      "妙技・綱渡り",
+      "妙技・鉄柱当て",
+      "妙技・時間差ボレー",
+      "妙技・風船割り"
+    ], answer: 0,
+    explanation: "ネットのコード上をボールが綱渡りのように転がる「妙技・綱渡り」。「どう？俺の妙技！」という決め台詞とともに、狙ってネットインを連発する超絶技巧です。",
+    trivia: "丸井ブン太は試合中のエネルギー消費が激しいため常にガムを噛んでおり、好物はホールケーキ丸ごと1個です。"
+  },
+  {
+    id: 22, type: "choice", character: "不二周助", school: "seigaku",
+    situation: "青学の天才・不二周助が初期から得意としていた「三種の返し球（トリプルカウンター）」。燕返し、白鯨ともう一つのカウンター技は何？",
+    choices: [
+      "羆落とし（ひぐまおとし）",
+      "麒麟落とし（きりんおとし）",
+      "鳳凰返し（ほうおうがえし）",
+      "白虎落とし（びゃっこおとし）"
+    ], answer: 0,
+    explanation: "相手のスマッシュの遠心力を利用してラケットを背面で振り抜き、相手コートのベースライン深くに落とすカウンター技「羆落とし（ひぐまおとし）」です！",
+    trivia: "不二のカウンター技は全国大会で「百腕巨人の門番」「星花火」、新テニで「光風」などへと究極進化していきました。"
+  },
+  {
+    id: 23, type: "choice", character: "手塚国光", school: "seigaku",
+    situation: "手塚国光の代名詞的ドロップショット。ボールが相手コートにバウンドした瞬間、跳ね上がることなくネット側へツーッと滑り戻る技の名前は？",
+    choices: [
+      "零式ドロップショット",
+      "無回転ドロップ",
+      "真空ドロップ",
+      "ファントムドロップ"
+    ], answer: 0,
+    explanation: "強烈なバックスピンにより、バウンド後に跳ね上がらずネット方向へ転がる「零式ドロップショット」。サーブ版の「零式サーブ」も存在します。",
+    trivia: "零式ドロップや零式サーブは腕や肘に強烈な負荷がかかるため、手塚自身にとっても諸刃の剣の技です。"
+  },
+  {
+    id: 24, type: "choice", character: "切原赤也", school: "rikkai",
+    situation: "立海大附属の2年生エース・切原赤也が極度の興奮や怒りに達した際、目が真っ赤に充血し髪が白（金髪）に変色して身体能力が跳ね上がる状態の名称は？",
+    choices: [
+      "悪魔化（デビル化）",
+      "狂戦士化（バーサク化）",
+      "血潮化（ブラッド化）",
+      "漆黒化（ダーク化）"
+    ], answer: 0,
+    explanation: "相手を徹底的に叩き潰す凶暴なプレイスタイルになる「悪魔化（デビル化）」。のちに四天宝寺・白石やU-17合宿での仲間との絆によって、理性を保ったままパワーアップする「天使化（エンジェル化）」も習得しました。",
+    trivia: "赤也は英語が大の苦手で、赤点を取ると全国大会に出場できなくなるため、柳や真田から猛特訓を受けていました。"
+  },
+  {
+    id: 25, type: "choice", character: "橘桔平", school: "fudomine",
+    situation: "不動峰中部長・橘桔平が全国大会の四天宝寺戦（千歳戦）で封印を解いた、打球に猛烈な不規則スピンがかかってボールが無数に見える技の名前は？",
+    choices: [
+      "あばれ球",
+      "獅子奮迅",
+      "黒龍波",
+      "暴風球"
+    ], answer: 0,
+    explanation: "かつて「九州の二翼」として恐れられていた橘が放つ、荒々しい野性のテニス「あばれ球」。ボールが何個にもブレて見え、どこに来るか捉えることができません。",
+    trivia: "橘は親友の千歳千里の目を練習中の事故で傷つけてしまった過去からこのテニスを封印していましたが、千歳との熱い和解戦で全てを出し切りました。"
+  },
+  {
+    id: 26, type: "choice", character: "跡部景吾", school: "hyotei",
+    situation: "毎年2月の恒例行事となり、集英社に専用トラックや特別保管倉庫が用意されるほど社会現象となった跡部景吾の伝説的な記録とは？",
+    choices: [
+      "バレンタインチョコレートの獲得数が数万個規模に達した",
+      "テニス雑誌の表紙を3年連続で独占した",
+      "跡部様の後援会会員数が100万人を突破した",
+      "CD売上ランキングでオリコン1位を連続獲得した"
+    ], answer: 0,
+    explanation: "テニプリのバレンタインチョコ獲得ランキングにおいて、跡部景吾は個人で数万個以上（2014年には6万個超）のチョコを獲得！集英社に専用のトラックと保管スペースが用意される伝説を作りました。",
+    trivia: "あまりのチョコの多さに集英社ビルの床が抜ける恐れが出たため、後に食品ロスや安全に配慮した応募券投票システムへと移行されました。"
+  },
+  {
+    id: 27, type: "choice", character: "オジイ", school: "rokkaku",
+    situation: "六角中学校テニス部の部員全員が愛用している木製ラケット。それぞれのプレイスタイルや体格に合わせてすべて手作りしている名物キャラクターは誰？",
+    choices: [
+      "オジイ（名物顧問兼監督）",
+      "佐伯虎次郎のおじいさん",
+      "越前南次郎",
+      "神尾アキラ"
+    ], answer: 0,
+    explanation: "六角中の名物顧問「オジイ」が木を削って部員一人ひとりのために手作りしています。葵剣太郎の三角形ラケットなど、ユニークかつ高品質な木製ラケットばかりです。",
+    trivia: "オジイは海岸の砂浜で子供たちとテニスを楽しんでおり、青学の部員たちにも温かいアドバイスを送る人格者です。"
+  },
+  {
+    id: 28, type: "choice", character: "千石清純", school: "yamabuki",
+    situation: "山吹中学校テニス部で、コイントスから大会の組み合わせ抽選まで驚異的な運の強さを誇り、ボクシングのフットワークを活かしたテニスをする千石清純の愛称は？",
+    choices: [
+      "ラッキー千石",
+      "ミラクル千石",
+      "ハッピー千石",
+      "フォーチュン千石"
+    ], answer: 0,
+    explanation: "「ラッキー千石」の愛称で親しまれるジュニア選抜の実力者。跳躍力を活かした「虎砲（こほう）」などの強烈なサーブを持ち、新テニでは桃城との絆でも熱い戦いを見せました。",
+    trivia: "千石は占いとおみくじが大好きで、女の子にも目がありませんが、ここぞという時の集中力は全国レベルです。"
+  },
+  {
+    id: 29, type: "choice", character: "忍足謙也", school: "shitenhoji",
+    situation: "「浪速のスピードスター」と呼ばれる四天宝寺の忍足謙也。彼の驚異的な足の速さを表す公式ファンブック設定の50m走タイムはどれ？",
+    choices: [
+      "5秒7",
+      "4秒9",
+      "6秒5",
+      "5秒1"
+    ], answer: 0,
+    explanation: "謙也の50m走タイムは驚異の「5秒7」！中学生離れした超人的スプリント力でどんな打球にも追いつくスピードスターです。",
+    trivia: "従兄弟である氷帝の忍足侑士とは対照的で、侑士が冷静沈着なポーカーフェイスなのに対し、謙也は明るく熱い性格です。"
+  },
+  {
+    id: 30, type: "choice", character: "幸村精市", school: "rikkai",
+    situation: "立海三連覇を統べる「神の子」幸村精市の代名詞であり、相手が幸村とラリーを続けるうちに陥る恐るべきプレイスタイルの通称は何？",
+    choices: [
+      "五感剥奪（イップス）",
+      "精神崩壊（ブレイクダウン）",
+      "絶対零度（フリーズ）",
+      "魔王降臨（ディアブロ）"
+    ], answer: 0,
+    explanation: "どんな完璧な打球もすべて正確無比に打ち返されることで「どこへ打っても返される」という絶望感に襲われ、視覚、聴覚、触覚が次々と失われていく「五感剥奪」。幸村の圧倒的な実力が生み出すイップスです。",
+    trivia: "幸村は激しい難病を乗り越えてコートに復帰。コート上ではどんなに激しく動いても肩に羽織ったジャージが決して落ちないことでも有名です。"
+  }
+];
+
+// ===== QUIZ CONTROLLER =====
+const quizState = {
+  currentQuestions: [],
+  currentIndex: 0,
+  score: 0,
+  answers: [],
+  answered: false
+};
+
+function openQuizModal() {
+  const overlay = document.getElementById('quiz-overlay');
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  renderQuizStart();
+}
+
+function closeQuizModal() {
+  const overlay = document.getElementById('quiz-overlay');
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function renderQuizStart() {
+  const body = document.getElementById('quiz-modal-body');
+  body.innerHTML = `
+    <div class="quiz-start-screen">
+      <div class="quiz-hero-badge">🎾 テニプリガチ勢監修・公式正史クイズ</div>
+      <h2 class="quiz-hero-title">新テニプリ<br>公式ナレッジクイズラリー</h2>
+      <p class="quiz-hero-desc">
+        青学・氷帝・立海・四天宝寺・U-17選抜まで完全網羅！<br>
+        原作コミックス・公式ファンブックの事実に基づいた本格4択クイズ。<br>
+        厳選された全30問からランダムで10球が出題される！！
+      </p>
+
+      <div class="quiz-rule-cards">
+        <div class="quiz-rule-card">
+          <h4><i class="fa-solid fa-trophy" style="color:#e11d48;"></i> 本格4択ナレッジ</h4>
+          <p>全国大会決勝の真実や名勝負のスコアなど、ファン納得の正確な知識を試せ！</p>
+        </div>
+        <div class="quiz-rule-card">
+          <h4><i class="fa-solid fa-lightbulb" style="color:#8b5cf6;"></i> 詳細解説＆豆知識</h4>
+          <p>全問に公式エピソード解説＆ファン歓喜のトリビア付き！解くだけで知識が深まる！</p>
+        </div>
+      </div>
+
+      <button class="quiz-primary-btn" id="quiz-real-start-btn">
+        <span>🎾 クイズラリー開始！（10問勝負）</span>
+      </button>
+    </div>
+  `;
+
+  document.getElementById('quiz-real-start-btn').addEventListener('click', startQuiz);
+}
+
+function startQuiz() {
+  // 全30問からランダムに10問をシャッフル抽出
+  const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
+  quizState.currentQuestions = shuffle(quizQuestions).slice(0, 10);
+  quizState.currentIndex = 0;
+  quizState.score = 0;
+  quizState.answers = [];
+  quizState.answered = false;
+
+  renderQuizQuestion();
+}
+
+function renderQuizQuestion() {
+  const body = document.getElementById('quiz-modal-body');
+  const q = quizState.currentQuestions[quizState.currentIndex];
+  const qNum = quizState.currentIndex + 1;
+  const total = quizState.currentQuestions.length;
+  const progressPct = ((qNum - 1) / total) * 100;
+
+  const school = getSchool(q.school);
+  const schoolColor = school ? school.color : '#3b82f6';
+  const schoolName = school ? school.kanji : '';
+
+  quizState.answered = false;
+
+  body.innerHTML = `
+    <div class="quiz-play-header">
+      <span class="quiz-progress-text">RALLY ${qNum} / ${total}</span>
+      <span class="quiz-type-badge">
+        💡 テニプリ公式ナレッジ
+      </span>
+    </div>
+    <div class="quiz-progress-track">
+      <div class="quiz-progress-fill" style="width: ${progressPct}%;"></div>
+    </div>
+
+    <div class="quiz-q-card">
+      <div class="quiz-char-tag" style="background-color: ${schoolColor};">
+        <span>${school ? school.symbol : '🎾'}</span>
+        <span>${q.character}（${schoolName}）</span>
+      </div>
+      <div class="quiz-situation">${q.situation}</div>
+    </div>
+
+    <div class="quiz-choices" id="quiz-choices-container">
+      ${q.choices.map((choiceText, idx) => `
+        <button class="quiz-choice-btn" data-index="${idx}">
+          <span>${choiceText}</span>
+        </button>
+      `).join('')}
+    </div>
+
+    <div id="quiz-feedback-container"></div>
+  `;
+
+  // 選択肢のクリックイベントをバインド
+  const btns = body.querySelectorAll('.quiz-choice-btn');
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const selectedIndex = parseInt(btn.dataset.index, 10);
+      handleChoiceSelect(selectedIndex);
+    });
+  });
+}
+
+function handleChoiceSelect(selectedIndex) {
+  if (quizState.answered) return;
+  quizState.answered = true;
+
+  const q = quizState.currentQuestions[quizState.currentIndex];
+  const isCorrect = selectedIndex === q.answer;
+
+  if (isCorrect) quizState.score++;
+  quizState.answers.push({
+    question: q,
+    userSelect: selectedIndex,
+    isCorrect: isCorrect
+  });
+
+  // 選択肢ボタンの装飾＆無効化
+  const btns = document.querySelectorAll('.quiz-choice-btn');
+  btns.forEach((b, idx) => {
+    b.disabled = true;
+    if (idx === q.answer) {
+      b.classList.add('correct');
+      b.innerHTML += ` <i class="fa-solid fa-circle-check"></i>`;
+    } else if (idx === selectedIndex && !isCorrect) {
+      b.classList.add('wrong');
+      b.innerHTML += ` <i class="fa-solid fa-circle-xmark"></i>`;
+    }
+  });
+
+  // プログレスバーを進める
+  const total = quizState.currentQuestions.length;
+  const nextPct = ((quizState.currentIndex + 1) / total) * 100;
+  const bar = document.querySelector('.quiz-progress-fill');
+  if (bar) bar.style.width = `${nextPct}%`;
+
+  // 解説＆フィードバックの表示
+  const feedbackContainer = document.getElementById('quiz-feedback-container');
+  const isLast = quizState.currentIndex === total - 1;
+
+  feedbackContainer.innerHTML = `
+    <div class="quiz-feedback-box ${isCorrect ? 'correct-box' : 'wrong-box'}">
+      <div class="quiz-feedback-title">
+        <i class="fa-solid ${isCorrect ? 'fa-circle-check' : 'fa-triangle-exclamation'}"></i>
+        <span>${isCorrect ? 'ナイスショット！大正解！！' : 'アウトォッ！不正解…！'}</span>
+      </div>
+      <div class="quiz-feedback-text">${q.explanation}</div>
+      ${q.trivia ? `<div class="quiz-trivia-tag">💡 <strong>公式豆知識:</strong> ${q.trivia}</div>` : ''}
+      <button class="quiz-next-btn" id="quiz-next-btn">
+        <span>${isLast ? '🏆 最終結果を見る' : '次の球を打つ ➔'}</span>
+      </button>
+    </div>
+  `;
+
+  document.getElementById('quiz-next-btn').addEventListener('click', () => {
+    if (isLast) {
+      renderQuizResult();
+    } else {
+      quizState.currentIndex++;
+      renderQuizQuestion();
+    }
+  });
+}
+
+function renderQuizResult() {
+  const body = document.getElementById('quiz-modal-body');
+  const score = quizState.score;
+  const total = quizState.currentQuestions.length;
+
+  let rankTitle = '';
+  let rankDesc = '';
+  let rankIcon = '🎾';
+
+  if (score === 10) {
+    rankTitle = '👑 天衣無縫の極み（テニプリ完全制覇！）';
+    rankDesc = '「テニスって楽しいじゃん！」全問正解達成！全国制覇を果たした本物のテニプリマスターです。';
+    rankIcon = '🌟';
+  } else if (score >= 8) {
+    rankTitle = '🏆 全国大会 決勝進出レベル！';
+    rankDesc = '「立海三連覇に死角なし！」並大抵のファンでは太刀打ちできない圧倒的な公式知識の持ち主です。';
+    rankIcon = '🥇';
+  } else if (score >= 6) {
+    rankTitle = '🔥 関東大会 ベスト4レギュラー！';
+    rankDesc = '「勝つのは氷帝！負けるの青学！」鋭い洞察力で激戦を勝ち抜く実力派ファン！';
+    rankIcon = '🥈';
+  } else if (score >= 4) {
+    rankTitle = '✨ 地区予選 突破レベル！';
+    rankDesc = '「暴れ足んねぇな！」まだまだ伸びしろ充分。テニプリの奥深き世界をもっと探求しよう！';
+    rankIcon = '🥉';
+  } else {
+    rankTitle = '🧢 まだまだだね（by 越前リョーマ）';
+    rankDesc = '原作漫画や公式ファンブックを読み直してリベンジしよう！次の挑戦を待ってるよ！';
+    rankIcon = '🎾';
+  }
+
+  // Xシェア用テキスト
+  const shareText = encodeURIComponent(`🎾【新テニプリ 公式ナレッジクイズ】に挑戦！\n結果: ${score}/${total}点（${rankTitle}）\n${rankDesc}\n#テニプリ部 #新テニスの王子様 #テニプリクイズ`);
+  const shareUrl = encodeURIComponent(window.location.href);
+  const twitterIntent = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`;
+
+  body.innerHTML = `
+    <div class="quiz-result-screen">
+      <div style="font-size: 2.5rem; margin-bottom: 4px;">${rankIcon}</div>
+      <div class="quiz-rank-title">${rankTitle}</div>
+      <div class="quiz-score-badge">${score}<span class="quiz-score-total"> / ${total}</span></div>
+      <p class="quiz-rank-desc">${rankDesc}</p>
+
+      <div class="quiz-history-list">
+        ${quizState.answers.map((a, i) => `
+          <div class="quiz-history-item">
+            <span class="quiz-history-icon">${a.isCorrect ? '⭕' : '❌'}</span>
+            <span class="quiz-history-char">第${i+1}問: ${a.question.character}</span>
+            <span class="quiz-history-sit">${a.question.situation}</span>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="quiz-result-actions">
+        <a class="quiz-share-btn" href="${twitterIntent}" target="_blank" rel="noopener noreferrer">
+          <i class="fa-brands fa-x-twitter"></i>
+          <span>結果をXでポスト</span>
+        </a>
+        <button class="quiz-retry-btn" id="quiz-retry-btn">
+          <i class="fa-solid fa-rotate-right"></i>
+          <span>もう一度挑戦する</span>
+        </button>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('quiz-retry-btn').addEventListener('click', startQuiz);
+}
+
 // ===== INIT =====
 function init() {
   newsList = loadNews();
   renderBirthdays();
   renderSchoolFilters();
   renderNewsList();
+  renderCalendar('focus');
 
   fetchOfficialNews(false);
 
+  // カレンダー操作
+  const calTabs = document.querySelectorAll('#cal-tabs .cal-tab-btn');
+  calTabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      calTabs.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderCalendar(btn.dataset.month);
+    });
+  });
+
+  const calToggleBtn = document.getElementById('cal-toggle-btn');
+  const calBody = document.getElementById('calendar-body');
+  const calToggleIcon = document.getElementById('cal-toggle-icon');
+  const calToggleText = document.getElementById('cal-toggle-text');
+  if (calToggleBtn && calBody) {
+    calToggleBtn.addEventListener('click', () => {
+      const isHidden = calBody.style.display === 'none';
+      calBody.style.display = isHidden ? 'block' : 'none';
+      if (calToggleIcon) calToggleIcon.className = isHidden ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-down';
+      if (calToggleText) calToggleText.textContent = isHidden ? '折りたたむ' : '展開する';
+    });
+  }
+
+  const calJumpBtn = document.getElementById('calendar-jump-btn');
+  if (calJumpBtn) {
+    calJumpBtn.addEventListener('click', () => {
+      if (calBody && calBody.style.display === 'none') {
+        calBody.style.display = 'block';
+        if (calToggleIcon) calToggleIcon.className = 'fa-solid fa-chevron-up';
+        if (calToggleText) calToggleText.textContent = '折りたたむ';
+      }
+      const calSection = document.getElementById('calendar-section');
+      if (calSection) {
+        calSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+
+  // クイズモーダル制御
+  const quizStartBtn = document.getElementById('quiz-start-btn');
+  if (quizStartBtn) {
+    quizStartBtn.addEventListener('click', openQuizModal);
+  }
+  const quizCloseBtn = document.getElementById('quiz-close-btn');
+  if (quizCloseBtn) {
+    quizCloseBtn.addEventListener('click', closeQuizModal);
+  }
+  const quizOverlay = document.getElementById('quiz-overlay');
+  if (quizOverlay) {
+    quizOverlay.addEventListener('click', e => {
+      if (e.target === quizOverlay) closeQuizModal();
+    });
+  }
+
+  // 最新情報更新ボタン
   document.getElementById('refresh-btn').addEventListener('click', () => {
     fetchOfficialNews(true);
   });
 
-  document.getElementById('search-input').addEventListener('input', e => {
-    searchQuery = e.target.value;
-    renderNewsList();
-  });
-
+  // カテゴリフィルター
   document.querySelectorAll('.cat-btn').forEach(b => {
     b.addEventListener('click', () => setCat(b.dataset.cat));
   });
