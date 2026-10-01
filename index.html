@@ -760,18 +760,40 @@
       background: #ffffff;
       border: 1.5px solid var(--border);
       border-radius: 16px;
-      padding: 16px 14px;
+      padding: 13px 16px;
       font-size: 0.95rem;
       font-weight: 700;
       color: #1e293b;
       cursor: pointer;
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      text-align: center;
+      text-align: left;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
+      justify-content: flex-start;
+      gap: 12px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      width: 100%;
+      word-break: break-word;
+    }
+    .quiz-choice-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #f1f5f9;
+      color: #475569;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+    .quiz-choice-text {
+      flex: 1;
+      text-align: left;
+      line-height: 1.45;
     }
     .quiz-choice-btn:hover:not(:disabled) {
       border-color: #f43f5e;
@@ -780,8 +802,20 @@
       transform: translateY(-2px);
       box-shadow: 0 6px 16px rgba(244, 63, 94, 0.15);
     }
+    .quiz-choice-btn:hover:not(:disabled) .quiz-choice-badge {
+      background: #fee2e2;
+      color: #e11d48;
+    }
     .quiz-choice-btn:disabled {
       cursor: default;
+    }
+    .quiz-choice-btn.correct .quiz-choice-badge {
+      background: #10b981;
+      color: #ffffff;
+    }
+    .quiz-choice-btn.wrong .quiz-choice-badge {
+      background: #ef4444;
+      color: #ffffff;
     }
     .quiz-choice-btn.correct {
       background: #ecfdf5 !important;
@@ -1649,7 +1683,7 @@ const characterBirthdays = [
 const categoryIcons = { anime:'📺', stage:'🎭', goods:'🛍️', event:'🏢' };
 const categoryLabels = { anime:'アニメ', stage:'テニミュ', goods:'グッズ・コラボ', event:'イベント・ライブ' };
 
-const STORAGE_KEY = 'tenipuri_news_v25_calendar_namja';
+const STORAGE_KEY = 'tenipuri_news_v26_quiz_shuffle';
 
 // ===== 直近3ヶ月の実在する個別記事パーマリンク一覧（2026年9月下旬最新版・公式9/17六角祭り〜9/24最新情報完全網羅） =====
 const defaultNews = [
@@ -2765,9 +2799,32 @@ function renderQuizStart() {
 }
 
 function startQuiz() {
-  // 全30問からランダムに10問をシャッフル抽出
-  const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
-  quizState.currentQuestions = shuffle(quizQuestions).slice(0, 10);
+  // Fisher-Yates シャッフル関数
+  const shuffle = arr => {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  };
+
+  // 全30問からランダムに10問選出
+  const selected = shuffle(quizQuestions).slice(0, 10);
+
+  // 各問題の選択肢(choices)をシャッフルし、正解インデックス(answer)を再計算
+  quizState.currentQuestions = selected.map(q => {
+    const originalAnswerText = q.choices[q.answer];
+    const shuffledChoices = shuffle(q.choices);
+    const newAnswerIndex = shuffledChoices.indexOf(originalAnswerText);
+
+    return {
+      ...q,
+      choices: shuffledChoices,
+      answer: newAnswerIndex
+    };
+  });
+
   quizState.currentIndex = 0;
   quizState.score = 0;
   quizState.answers = [];
@@ -2811,7 +2868,8 @@ function renderQuizQuestion() {
     <div class="quiz-choices" id="quiz-choices-container">
       ${q.choices.map((choiceText, idx) => `
         <button class="quiz-choice-btn" data-index="${idx}">
-          <span>${choiceText}</span>
+          <span class="quiz-choice-badge">${['A', 'B', 'C', 'D'][idx] || (idx + 1)}</span>
+          <span class="quiz-choice-text">${choiceText}</span>
         </button>
       `).join('')}
     </div>
@@ -2849,10 +2907,10 @@ function handleChoiceSelect(selectedIndex) {
     b.disabled = true;
     if (idx === q.answer) {
       b.classList.add('correct');
-      b.innerHTML += ` <i class="fa-solid fa-circle-check"></i>`;
+      b.innerHTML += ` <i class="fa-solid fa-circle-check" style="margin-left:auto; flex-shrink:0; font-size:1.15rem;"></i>`;
     } else if (idx === selectedIndex && !isCorrect) {
       b.classList.add('wrong');
-      b.innerHTML += ` <i class="fa-solid fa-circle-xmark"></i>`;
+      b.innerHTML += ` <i class="fa-solid fa-circle-xmark" style="margin-left:auto; flex-shrink:0; font-size:1.15rem;"></i>`;
     }
   });
 
