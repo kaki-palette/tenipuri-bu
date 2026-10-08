@@ -254,31 +254,6 @@
     }
     @keyframes spin { 100% { transform: rotate(360deg); } }
 
-    /* 学校フィルター（推しカラー・明るめバッジ） */
-    .school-filters-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      align-items: center;
-    }
-    .school-btn {
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      cursor: pointer;
-      border: 1.2px solid transparent;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-      background: #ffffff;
-      border-color: var(--border);
-      color: var(--text-sub);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-    }
-    .school-btn.active {
-      box-shadow: 0 3px 10px rgba(0,0,0,0.12);
-      font-weight: 800;
-    }
 
     /* カテゴリフィルター */
     .cat-filters {
@@ -1315,6 +1290,105 @@
       color: #0f172a;
     }
 
+    /* 全月一目早見表（スクロール不要・半年分の推し活が一瞬でわかる仕様） */
+    .cal-glance-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      margin-bottom: 12px;
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 8px 6px;
+    }
+    .cal-glance-col {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 5px 3px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .cal-glance-col:hover, .cal-glance-col.active {
+      background: rgba(204, 255, 0, 0.14);
+      border-color: #ccff00;
+      box-shadow: 0 0 10px rgba(204, 255, 0, 0.25);
+    }
+    .cal-glance-badge {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 0.74rem;
+      padding: 2px 4px;
+      border-radius: 4px;
+      color: #ffffff;
+      display: inline-block;
+      margin-bottom: 2px;
+    }
+    .badge-sep { background: #3b82f6; }
+    .badge-oct { background: #ec4899; }
+    .badge-nov { background: #f97316; }
+    .badge-dec { background: #06b6d4; }
+    .badge-2027 { background: #8b5cf6; }
+    .cal-glance-highlights {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5px;
+      font-size: 0.62rem;
+      color: #e2e8f0;
+      line-height: 1.2;
+    }
+    .cal-glance-highlights span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 3px;
+      padding: 1.5px 2px;
+    }
+
+    /* 月別クイックタブ（スマホでの一目把握＆スクロール不要化） */
+    .cal-quick-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 14px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .cal-quick-tabs::-webkit-scrollbar {
+      display: none;
+    }
+    .cal-qtab {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #94a3b8;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 800;
+      font-size: 0.82rem;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      flex: 1;
+      text-align: center;
+    }
+    .cal-qtab:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+    }
+    .cal-qtab.active {
+      background: #ccff00;
+      color: #091a2e;
+      border-color: #ccff00;
+      box-shadow: 0 2px 10px rgba(204, 255, 0, 0.35);
+    }
+
     /* フッター */
     .cal-poster-footer {
       display: flex;
@@ -1344,13 +1418,164 @@
       color: #2dd4bf;
     }
 
+    /* スマホ・タブレット（最大820px）での高密度＆一目把握デザイン最適化 */
     @media (max-width: 820px) {
-      .cal-poster-container { padding: 20px 16px; border-radius: 18px; }
-      .cal-cards-grid { grid-template-columns: 1fr; }
-      .cal-2027-grid { grid-template-columns: 1fr; }
-      .cal-header-title { font-size: 1.6rem; }
-      .cal-ball-wrapper { width: 50px; height: 50px; }
-      .cal-poster-footer { flex-direction: column; align-items: flex-start; }
+      .cal-poster-container {
+        padding: 14px 10px;
+        border-radius: 14px;
+        margin-bottom: 18px;
+      }
+      .cal-header-title {
+        font-size: 1.35rem;
+      }
+      .cal-header-sub {
+        font-size: 0.75rem;
+      }
+      .cal-ball-wrapper {
+        width: 38px;
+        height: 38px;
+      }
+      .cal-title-line {
+        width: 130px;
+        height: 3px;
+      }
+      .cal-legend-row {
+        gap: 4px;
+        margin-bottom: 10px;
+        justify-content: flex-start;
+      }
+      .cal-legend-pill {
+        font-size: 0.64rem;
+        padding: 2px 6px;
+      }
+
+      /* 全月一目早見表のスマホ最適化（5ヶ月分を1画面で完全俯瞰） */
+      .cal-glance-strip {
+        gap: 4px;
+        padding: 6px 4px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+      }
+      .cal-glance-col {
+        padding: 4px 2px;
+        border-radius: 6px;
+      }
+      .cal-glance-badge {
+        font-size: 0.68rem;
+        padding: 1.5px 3px;
+      }
+      .cal-glance-highlights {
+        font-size: 0.58rem;
+        gap: 2px;
+      }
+      .cal-glance-highlights span {
+        padding: 1px 1px;
+        font-size: 0.58rem;
+        letter-spacing: -0.02em;
+      }
+
+      /* クイックタブのスマホ最適化 */
+      .cal-quick-tabs {
+        gap: 4px;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+      }
+      .cal-qtab {
+        font-size: 0.75rem;
+        padding: 5px 8px;
+        min-width: calc(33.33% - 4px);
+        text-align: center;
+      }
+
+      /* カードと行の超コンパクト・1画面一目化 */
+      .cal-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+      .cal-block-card {
+        border-radius: 12px;
+      }
+      .cal-block-head {
+        padding: 6px 10px;
+        gap: 6px;
+      }
+      .cal-block-num {
+        font-size: 1.25rem;
+      }
+      .cal-block-name {
+        font-size: 0.88rem;
+      }
+      .cal-block-list {
+        padding: 1px 0;
+      }
+      .cal-row {
+        padding: 5px 8px;
+        gap: 5px;
+      }
+      .cal-row-left {
+        gap: 5px;
+      }
+      .cal-date-text {
+        font-size: 0.78rem;
+        min-width: 44px;
+      }
+      .cal-tag-pill {
+        font-size: 0.6rem;
+        padding: 1px 5px;
+      }
+      .cal-title-text {
+        font-size: 0.78rem;
+        line-height: 1.25;
+      }
+      .cal-sub-text {
+        font-size: 0.68rem;
+      }
+      .cal-link-arrow {
+        font-size: 0.62rem;
+        margin-left: 3px;
+      }
+
+      /* 2027年セクションのスマホ最適化 */
+      .cal-2027-box {
+        border-radius: 14px;
+        margin-bottom: 14px;
+      }
+      .cal-2027-head {
+        padding: 10px 14px;
+        gap: 8px;
+      }
+      .cal-2027-year {
+        font-size: 1.4rem;
+      }
+      .cal-2027-title {
+        font-size: 0.95rem;
+      }
+      .cal-2027-grid {
+        grid-template-columns: 1fr;
+        padding: 10px;
+        gap: 8px;
+      }
+      .cal-pastel-card {
+        padding: 10px 12px;
+        border-radius: 10px;
+      }
+      .pastel-title-jan, .pastel-title-feb, .pastel-title-mar {
+        font-size: 1.05rem;
+        margin-bottom: 8px;
+      }
+      .cal-dot-items {
+        gap: 6px;
+      }
+      .cal-dot-link, .cal-dot-static {
+        font-size: 0.82rem;
+      }
+      .cal-poster-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        padding-top: 10px;
+      }
     }
   </style>
 </head>
@@ -1413,11 +1638,6 @@
       </button>
     </div>
 
-    <!-- 学校フィルター（六角＝朱色、U-17＝深紅で明確に区別） -->
-    <div class="school-filters-grid" id="school-filters">
-      <button class="school-btn active" data-school="all">🎾 全校</button>
-    </div>
-
     <!-- カテゴリフィルター -->
     <div class="cat-filters" id="cat-filters">
       <button class="cat-btn active" data-cat="all">ALL すべて</button>
@@ -1458,10 +1678,64 @@
       <span class="cal-legend-pill pill-music">アニメ・音楽</span>
     </div>
 
+    <!-- 全月一目早見表（スクロール不要・半年分の推し活が一瞬でわかる仕様） -->
+    <div class="cal-glance-strip" id="cal-glance-strip">
+      <div class="cal-glance-col" data-jump="sep">
+        <span class="cal-glance-badge badge-sep">09 SEP</span>
+        <div class="cal-glance-highlights">
+          <span>ドンキコラボ</span>
+          <span>全国統一試験</span>
+          <span>新アニメ開始</span>
+        </div>
+      </div>
+      <div class="cal-glance-col active" data-jump="oct">
+        <span class="cal-glance-badge badge-oct">10 OCT</span>
+        <div class="cal-glance-highlights">
+          <span>ROUND1</span>
+          <span>テニプリスト</span>
+          <span>Fever vol.1</span>
+        </div>
+      </div>
+      <div class="cal-glance-col" data-jump="nov">
+        <span class="cal-glance-badge badge-nov">11 NOV</span>
+        <div class="cal-glance-highlights">
+          <span>ちょびぬい氷帝</span>
+          <span>Thank you祭</span>
+          <span>るかっぷ白石</span>
+        </div>
+      </div>
+      <div class="cal-glance-col" data-jump="dec">
+        <span class="cal-glance-badge badge-dec">12 DEC</span>
+        <div class="cal-glance-highlights">
+          <span>カルピンおうち</span>
+          <span>一番くじ</span>
+          <span>JF2027</span>
+        </div>
+      </div>
+      <div class="cal-glance-col" data-jump="2027">
+        <span class="cal-glance-badge badge-2027">2027年</span>
+        <div class="cal-glance-highlights">
+          <span>ぽわぬい</span>
+          <span>跡部フィギュア</span>
+          <span>FILA靴</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 月別クイックタブ（スマホでスクロール不要・一目で全体把握） -->
+    <div class="cal-quick-tabs" id="cal-quick-tabs">
+      <button class="cal-qtab" data-target="all">ALL 全月</button>
+      <button class="cal-qtab" data-target="sep">09 SEP</button>
+      <button class="cal-qtab active" data-target="oct">10 OCT</button>
+      <button class="cal-qtab" data-target="nov">11 NOV</button>
+      <button class="cal-qtab" data-target="dec">12 DEC</button>
+      <button class="cal-qtab" data-target="2027">2027年</button>
+    </div>
+
     <!-- カレンダーカード 2カラムグリッド -->
-    <div class="cal-cards-grid">
+    <div class="cal-cards-grid" id="cal-cards-grid">
       <!-- 09 SEPTEMBER -->
-      <div class="cal-block-card">
+      <div class="cal-block-card" data-cal-month="sep">
         <div class="cal-block-head head-sep">
           <span class="cal-block-num">09</span>
           <span class="cal-block-name name-sep">SEPTEMBER</span>
@@ -1472,7 +1746,7 @@
       </div>
 
       <!-- 10 OCTOBER -->
-      <div class="cal-block-card">
+      <div class="cal-block-card" data-cal-month="oct">
         <div class="cal-block-head head-oct">
           <span class="cal-block-num">10</span>
           <span class="cal-block-name name-oct">OCTOBER</span>
@@ -1483,7 +1757,7 @@
       </div>
 
       <!-- 11 NOVEMBER -->
-      <div class="cal-block-card">
+      <div class="cal-block-card" data-cal-month="nov">
         <div class="cal-block-head head-nov">
           <span class="cal-block-num">11</span>
           <span class="cal-block-name name-nov">NOVEMBER</span>
@@ -1494,7 +1768,7 @@
       </div>
 
       <!-- 12 DECEMBER -->
-      <div class="cal-block-card">
+      <div class="cal-block-card" data-cal-month="dec">
         <div class="cal-block-head head-dec">
           <span class="cal-block-num">12</span>
           <span class="cal-block-name name-dec">DECEMBER</span>
@@ -1506,7 +1780,7 @@
     </div>
 
     <!-- 2027年セクション -->
-    <div class="cal-2027-box">
+    <div class="cal-2027-box" data-cal-month="2027">
       <div class="cal-2027-head">
         <span class="cal-2027-year">2027</span>
         <span class="cal-2027-title">JANUARY — MARCH</span>
@@ -1683,10 +1957,45 @@ const characterBirthdays = [
 const categoryIcons = { anime:'📺', stage:'🎭', goods:'🛍️', event:'🏢' };
 const categoryLabels = { anime:'アニメ', stage:'テニミュ', goods:'グッズ・コラボ', event:'イベント・ライブ' };
 
-const STORAGE_KEY = 'tenipuri_news_v26_quiz_shuffle';
+const STORAGE_KEY = 'tenipuri_news_v27_mobile_oct';
 
-// ===== 直近3ヶ月の実在する個別記事パーマリンク一覧（2026年9月下旬最新版・公式9/17六角祭り〜9/24最新情報完全網羅） =====
+// ===== 直近3ヶ月の実在する個別記事パーマリンク一覧（2026年10月最新版・秋の最新トピック完全網羅） =====
 const defaultNews = [
+  {
+    id:'news-2026-1008-tennimu', date:'10/08', category:'stage', media:'新テニミュ公式', icon:'🎭',
+    title:'ミュージカル『新テニスの王子様』The Final Stage：開幕記念オフィシャルグッズ＆当日引換券情報公開！',
+    description:'いよいよクライマックスを迎える新テニミュ The Final Stage！劇場物販・公式通販グッズの全ラインナップおよび各公演の当日引換券・見逃し配信スケジュールが解禁！',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','u17'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','徳川カズヤ','平等院鳳凰'],
+    sourceUrl:'https://www.tennimu.com/'
+  },
+  {
+    id:'news-2026-1006-anime', date:'10/06', category:'anime', media:'アニメ公式', icon:'📺',
+    title:'TVアニメ『新テニスの王子様 U-17 WORLD CUP 決勝メンバー決定戦』見逃し配信スケジュール解禁！',
+    description:'テレ東系列にて放送中の最新TVシリーズ！ABEMA、U-NEXT、DMM TV、Lemino、Prime Videoほか各動画配信プラットフォームでの最新話配信スケジュールが公開！',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','u17'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介'],
+    sourceUrl:'http://tenipuri.jp/news/news/19048.html'
+  },
+  {
+    id:'news-2026-1004-jf', date:'10/04', category:'event', media:'ジャンプフェスタ', icon:'🎪',
+    title:'ジャンプフェスタ（JF）：『新テニスの王子様』ブース出展＆描き下ろし先行グッズ情報第1弾！',
+    description:'幕張メッセにて開催される冬の祭典「ジャンプフェスタ」に新テニスの王子様が出展！ショウワノート・ムービック等によるJF限定・先行販売アイテムが順次発表予定！',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa','u17'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介'],
+    sourceUrl:'https://jumpsq.shueisha.co.jp/'
+  },
+  {
+    id:'news-2026-1002-tenipurist', date:'10/02', category:'event', media:'テニプリスト', icon:'🏬',
+    title:'公式ストア「テニプリスト」：10月10日オープン直前！来店ノベルティ＆ショッパー実物公開！',
+    description:'10月10日(土)にグランドオープンの公式ストア「テニプリスト」！購入特典の特製ホログラムポストカードや記念ショッパー、整理券入場のご案内が公式公開！',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa','u17'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介','徳川カズヤ'],
+    sourceUrl:'https://tenipuri.jp/news/goods/19314.html'
+  },
+  {
+    id:'news-2026-1001-round1', date:'10/01', category:'goods', media:'ラウンドワン', icon:'🎳',
+    title:'アニメ『新テニスの王子様』× ラウンドワン コラボイベント part5 本日より全国一斉スタート！',
+    description:'全国のラウンドワン100店舗にて本日10月1日より開催！ボウリング・カラオケコラボパック特典のオリジナルグッズやコラボドリンク＆フードが満を持して登場！',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','u17'], characters:['越前リョーマ','跡部景吾','幸村精市','白石蔵ノ介'],
+    sourceUrl:'http://tenipuri.jp/news/news/19033.html'
+  },
   {
     id:'news-19332', date:'09/24', category:'goods', media:'ドン・キホーテ/アピタ', icon:'🛍️',
     title:'バンダイ：ドン・キホーテ/アピタにてアニメ『新テニスの王子様』のジャージ風アパレルアイテムが登場！',
@@ -1917,7 +2226,6 @@ const defaultNews = [
 
 // ===== STATE =====
 let newsList = [];
-let selectedSchool = 'all';
 let selectedCategory = 'all';
 
 function loadNews() {
@@ -1969,59 +2277,7 @@ function renderBirthdays() {
   }).join('');
 }
 
-// ===== RENDER SCHOOL FILTERS =====
-function renderSchoolFilters() {
-  const container = document.getElementById('school-filters');
-  const allBtn = container.querySelector('.school-btn[data-school="all"]');
-  if (allBtn) {
-    allBtn.addEventListener('click', () => setSchool('all'));
-  }
-
-  schools.forEach(s => {
-    const btn = document.createElement('button');
-    btn.className = 'school-btn';
-    btn.dataset.school = s.id;
-    btn.textContent = `${s.symbol} ${s.kanji}`;
-    btn.style.color = s.color;
-    btn.style.borderColor = `${s.color}40`;
-    btn.addEventListener('click', () => setSchool(s.id));
-    container.appendChild(btn);
-  });
-}
-
-function setSchool(id) {
-  selectedSchool = id;
-  const root = document.documentElement;
-  
-  if (id === 'all') {
-    root.style.setProperty('--accent', '#38bdf8');
-  } else {
-    const s = getSchool(id);
-    if (s) {
-      root.style.setProperty('--accent', s.color);
-    }
-  }
-
-  document.querySelectorAll('.school-btn').forEach(b => {
-    const isThis = b.dataset.school === id;
-    if (b.dataset.school === 'all') {
-      b.classList.toggle('active', isThis);
-      b.style.background = isThis ? '#eff6ff' : '#ffffff';
-      b.style.color = isThis ? '#2563eb' : 'var(--text-sub)';
-      b.style.borderColor = isThis ? '#3b82f6' : 'var(--border)';
-    } else {
-      const s = getSchool(b.dataset.school);
-      if (s) {
-        b.classList.toggle('active', isThis);
-        b.style.background = isThis ? `${s.color}15` : '#ffffff';
-        b.style.color = isThis ? s.color : s.color;
-        b.style.borderColor = isThis ? s.color : `${s.color}40`;
-      }
-    }
-  });
-  renderNewsList();
-}
-
+// ===== CATEGORY FILTER =====
 function setCat(cat) {
   selectedCategory = cat;
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
@@ -2030,7 +2286,6 @@ function setCat(cat) {
 
 function getFilteredNews() {
   return newsList.filter(item => {
-    if (selectedSchool !== 'all' && !item.schoolIds.includes(selectedSchool)) return false;
     if (selectedCategory !== 'all' && item.category !== selectedCategory) return false;
     return true;
   });
@@ -2050,17 +2305,10 @@ function renderNewsList() {
   }
 
   list.innerHTML = filtered.map((item, index) => {
-    const mainSchool = item.schoolIds[0] ? getSchool(item.schoolIds[0]) : null;
-    const accentColor = mainSchool ? mainSchool.color : '#38bdf8';
-    const schoolBadges = item.schoolIds.map(id => {
-      const s = getSchool(id);
-      return s ? `<span class="member-badge" style="background-color:${s.color}">${s.kanji}</span>` : '';
-    }).join(' ');
-
     const delay = Math.min(index * 0.04, 0.35);
 
     return `
-      <div class="day-event-card" style="border-left-color:${accentColor}; animation-delay: ${delay}s;">
+      <div class="day-event-card" style="border-left-color: #38bdf8; animation-delay: ${delay}s;">
         <div class="day-event-time">
           <span class="event-list-date">${item.date}</span>
           <span class="event-list-media">${item.media || categoryLabels[item.category]}</span>
@@ -2073,7 +2321,6 @@ function renderNewsList() {
           <p>${item.description}</p>
         </div>
         <div class="day-event-right">
-          <div>${schoolBadges}</div>
           <a class="source-jump-btn" href="${item.sourceUrl}" target="_blank" rel="noopener noreferrer">
             <i class="fa-solid fa-arrow-up-right-from-square"></i> 公式ソースへ
           </a>
@@ -2095,8 +2342,43 @@ async function fetchOfficialNews(isManual = false) {
     url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
   ];
 
-  // 1. 公式最新マスタプールから未取得記事をマージ（9/17六角祭り〜9/24ドンキまで完全網羅）
+  // 1. 公式最新マスタプールから未取得記事をマージ（10月最新トピック完全網羅）
   const officialMasterPool = [
+    {
+      id:'news-2026-1008-tennimu', date:'10/08', category:'stage', media:'新テニミュ公式', icon:'🎭',
+      title:'ミュージカル『新テニスの王子様』The Final Stage：開幕記念オフィシャルグッズ＆当日引換券情報公開！',
+      description:'いよいよクライマックスを迎える新テニミュ The Final Stage！劇場物販・公式通販グッズの全ラインナップおよび各公演の当日引換券・見逃し配信スケジュールが解禁！',
+      schoolIds:['seigaku','hyotei','rikkai','shitenhoji','u17'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','徳川カズヤ','平等院鳳凰'],
+      sourceUrl:'https://www.tennimu.com/'
+    },
+    {
+      id:'news-2026-1006-anime', date:'10/06', category:'anime', media:'アニメ公式', icon:'📺',
+      title:'TVアニメ『新テニスの王子様 U-17 WORLD CUP 決勝メンバー決定戦』見逃し配信スケジュール解禁！',
+      description:'テレ東系列にて放送中の最新TVシリーズ！ABEMA、U-NEXT、DMM TV、Lemino、Prime Videoほか各動画配信プラットフォームでの最新話配信スケジュールが公開！',
+      schoolIds:['seigaku','hyotei','rikkai','shitenhoji','u17'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介'],
+      sourceUrl:'http://tenipuri.jp/news/news/19048.html'
+    },
+    {
+      id:'news-2026-1004-jf', date:'10/04', category:'event', media:'ジャンプフェスタ', icon:'🎪',
+      title:'ジャンプフェスタ（JF）：『新テニスの王子様』ブース出展＆描き下ろし先行グッズ情報第1弾！',
+      description:'幕張メッセにて開催される冬の祭典「ジャンプフェスタ」に新テニスの王子様が出展！ショウワノート・ムービック等によるJF限定・先行販売アイテムが順次発表予定！',
+      schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa','u17'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介'],
+      sourceUrl:'https://jumpsq.shueisha.co.jp/'
+    },
+    {
+      id:'news-2026-1002-tenipurist', date:'10/02', category:'event', media:'テニプリスト', icon:'🏬',
+      title:'公式ストア「テニプリスト」：10月10日オープン直前！来店ノベルティ＆ショッパー実物公開！',
+      description:'10月10日(土)にグランドオープンの公式ストア「テニプリスト」！購入特典の特製ホログラムポストカードや記念ショッパー、整理券入場のご案内が公式公開！',
+      schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa','u17'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介','徳川カズヤ'],
+      sourceUrl:'https://tenipuri.jp/news/goods/19314.html'
+    },
+    {
+      id:'news-2026-1001-round1', date:'10/01', category:'goods', media:'ラウンドワン', icon:'🎳',
+      title:'アニメ『新テニスの王子様』× ラウンドワン コラボイベント part5 本日より全国一斉スタート！',
+      description:'全国のラウンドワン100店舗にて本日10月1日より開催！ボウリング・カラオケコラボパック特典のオリジナルグッズやコラボドリンク＆フードが満を持して登場！',
+      schoolIds:['seigaku','hyotei','rikkai','shitenhoji','u17'], characters:['越前リョーマ','跡部景吾','幸村精市','白石蔵ノ介'],
+      sourceUrl:'http://tenipuri.jp/news/news/19033.html'
+    },
     {
       id:'news-19332', date:'09/24', category:'goods', media:'ドン・キホーテ/アピタ', icon:'🛍️',
       title:'バンダイ：ドン・キホーテ/アピタにてアニメ『新テニスの王子様』のジャージ風アパレルアイテムが登場！',
@@ -2371,6 +2653,56 @@ function renderCalendar() {
   renderMonthList(10, 'cal-list-oct');
   renderMonthList(11, 'cal-list-nov');
   renderMonthList(12, 'cal-list-dec');
+}
+
+// カレンダー月別クイックタブ＆早見表制御（スマホでスクロール不要・一目で全体把握）
+function initCalendarTabs() {
+  const tabs = document.querySelectorAll('.cal-qtab');
+  const glanceCols = document.querySelectorAll('.cal-glance-col');
+  const allBlocks = document.querySelectorAll('[data-cal-month]');
+
+  function switchCalendarMonth(target) {
+    // タブのactive状態更新
+    tabs.forEach(t => {
+      t.classList.toggle('active', t.dataset.target === target);
+    });
+
+    // 早見表のactive状態更新
+    glanceCols.forEach(c => {
+      c.classList.toggle('active', c.dataset.jump === target);
+    });
+
+    // 各月ブロックの表示切り替え
+    allBlocks.forEach(b => {
+      if (target === 'all' || b.dataset.calMonth === target) {
+        b.style.display = '';
+      } else {
+        b.style.display = 'none';
+      }
+    });
+  }
+
+  // タブクリック
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      switchCalendarMonth(tab.dataset.target);
+    });
+  });
+
+  // 早見表カラムクリック
+  glanceCols.forEach(col => {
+    col.addEventListener('click', () => {
+      const target = col.dataset.jump;
+      if (target) switchCalendarMonth(target);
+    });
+  });
+
+  // 初期表示: スマホ環境(<=820px)ではスクロール不要で1画面に収まるよう当月(10月)を選択
+  if (window.innerWidth <= 820) {
+    switchCalendarMonth('oct');
+  } else {
+    switchCalendarMonth('all');
+  }
 }
 
 function showToast(msg) {
@@ -3021,9 +3353,9 @@ function renderQuizResult() {
 function init() {
   newsList = loadNews();
   renderBirthdays();
-  renderSchoolFilters();
   renderNewsList();
   renderCalendar();
+  initCalendarTabs();
 
   fetchOfficialNews(false);
 
