@@ -1349,6 +1349,19 @@
       border-radius: 3px;
       padding: 1.5px 2px;
     }
+    .cal-glance-hint {
+      font-size: 0.72rem;
+      color: #94a3b8;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 500;
+    }
+    .cal-glance-hint i {
+      color: #ccff00;
+      font-size: 0.75rem;
+    }
 
     /* 月別クイックタブ（スマホでの一目把握＆スクロール不要化） */
     .cal-quick-tabs {
@@ -1449,42 +1462,69 @@
         padding: 2px 6px;
       }
 
-      /* 全月一目早見表のスマホ最適化（5ヶ月分を1画面で完全俯瞰） */
+      /* 全月一目早見表のスマホ最適化（横スクロールで文字を潰さず美しく一目把握） */
       .cal-glance-strip {
-        gap: 4px;
-        padding: 6px 4px;
-        margin-bottom: 10px;
-        border-radius: 10px;
+        display: flex;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 8px;
+        padding: 8px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        background: rgba(15, 23, 42, 0.75);
+      }
+      .cal-glance-strip::-webkit-scrollbar {
+        display: none;
       }
       .cal-glance-col {
-        padding: 4px 2px;
-        border-radius: 6px;
+        flex: 0 0 102px;
+        min-width: 102px;
+        padding: 6px 5px;
+        border-radius: 8px;
+        text-align: center;
       }
       .cal-glance-badge {
-        font-size: 0.68rem;
-        padding: 1.5px 3px;
+        font-size: 0.72rem;
+        padding: 2px 5px;
+        margin-bottom: 4px;
+        white-space: nowrap;
       }
       .cal-glance-highlights {
-        font-size: 0.58rem;
-        gap: 2px;
+        font-size: 0.64rem;
+        gap: 3px;
       }
       .cal-glance-highlights span {
-        padding: 1px 1px;
-        font-size: 0.58rem;
-        letter-spacing: -0.02em;
+        padding: 2px 4px;
+        font-size: 0.64rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
       }
 
-      /* クイックタブのスマホ最適化 */
+      /* クイックタブのスマホ最適化（3列×2行の完全均等グリッド・文字改行を徹底防止） */
       .cal-quick-tabs {
-        gap: 4px;
-        margin-bottom: 10px;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+        margin-bottom: 12px;
+        width: 100%;
+        overflow-x: visible;
+        padding-bottom: 0;
       }
       .cal-qtab {
-        font-size: 0.75rem;
-        padding: 5px 8px;
-        min-width: calc(33.33% - 4px);
+        font-size: 0.76rem;
+        font-weight: 700;
+        padding: 8px 4px;
+        white-space: nowrap;
         text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 9999px;
+        min-width: 0;
+        letter-spacing: -0.01em;
       }
 
       /* カードと行の超コンパクト・1画面一目化 */
@@ -1497,8 +1537,8 @@
         border-radius: 12px;
       }
       .cal-block-head {
-        padding: 6px 10px;
-        gap: 6px;
+        padding: 7px 12px;
+        gap: 8px;
       }
       .cal-block-num {
         font-size: 1.25rem;
@@ -1507,33 +1547,47 @@
         font-size: 0.88rem;
       }
       .cal-block-list {
-        padding: 1px 0;
+        padding: 2px 0;
       }
       .cal-row {
-        padding: 5px 8px;
-        gap: 5px;
+        padding: 6px 10px;
+        gap: 6px;
+        align-items: flex-start;
       }
       .cal-row-left {
-        gap: 5px;
+        gap: 6px;
+        flex: 1;
+        min-width: 0;
+        align-items: center;
       }
       .cal-date-text {
         font-size: 0.78rem;
-        min-width: 44px;
+        min-width: 48px;
+        flex-shrink: 0;
+        white-space: nowrap;
       }
       .cal-tag-pill {
-        font-size: 0.6rem;
-        padding: 1px 5px;
+        font-size: 0.62rem;
+        padding: 1.5px 6px;
+        flex-shrink: 0;
+        white-space: nowrap;
       }
       .cal-title-text {
-        font-size: 0.78rem;
-        line-height: 1.25;
+        font-size: 0.8rem;
+        line-height: 1.35;
+        min-width: 0;
+        word-break: normal;
+        overflow-wrap: break-word;
       }
       .cal-sub-text {
-        font-size: 0.68rem;
+        font-size: 0.7rem;
+        margin-left: 4px;
+        opacity: 0.85;
       }
       .cal-link-arrow {
-        font-size: 0.62rem;
-        margin-left: 3px;
+        font-size: 0.64rem;
+        margin-left: 4px;
+        flex-shrink: 0;
       }
 
       /* 2027年セクションのスマホ最適化 */
@@ -1679,6 +1733,7 @@
     </div>
 
     <!-- 全月一目早見表（スクロール不要・半年分の推し活が一瞬でわかる仕様） -->
+    <div class="cal-glance-hint"><i class="fa-solid fa-arrows-left-right"></i> 月別ハイライト（タップで月切替・左右スワイプ可能）</div>
     <div class="cal-glance-strip" id="cal-glance-strip">
       <div class="cal-glance-col" data-jump="sep">
         <span class="cal-glance-badge badge-sep">09 SEP</span>
@@ -1957,10 +2012,38 @@ const characterBirthdays = [
 const categoryIcons = { anime:'📺', stage:'🎭', goods:'🛍️', event:'🏢' };
 const categoryLabels = { anime:'アニメ', stage:'テニミュ', goods:'グッズ・コラボ', event:'イベント・ライブ' };
 
-const STORAGE_KEY = 'tenipuri_news_v27_mobile_oct';
+const STORAGE_KEY = 'tenipuri_news_v28_mobile_layout_fix';
 
-// ===== 直近3ヶ月の実在する個別記事パーマリンク一覧（2026年10月最新版・秋の最新トピック完全網羅） =====
+// ===== 直近3ヶ月の実在する個別記事パーマリンク一覧（2026年10月中旬最新版・秋の最新トピック完全網羅） =====
 const defaultNews = [
+  {
+    id:'news-2026-1011-fever', date:'10/11', category:'event', media:'テニプリ25th公式', icon:'🎪',
+    title:'『テニプリ 25th Anniversary Event -Fever- Vol.1』大盛況開催＆公式グッズ事後受注販売スタート！',
+    description:'10月11日「esports TOKYO BAY studio」にて開催！青学・ルドルフ・六角キャスト10名登壇の書き下ろし朗読劇＆ライブで熱狂！イベント記念グッズの受注販売受付がスタート。さらにVol.2が2027年11月開催決定！',
+    schoolIds:['seigaku','rokkaku'], characters:['越前リョーマ','手塚国光','大石秀一郎','不二周助','観月はじめ','不二裕太','葵剣太郎','佐伯虎次郎'],
+    sourceUrl:'https://tenipuri.jp/25th/projects/6'
+  },
+  {
+    id:'news-2026-1010-tenipurist-autumn', date:'10/10', category:'goods', media:'テニプリスト', icon:'🍁',
+    title:'公式ストア「テニプリスト」グランドオープン！秋の「紅葉狩りver.」新作グッズ＆来店特典解禁！',
+    description:'10月10日オープン記念！紅葉狩りをテーマにした新規描き下ろしイラストのアクリルスタンド、キャラバッジコレクション、クリアカードが登場！お買い上げ特典ショッパーもプレゼント。',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介'],
+    sourceUrl:'https://tenipuristo.jp/'
+  },
+  {
+    id:'news-2026-1009-konami', date:'10/09', category:'goods', media:'KONAMI公式', icon:'🎮',
+    title:'コナミ：名作ゲーム『学園祭の王子様』『ドキドキサバイバル』サプライズ寄せ書き＆フォト再販決定！',
+    description:'コナミデジタルエンタテインメントより、「も～っと 学園祭の王子様」「ぎゅ～っと！ ドキドキサバイバル」の伝説の思い出フォトメッセージ＆後夜祭寄せ書きアイテムが熱いリクエストに応えて待望の再販！',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介','木手永四郎'],
+    sourceUrl:'https://tenipuri.jp/news/goods/19239.html'
+  },
+  {
+    id:'news-2026-1008-shimamura', date:'10/08', category:'goods', media:'しまむらパーク', icon:'👕',
+    title:'しまむらパーク：アニメ『新テニスの王子様』ジャージ風メンズルームウェア発売決定！',
+    description:'全国のしまむら系列「しまむらパーク」にて、青学・氷帝・立海・四天宝寺・比嘉の各校ユニフォームデザインを落とし込んだジャージ風ルームウェアが新発売！',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa'], characters:['越前リョーマ','跡部景吾','幸村精市','白石蔵ノ介','木手永四郎'],
+    sourceUrl:'https://tenipuri.jp/news/goods/19332.html'
+  },
   {
     id:'news-2026-1008-tennimu', date:'10/08', category:'stage', media:'新テニミュ公式', icon:'🎭',
     title:'ミュージカル『新テニスの王子様』The Final Stage：開幕記念オフィシャルグッズ＆当日引換券情報公開！',
@@ -1976,6 +2059,13 @@ const defaultNews = [
     sourceUrl:'http://tenipuri.jp/news/news/19048.html'
   },
   {
+    id:'news-2026-1005-ghana', date:'10/05', category:'goods', media:'ロッテ・Ghana', icon:'🍫',
+    title:'ロッテ「プレミアムガーナ」× 跡部景吾：プレミアムコラボレーション企画が始動！',
+    description:'ロッテの大人気チョコレート「プレミアムガーナ」と氷帝学園テニス部部長・跡部景吾の至高のコラボレーションが決定！オリジナル描き下ろしビジュアルや特別キャンペーンが順次公開！',
+    schoolIds:['hyotei'], characters:['跡部景吾'],
+    sourceUrl:'https://tenipuri.jp/news/news/19081.html'
+  },
+  {
     id:'news-2026-1004-jf', date:'10/04', category:'event', media:'ジャンプフェスタ', icon:'🎪',
     title:'ジャンプフェスタ（JF）：『新テニスの王子様』ブース出展＆描き下ろし先行グッズ情報第1弾！',
     description:'幕張メッセにて開催される冬の祭典「ジャンプフェスタ」に新テニスの王子様が出展！ショウワノート・ムービック等によるJF限定・先行販売アイテムが順次発表予定！',
@@ -1983,11 +2073,18 @@ const defaultNews = [
     sourceUrl:'https://jumpsq.shueisha.co.jp/'
   },
   {
-    id:'news-2026-1002-tenipurist', date:'10/02', category:'event', media:'テニプリスト', icon:'🏬',
-    title:'公式ストア「テニプリスト」：10月10日オープン直前！来店ノベルティ＆ショッパー実物公開！',
-    description:'10月10日(土)にグランドオープンの公式ストア「テニプリスト」！購入特典の特製ホログラムポストカードや記念ショッパー、整理券入場のご案内が公式公開！',
-    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa','u17'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介','徳川カズヤ'],
-    sourceUrl:'https://tenipuri.jp/news/goods/19314.html'
+    id:'news-2026-1004-furyu', date:'10/04', category:'goods', media:'フリュープライズ', icon:'🧸',
+    title:'フリュー：プライズ限定マスコット『ちょぴぬいぷち』全国アミューズメント施設に順次登場！',
+    description:'手のひらサイズの愛らしいぬいぐるみシリーズ『ちょぴぬいぷち』に新テニスの王子様が登場！10月第2週の青学①を皮切りに、氷帝・立海・四天宝寺・比嘉・U-17が続々ラインナップ！',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa','u17'], characters:['越前リョーマ','手塚国光','不二周助','菊丸英二'],
+    sourceUrl:'https://tenipuri.jp/news/goods/19239.html'
+  },
+  {
+    id:'news-2026-1002-epos', date:'10/02', category:'event', media:'マルイ・エポス', icon:'💳',
+    title:'エポスカード：『新テニスの王子様』コラボレーションクレジットカード新デザイン登場！',
+    description:'マルイのエポスカードに新テニスの王子様の新デザインが登場！入会特典や会員限定のオリジナルグッズプレゼントキャンペーンもスタート！',
+    schoolIds:['seigaku','hyotei','rikkai','shitenhoji'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介'],
+    sourceUrl:'https://tenipuri.jp/news/news/19113.html'
   },
   {
     id:'news-2026-1001-round1', date:'10/01', category:'goods', media:'ラウンドワン', icon:'🎳',
@@ -2342,8 +2439,36 @@ async function fetchOfficialNews(isManual = false) {
     url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
   ];
 
-  // 1. 公式最新マスタプールから未取得記事をマージ（10月最新トピック完全網羅）
+  // 1. 公式最新マスタプールから未取得記事をマージ（10月中旬最新トピック完全網羅）
   const officialMasterPool = [
+    {
+      id:'news-2026-1011-fever', date:'10/11', category:'event', media:'テニプリ25th公式', icon:'🎪',
+      title:'『テニプリ 25th Anniversary Event -Fever- Vol.1』大盛況開催＆公式グッズ事後受注販売スタート！',
+      description:'10月11日「esports TOKYO BAY studio」にて開催！青学・ルドルフ・六角キャスト10名登壇の書き下ろし朗読劇＆ライブで熱狂！イベント記念グッズの受注販売受付がスタート。さらにVol.2が2027年11月開催決定！',
+      schoolIds:['seigaku','rokkaku'], characters:['越前リョーマ','手塚国光','大石秀一郎','不二周助','観月はじめ','不二裕太','葵剣太郎','佐伯虎次郎'],
+      sourceUrl:'https://tenipuri.jp/25th/projects/6'
+    },
+    {
+      id:'news-2026-1010-tenipurist-autumn', date:'10/10', category:'goods', media:'テニプリスト', icon:'🍁',
+      title:'公式ストア「テニプリスト」グランドオープン！秋の「紅葉狩りver.」新作グッズ＆来店特典解禁！',
+      description:'10月10日オープン記念！紅葉狩りをテーマにした新規描き下ろしイラストのアクリルスタンド、キャラバッジコレクション、クリアカードが登場！お買い上げ特典ショッパーもプレゼント。',
+      schoolIds:['seigaku','hyotei','rikkai','shitenhoji'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介'],
+      sourceUrl:'https://tenipuristo.jp/'
+    },
+    {
+      id:'news-2026-1009-konami', date:'10/09', category:'goods', media:'KONAMI公式', icon:'🎮',
+      title:'コナミ：名作ゲーム『学園祭の王子様』『ドキドキサバイバル』サプライズ寄せ書き＆フォト再販決定！',
+      description:'コナミデジタルエンタテインメントより、「も～っと 学園祭の王子様」「ぎゅ～っと！ ドキドキサバイバル」の伝説の思い出フォトメッセージ＆後夜祭寄せ書きアイテムが熱いリクエストに応えて待望の再販！',
+      schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介','木手永四郎'],
+      sourceUrl:'https://tenipuri.jp/news/goods/19239.html'
+    },
+    {
+      id:'news-2026-1008-shimamura', date:'10/08', category:'goods', media:'しまむらパーク', icon:'👕',
+      title:'しまむらパーク：アニメ『新テニスの王子様』ジャージ風メンズルームウェア発売決定！',
+      description:'全国のしまむら系列「しまむらパーク」にて、青学・氷帝・立海・四天宝寺・比嘉の各校ユニフォームデザインを落とし込んだジャージ風ルームウェアが新発売！',
+      schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa'], characters:['越前リョーマ','跡部景吾','幸村精市','白石蔵ノ介','木手永四郎'],
+      sourceUrl:'https://tenipuri.jp/news/goods/19332.html'
+    },
     {
       id:'news-2026-1008-tennimu', date:'10/08', category:'stage', media:'新テニミュ公式', icon:'🎭',
       title:'ミュージカル『新テニスの王子様』The Final Stage：開幕記念オフィシャルグッズ＆当日引換券情報公開！',
@@ -2359,6 +2484,13 @@ async function fetchOfficialNews(isManual = false) {
       sourceUrl:'http://tenipuri.jp/news/news/19048.html'
     },
     {
+      id:'news-2026-1005-ghana', date:'10/05', category:'goods', media:'ロッテ・Ghana', icon:'🍫',
+      title:'ロッテ「プレミアムガーナ」× 跡部景吾：プレミアムコラボレーション企画が始動！',
+      description:'ロッテの大人気チョコレート「プレミアムガーナ」と氷帝学園テニス部部長・跡部景吾の至高のコラボレーションが決定！オリジナル描き下ろしビジュアルや特別キャンペーンが順次公開！',
+      schoolIds:['hyotei'], characters:['跡部景吾'],
+      sourceUrl:'https://tenipuri.jp/news/news/19081.html'
+    },
+    {
       id:'news-2026-1004-jf', date:'10/04', category:'event', media:'ジャンプフェスタ', icon:'🎪',
       title:'ジャンプフェスタ（JF）：『新テニスの王子様』ブース出展＆描き下ろし先行グッズ情報第1弾！',
       description:'幕張メッセにて開催される冬の祭典「ジャンプフェスタ」に新テニスの王子様が出展！ショウワノート・ムービック等によるJF限定・先行販売アイテムが順次発表予定！',
@@ -2366,11 +2498,18 @@ async function fetchOfficialNews(isManual = false) {
       sourceUrl:'https://jumpsq.shueisha.co.jp/'
     },
     {
-      id:'news-2026-1002-tenipurist', date:'10/02', category:'event', media:'テニプリスト', icon:'🏬',
-      title:'公式ストア「テニプリスト」：10月10日オープン直前！来店ノベルティ＆ショッパー実物公開！',
-      description:'10月10日(土)にグランドオープンの公式ストア「テニプリスト」！購入特典の特製ホログラムポストカードや記念ショッパー、整理券入場のご案内が公式公開！',
-      schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa','u17'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介','徳川カズヤ'],
-      sourceUrl:'https://tenipuri.jp/news/goods/19314.html'
+      id:'news-2026-1004-furyu', date:'10/04', category:'goods', media:'フリュープライズ', icon:'🧸',
+      title:'フリュー：プライズ限定マスコット『ちょぴぬいぷち』全国アミューズメント施設に順次登場！',
+      description:'手のひらサイズの愛らしいぬいぐるみシリーズ『ちょぴぬいぷち』に新テニスの王子様が登場！10月第2週の青学①を皮切りに、氷帝・立海・四天宝寺・比嘉・U-17が続々ラインナップ！',
+      schoolIds:['seigaku','hyotei','rikkai','shitenhoji','higa','u17'], characters:['越前リョーマ','手塚国光','不二周助','菊丸英二'],
+      sourceUrl:'https://tenipuri.jp/news/goods/19239.html'
+    },
+    {
+      id:'news-2026-1002-epos', date:'10/02', category:'event', media:'マルイ・エポス', icon:'💳',
+      title:'エポスカード：『新テニスの王子様』コラボレーションクレジットカード新デザイン登場！',
+      description:'マルイのエポスカードに新テニスの王子様の新デザインが登場！入会特典や会員限定のオリジナルグッズプレゼントキャンペーンもスタート！',
+      schoolIds:['seigaku','hyotei','rikkai','shitenhoji'], characters:['越前リョーマ','手塚国光','跡部景吾','幸村精市','白石蔵ノ介'],
+      sourceUrl:'https://tenipuri.jp/news/news/19113.html'
     },
     {
       id:'news-2026-1001-round1', date:'10/01', category:'goods', media:'ラウンドワン', icon:'🎳',
@@ -2667,9 +2806,13 @@ function initCalendarTabs() {
       t.classList.toggle('active', t.dataset.target === target);
     });
 
-    // 早見表のactive状態更新
+    // 早見表のactive状態更新＆スマホ時に見やすい位置へ自動スムーズスクロール
     glanceCols.forEach(c => {
-      c.classList.toggle('active', c.dataset.jump === target);
+      const isActive = c.dataset.jump === target;
+      c.classList.toggle('active', isActive);
+      if (isActive && window.innerWidth <= 820) {
+        c.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
     });
 
     // 各月ブロックの表示切り替え
