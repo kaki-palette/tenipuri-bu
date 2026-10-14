@@ -1686,10 +1686,6 @@
         <i class="fa-solid fa-calendar-days"></i>
         <span>📅 推し活カレンダー</span>
       </button>
-      <button class="refresh-btn" id="refresh-btn" title="公式サイトから最新情報を取得します">
-        <i class="fa-solid fa-rotate" id="refresh-icon"></i>
-        <span>最新情報に更新</span>
-      </button>
     </div>
 
     <!-- カテゴリフィルター -->
@@ -2427,10 +2423,7 @@ function renderNewsList() {
 }
 
 // ===== 公式サイト記事抽出ロジック =====
-async function fetchOfficialNews(isManual = false) {
-  const refreshIcon = document.getElementById('refresh-icon');
-  if (refreshIcon) refreshIcon.classList.add('rotating');
-
+async function fetchOfficialNews() {
   let fetchedCount = 0;
   let success = false;
 
@@ -2646,18 +2639,6 @@ async function fetchOfficialNews(isManual = false) {
   saveNews();
   renderNewsList();
   renderCalendar(); // ニュースの更新に合わせてカレンダーも自動即時反映！
-
-  if (isManual) {
-    if (fetchedCount > 0) {
-      showToast(`✨ 最新の公式ニュース（9/17六角祭り・9/18〜9/24最新情報など ${fetchedCount}件）を更新しました！`);
-    } else {
-      showToast('🌸 すでに最新の公式ニュース（9/17六角祭り〜9/24最新情報）を表示中です');
-    }
-  }
-
-  if (refreshIcon) {
-    setTimeout(() => refreshIcon.classList.remove('rotating'), 600);
-  }
 }
 
 // ===== 添付画像完全再現：テニプリ 推し活カレンダー データベース ＆ レンダリング =====
@@ -3528,11 +3509,6 @@ function init() {
       if (e.target === quizOverlay) closeQuizModal();
     });
   }
-
-  // 最新情報更新ボタン
-  document.getElementById('refresh-btn').addEventListener('click', () => {
-    fetchOfficialNews(true);
-  });
 
   // カテゴリフィルター
   document.querySelectorAll('.cat-btn').forEach(b => {
