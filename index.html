@@ -2219,10 +2219,34 @@ const characterBirthdays = [
 const categoryIcons = { anime:'📺', stage:'🎭', goods:'🛍️', event:'🏢' };
 const categoryLabels = { anime:'アニメ', stage:'テニミュ', goods:'グッズ・コラボ', event:'イベント・ライブ' };
 
-const STORAGE_KEY = 'tenipuri_news_v30_logo_redesign';
+const STORAGE_KEY = 'tenipuri_news_v31_latest_oct22';
 
-// ===== 直近3ヶ月の実在する個別記事パーマリンク一覧（2026年10月中旬最新版・秋の最新トピック完全網羅） =====
+// ===== 2026年10月最新トピック＆今後の予定（10月〜2027年1月以降） =====
 const defaultNews = [
+  {
+    id: 'news-2026-1021-anime-ep5',
+    date: '10/21',
+    category: 'anime',
+    media: 'アニメ公式',
+    icon: '📺',
+    title: 'アニメ『U-17 決勝メンバー決定戦』第5話先行カット公開＆BD・DVD BOX発売決定！',
+    description: '10月28日放送の第5話「ダブルスという名の決断」先行カット解禁！幸村精市＆柳蓮二ペアの激闘が描かれます。さらに豪華特典付きBlu-ray BOX & DVD BOXの発売も決定！',
+    schoolIds: ['rikkai', 'seigaku', 'u17'],
+    characters: ['幸村精市', '柳蓮二', '越前リョーマ'],
+    sourceUrl: 'https://tenipuri.jp/news/news/19048.html'
+  },
+  {
+    id: 'news-2026-1015-gakupuri',
+    date: '10/15',
+    category: 'goods',
+    media: 'KONAMI公式',
+    icon: '🎮',
+    title: 'KONAMI：『学園祭の王子様』DLC第1弾「越前リョーガ」新規シナリオ＆描き下ろしスチル配信開始！',
+    description: 'Switch/Steam版『学園祭の王子様』にて、追加攻略キャラクター「越前リョーガ」（CV:宮野真守）有償DLCが10月15日より配信スタート！完全新規フルボイスシナリオ＆美麗スチル収録！',
+    schoolIds: ['u17', 'seigaku'],
+    characters: ['越前リョーガ', '越前リョーマ'],
+    sourceUrl: 'https://tenipuri.jp/news/goods/19239.html'
+  },
   {
     id: 'news-2026-1011-fever',
     date: '10/11',
@@ -2349,11 +2373,23 @@ const defaultNews = [
     category: 'goods',
     media: 'ラウンドワン',
     icon: '🎳',
-    title: 'ラウンドワン：アニメ『新テニスの王子様』コラボキャンペーン part5 全国一斉スタート！',
+    title: 'ラウンドワン：アニメ『新テニスの王子様』コラボキャンペーン第5弾 全国一斉スタート！',
     description: '全国のラウンドワン100店舗にて10月1日より開催！ボウリング・カラオケコラボパック特典のオリジナルグッズやコラボドリンク＆フードが満を持して登場！',
     schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji', 'u17'],
     characters: ['越前リョーマ', '跡部景吾', '幸村精市', '白石蔵ノ介'],
     sourceUrl: 'https://tenipuri.jp/news/news/19033.html'
+  },
+  {
+    id: 'news-2026-1027-namja-yamabuki',
+    date: '10/27予定',
+    category: 'event',
+    media: 'ナンジャタウン',
+    icon: '🎪',
+    title: 'ナンジャタウン：『新テニスの王子様祭り』第6弾「山吹祭り」10月27日より開催決定！',
+    description: '池袋ナンジャタウンにて山吹中フィーチャーのコラボイベント開催！千石・亜久津ら8名の描き下ろしイラストグッズ、ミニゲーム「ラッキー千石ガラポン」、コラボデザート＆フードが登場！',
+    schoolIds: ['yamabuki'],
+    characters: ['千石清純', '亜久津仁', '南健太郎', '東方雅美'],
+    sourceUrl: 'https://event.bandainamco-am.co.jp/namja/tenipurimaturi/'
   },
   {
     id: 'news-2026-1028-cd',
@@ -2603,10 +2639,11 @@ const officialCalendarItems = [
   { month: 10, date: '10/9〜', pill: 'collab', pillText: 'コラボ', title: 'よこはまコスモワールド：新テニ コラボ第2弾＆限定チケット', sub: '', url: 'https://tenipuri.jp/news/goods/19246.html' },
   { month: 10, date: '10/10〜', pill: 'event', pillText: 'イベント', title: '公式ストア「テニプリスト」秋の紅葉狩り新作グッズ＆来店特典', sub: '', url: 'https://tenipuri.jp/news/goods/19314.html' },
   { month: 10, date: '10/11', pill: 'event', pillText: 'イベント', title: 'テニプリ25周年記念イベント『-Fever- Vol.1』開催＆記念グッズ', sub: '', url: '' },
+  { month: 10, date: '10/15', pill: 'goods', pillText: 'ゲーム', title: 'KONAMI：『学園祭の王子様』DLC第1弾「越前リョーガ」配信開始', sub: '', url: 'https://tenipuri.jp/news/goods/19239.html' },
   { month: 10, date: '10月2週', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（青学①）', sub: '', url: 'https://tenipuri.jp/news/goods/19239.html' },
   { month: 10, date: '10月〜', pill: 'goods', pillText: 'グッズ', title: '集英社：原作完全再現 各校公式ジャージ 受注受付開始', sub: '', url: '' },
   { month: 10, date: '10月末', pill: 'goods', pillText: 'グッズ', title: 'メガハウス：見つめるフィギュア『るかっぷ』手塚国光・幸村精市', sub: '', url: 'https://www.megahobby.jp/products/item/4808/' },
-  { month: 10, date: '10/27〜', pill: 'event', pillText: 'イベント', title: 'ナンジャタウン：『新テニスの王子様祭り』山吹祭りコラボ', sub: '', url: '' },
+  { month: 10, date: '10/27〜', pill: 'event', pillText: 'イベント', title: 'ナンジャタウン：『新テニスの王子様祭り』山吹祭りコラボ', sub: '', url: 'https://event.bandainamco-am.co.jp/namja/tenipurimaturi/' },
   { month: 10, date: '10/28', pill: 'music', pillText: '音楽', title: '新TVアニメ OP曲 青酢「Walls And Bridges」＆ ED曲「金環蝕」CD発売', sub: '', url: 'https://tenipuri.jp/news/goods/19048.html' },
 
   // 11 NOVEMBER
@@ -2620,7 +2657,10 @@ const officialCalendarItems = [
   { month: 12, date: '12月3週', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（立海）', sub: '', url: 'https://tenipuri.jp/news/goods/19239.html' },
   { month: 12, date: '12/22〜', pill: 'event', pillText: 'イベント', title: 'ナンジャタウン：『新テニスの王子様祭り』不動峰祭りコラボ', sub: '', url: '' },
   { month: 12, date: '12/24', pill: 'goods', pillText: 'グッズ', title: 'BANDAI SPIRITS：『一番くじ 新テニスの王子様』全国発売', sub: '', url: '' },
-  { month: 12, date: '12月末', pill: 'goods', pillText: 'グッズ', title: 'ジャンプフェスタ：JF2027限定先行グッズ＆ちょこりんマスコット第2弾', sub: '', url: 'https://jumpsq.shueisha.co.jp/' }
+  { month: 12, date: '12月末', pill: 'goods', pillText: 'グッズ', title: 'ジャンプフェスタ：JF2027限定先行グッズ＆ちょこりんマスコット第2弾', sub: '', url: 'https://jumpsq.shueisha.co.jp/' },
+
+  // 1 JANUARY (2027)
+  { month: 1, date: '1月予定', pill: 'goods', pillText: 'グッズ', title: 'バンダイナムコヌイ：『ぽわぬい』手触り抜群のマスコット新発売', sub: '', url: 'https://tenipuri.jp/news/goods/19239.html' }
 ];
 
 // 表示中ニュースとスケジュールを自動統合
