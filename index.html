@@ -172,48 +172,144 @@
       margin: 0 auto;
     }
 
-    /* コーポレート風 クイックリンク・アクションバー */
-    .corporate-actions-bar {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 18px;
-      padding-top: 18px;
+    /* 直感的で押しやすい 2大フィーチャーアクションカード（カレンダー ＆ クイズ） */
+    .featured-hero-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+      padding-top: 20px;
       border-top: 1px solid var(--border-light);
+      text-align: left;
     }
-    .corporate-action-btn {
-      display: inline-flex;
+    .hero-feature-card {
+      position: relative;
+      display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 8px 18px;
-      border-radius: 9999px;
-      background: #ffffff;
-      border: 1.5px solid var(--border);
-      color: #1e293b;
-      font-size: 0.82rem;
-      font-weight: 700;
+      gap: 16px;
+      padding: 18px 20px;
+      border-radius: 16px;
       text-decoration: none;
-      transition: all 0.25s ease;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
       cursor: pointer;
+      overflow: hidden;
+      transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1.5px solid transparent;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
     }
-    .corporate-action-btn:hover {
-      background: #fdfaf0;
-      border-color: var(--gold-primary);
-      color: var(--gold-deep);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 14px rgba(197, 155, 39, 0.16);
+    .hero-feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
     }
-    .corporate-action-btn.primary {
-      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    /* カレンダーカード（エメラルド＆ネイビー） */
+    .hero-feature-card.calendar-card {
+      background: linear-gradient(135deg, #091e3a 0%, #0f2b48 100%);
+      border-color: rgba(56, 189, 248, 0.3);
       color: #ffffff;
-      border-color: #0f172a;
     }
-    .corporate-action-btn.primary:hover {
-      background: linear-gradient(135deg, #c59b27 0%, #9a7310 100%);
-      border-color: #c59b27;
+    .hero-feature-card.calendar-card:hover {
+      border-color: #38bdf8;
+      box-shadow: 0 10px 30px rgba(15, 43, 72, 0.25), 0 0 20px rgba(56, 189, 248, 0.2);
+    }
+    /* クイズカード（パープル＆ローズ） */
+    .hero-feature-card.quiz-card {
+      background: linear-gradient(135deg, #2a0b38 0%, #431252 100%);
+      border-color: rgba(244, 114, 182, 0.3);
       color: #ffffff;
+    }
+    .hero-feature-card.quiz-card:hover {
+      border-color: #f472b6;
+      box-shadow: 0 10px 30px rgba(67, 18, 82, 0.25), 0 0 20px rgba(244, 114, 182, 0.2);
+    }
+    .hero-card-icon-wrap {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .calendar-card .hero-card-icon-wrap { color: #38bdf8; }
+    .quiz-card .hero-card-icon-wrap { color: #f472b6; }
+
+    .hero-card-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .hero-card-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .calendar-card .hero-card-badge {
+      background: rgba(56, 189, 248, 0.18);
+      color: #7dd3fc;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+    .quiz-card .hero-card-badge {
+      background: rgba(244, 114, 182, 0.18);
+      color: #fbcfe8;
+      border: 1px solid rgba(244, 114, 182, 0.3);
+    }
+    .hero-card-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+      color: #ffffff;
+      letter-spacing: 0.3px;
+    }
+    .hero-card-desc {
+      font-size: 0.76rem;
+      line-height: 1.45;
+      color: rgba(255, 255, 255, 0.78);
+      margin: 0;
+    }
+    .hero-card-action {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      transition: all 0.2s ease;
+    }
+    .hero-feature-card:hover .hero-card-action {
+      background: #ffffff;
+      color: #0f172a;
+    }
+    @media (max-width: 640px) {
+      .featured-hero-actions {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .hero-feature-card {
+        padding: 14px 16px;
+      }
+      .hero-card-icon-wrap {
+        width: 44px;
+        height: 44px;
+        font-size: 1.3rem;
+      }
+      .hero-card-title {
+        font-size: 0.96rem;
+      }
+      .hero-card-desc {
+        font-size: 0.72rem;
+      }
     }
 
     /* 公式外部リンクピル */
@@ -351,59 +447,6 @@
       display: flex;
       gap: 8px;
       align-items: center;
-    }
-
-    /* 最新情報更新ボタン */
-    .refresh-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 10px 16px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #eff6ff 0%, #fdf2f8 100%);
-      border: 1px solid #bfdbfe;
-      color: #2563eb;
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.25s ease;
-      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.08);
-    }
-    .refresh-btn:hover {
-      background: linear-gradient(135deg, #3b82f6 0%, #ec4899 100%);
-      color: #ffffff;
-      border-color: transparent;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
-    }
-    .refresh-btn i.rotating {
-      animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-    }
-    @keyframes spin { 100% { transform: rotate(360deg); } }
-
-
-    /* カテゴリフィルター */
-    .cat-filters {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-    .cat-btn {
-      padding: 4px 12px;
-      border-radius: 8px;
-      font-size: 0.74rem;
-      font-weight: 600;
-      cursor: pointer;
-      border: 1px solid var(--border);
-      background: #ffffff;
-      color: var(--text-sub);
-      transition: all 0.2s ease;
-    }
-    .cat-btn.active, .cat-btn:hover {
-      border-color: #38bdf8;
-      color: #0284c7;
-      background: #f0f9ff;
     }
 
     /* ===== MAIN CONTENT ===== */
@@ -1860,17 +1903,39 @@
       </p>
     </div>
 
-    <!-- コーポレート風 クイックアクションバー -->
-    <div class="corporate-actions-bar">
-      <a class="corporate-action-btn primary" href="calendar.html" target="_blank" rel="noopener noreferrer">
-        <i class="fa-solid fa-calendar-days"></i>
-        <span>推し活カレンダーを見る (別ウィンドウで開く)</span>
-        <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.72rem; opacity: 0.85; margin-left: 2px;"></i>
+    <!-- 2大注目機能：推し活カレンダー ＆ ネタクイズに挑戦 直感フィーチャーカード -->
+    <div class="featured-hero-actions">
+      <!-- カード1: 推し活カレンダー（別ウィンドウ・最新同期画像表示） -->
+      <a class="hero-feature-card calendar-card" id="calendar-hero-btn" href="calendar.html" target="_blank" rel="noopener noreferrer" title="推し活カレンダーを画像1枚で確認（別ウィンドウ）">
+        <div class="hero-card-icon-wrap">
+          <i class="fa-solid fa-calendar-days"></i>
+        </div>
+        <div class="hero-card-content">
+          <div class="hero-card-badge">公式ポスター 1枚で確認</div>
+          <h3 class="hero-card-title">📅 推し活カレンダーを見る</h3>
+          <p class="hero-card-desc">2026年秋〜2027年の最新推し活スケジュールを画像表示！各ニュースをクリックで公式情報元へ飛べます。</p>
+        </div>
+        <div class="hero-card-action">
+          <span>開く</span>
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </div>
       </a>
-      <button class="corporate-action-btn" onclick="document.getElementById('quiz-start-btn').click();" style="background:#fffdf5; border-color:#fde047;">
-        <i class="fa-solid fa-question" style="color:#d97706;"></i>
-        <span>🎾 ネタクイズに挑戦</span>
-      </button>
+
+      <!-- カード2: ネタクイズに挑戦 -->
+      <div class="hero-feature-card quiz-card" id="quiz-start-btn" role="button" tabindex="0" title="テニプリネタクイズに挑戦！">
+        <div class="hero-card-icon-wrap">
+          <i class="fa-solid fa-trophy"></i>
+        </div>
+        <div class="hero-card-content">
+          <div class="hero-card-badge">全30問 / ランダム10問出題</div>
+          <h3 class="hero-card-title">🎾 テニプリ ネタクイズに挑戦！</h3>
+          <p class="hero-card-desc">名言・珍場面・超絶技のディープなネタから厳選出題！あなたのテニプリ愛を今すぐテストしよう！</p>
+        </div>
+        <div class="hero-card-action">
+          <span>挑戦する</span>
+          <i class="fa-solid fa-play"></i>
+        </div>
+      </div>
     </div>
 
     <!-- 公式外部サイト クイックリンクバー -->
@@ -1900,32 +1965,6 @@
     </div>
     <div class="bday-grid" id="birthday-grid">
       <!-- JSでカレンダーグリッドを一括動的生成 -->
-    </div>
-  </div>
-</div>
-
-<!-- STICKY FILTER & SEARCH BAR -->
-<div class="filter-sticky-bar">
-  <div class="filter-container">
-    <!-- 検索バー ＋ 最新情報更新ボタン ＋ クイズ ＋ カレンダーボタン -->
-    <div class="search-action-row">
-      <button class="refresh-btn" id="quiz-start-btn" title="テニプリネタクイズに挑戦！" style="background: linear-gradient(135deg, #fdf2f8 0%, #ede9fe 100%); border-color: #f9a8d4; color: #be185d;">
-        <i class="fa-solid fa-question"></i>
-        <span>🎾 ネタクイズに挑戦！</span>
-      </button>
-      <button class="refresh-btn" id="calendar-jump-btn" title="推し活カレンダーへジャンプ" style="background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%); border-color: #86efac; color: #0f766e;">
-        <i class="fa-solid fa-calendar-days"></i>
-        <span>📅 推し活カレンダー</span>
-      </button>
-    </div>
-
-    <!-- カテゴリフィルター -->
-    <div class="cat-filters" id="cat-filters">
-      <button class="cat-btn active" data-cat="all">ALL すべて</button>
-      <button class="cat-btn" data-cat="goods">🛍️ グッズ・コラボ</button>
-      <button class="cat-btn" data-cat="anime">📺 アニメ</button>
-      <button class="cat-btn" data-cat="stage">🎭 テニミュ</button>
-      <button class="cat-btn" data-cat="event">🏢 イベント・ライブ</button>
     </div>
   </div>
 </div>
@@ -2219,13 +2258,48 @@ const characterBirthdays = [
 const categoryIcons = { anime:'📺', stage:'🎭', goods:'🛍️', event:'🏢' };
 const categoryLabels = { anime:'アニメ', stage:'テニミュ', goods:'グッズ・コラボ', event:'イベント・ライブ' };
 
-const STORAGE_KEY = 'tenipuri_news_v31_latest_oct22';
+const STORAGE_KEY = 'tenipuri_news_v32_latest_oct24';
 
-// ===== 2026年10月最新トピック＆今後の予定（10月〜2027年1月以降） =====
+// ===== ニュース日付判定（当日より3日以上前の過去ニュースは自動削除・除外） =====
+function isNewsActive(dateStr) {
+  if (!dateStr) return true;
+  // 未来の予定表記（"予定", "11月", "12月", "1月" など）は常に保持
+  if (dateStr.includes('予定') || (dateStr.includes('月') && !dateStr.includes('/'))) return true;
+  
+  const match = dateStr.match(/^(\d{1,2})\/(\d{1,2})/);
+  if (!match) return true;
+  
+  const m = parseInt(match[1], 10);
+  const d = parseInt(match[2], 10);
+  
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  // 判定基準日
+  const targetDate = new Date(currentYear, m - 1, d);
+  const today = new Date(currentYear, now.getMonth(), now.getDate());
+  
+  const diffDays = Math.floor((today - targetDate) / (1000 * 60 * 60 * 24));
+  // 当日より3日以上前のニュースは除外（false）
+  return diffDays < 3;
+}
+
+// ===== 直近3日以内の最新ニュース＆今後の予定（当日より3日以上前の過去ニュースは自動除外済み） =====
 const defaultNews = [
   {
-    id: 'news-2026-1021-anime-ep5',
-    date: '10/21',
+    id: 'news-2026-1023-tennimu-osaka',
+    date: '10/23',
+    category: 'stage',
+    media: '新テニミュ公式',
+    icon: '🎭',
+    title: 'ミュージカル『新テニスの王子様』The Final Stage：大阪公演好評上演中＆客席撮影タイム実施！',
+    description: 'SkyシアターMBSにて大阪公演が白熱上演中！本編の特定演出において客席からのスマホ写真撮影タイムが実施されSNSでも大反響！当日券・見逃し配信も好評受付中！',
+    schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji', 'u17'],
+    characters: ['越前リョーマ', '手塚国光', '跡部景吾', '幸村精市', '徳川カズヤ', '平等院鳳凰'],
+    sourceUrl: 'https://www.tennimu.com/'
+  },
+  {
+    id: 'news-2026-1022-anime-ep5',
+    date: '10/22',
     category: 'anime',
     media: 'アニメ公式',
     icon: '📺',
@@ -2234,150 +2308,6 @@ const defaultNews = [
     schoolIds: ['rikkai', 'seigaku', 'u17'],
     characters: ['幸村精市', '柳蓮二', '越前リョーマ'],
     sourceUrl: 'https://tenipuri.jp/news/news/19048.html'
-  },
-  {
-    id: 'news-2026-1015-gakupuri',
-    date: '10/15',
-    category: 'goods',
-    media: 'KONAMI公式',
-    icon: '🎮',
-    title: 'KONAMI：『学園祭の王子様』DLC第1弾「越前リョーガ」新規シナリオ＆描き下ろしスチル配信開始！',
-    description: 'Switch/Steam版『学園祭の王子様』にて、追加攻略キャラクター「越前リョーガ」（CV:宮野真守）有償DLCが10月15日より配信スタート！完全新規フルボイスシナリオ＆美麗スチル収録！',
-    schoolIds: ['u17', 'seigaku'],
-    characters: ['越前リョーガ', '越前リョーマ'],
-    sourceUrl: 'https://tenipuri.jp/news/goods/19239.html'
-  },
-  {
-    id: 'news-2026-1011-fever',
-    date: '10/11',
-    category: 'event',
-    media: 'テニプリ25th公式',
-    icon: '🎪',
-    title: '『テニプリ 25th Anniversary Event -Fever- Vol.1』大盛況開催＆公式グッズ事後受注販売スタート！',
-    description: '10月11日「esports TOKYO BAY studio」にて開催！青学・ルドルフ・六角キャスト10名登壇の書き下ろし朗読劇＆ライブで熱狂！イベント記念グッズの受注販売受付がスタート。さらにVol.2が2027年11月開催決定！',
-    schoolIds: ['seigaku', 'rokkaku', 'rudolph'],
-    characters: ['越前リョーマ', '手塚国光', '大石秀一郎', '不二周助', '観月はじめ', '不二裕太', '葵剣太郎', '佐伯虎次郎'],
-    sourceUrl: ''
-  },
-  {
-    id: 'news-2026-1010-tenipurist-autumn',
-    date: '10/10',
-    category: 'goods',
-    media: 'テニプリスト',
-    icon: '🍁',
-    title: '公式ストア「テニプリスト」オープン！秋の「紅葉狩りver.」新作グッズ＆来店特典解禁！',
-    description: '10月10日オープン記念！紅葉狩りをテーマにした新規描き下ろしイラストのアクリルスタンド、キャラバッジコレクション、クリアカードが登場！お買い上げ特典ショッパーもプレゼント。',
-    schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji'],
-    characters: ['越前リョーマ', '手塚国光', '跡部景吾', '幸村精市', '白石蔵ノ介'],
-    sourceUrl: 'https://tenipuri.jp/news/goods/19314.html'
-  },
-  {
-    id: 'news-2026-1009-konami',
-    date: '10/09',
-    category: 'goods',
-    media: 'KONAMI公式',
-    icon: '🎮',
-    title: 'コナミ：名作ゲーム『学園祭の王子様』『ドキドキサバイバル』思い出フォト＆寄せ書き再販決定！',
-    description: 'コナミデジタルエンタテインメントより、「も～っと 学園祭の王子様」「ぎゅ～っと！ ドキドキサバイバル」の伝説の思い出フォトメッセージ＆後夜祭寄せ書きアイテムが熱いリクエストに応えて待望の再販！',
-    schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji', 'higa'],
-    characters: ['越前リョーマ', '手塚国光', '跡部景吾', '幸村精市', '白石蔵ノ介', '木手永四郎'],
-    sourceUrl: 'https://tenipuri.jp/news/goods/19239.html'
-  },
-  {
-    id: 'news-2026-1008-shimamura',
-    date: '10/08',
-    category: 'goods',
-    media: 'しまむらパーク',
-    icon: '👕',
-    title: 'しまむらパーク：アニメ『新テニスの王子様』各校ジャージ風メンズルームウェア発売決定！',
-    description: '全国のしまむら系列「しまむらパーク」にて、青学・氷帝・立海・四天宝寺・比嘉の各校ユニフォームデザインを落とし込んだジャージ風ルームウェアが新発売！',
-    schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji', 'higa'],
-    characters: ['越前リョーマ', '跡部景吾', '幸村精市', '白石蔵ノ介', '木手永四郎'],
-    sourceUrl: 'https://tenipuri.jp/news/goods/19332.html'
-  },
-  {
-    id: 'news-2026-1008-tennimu',
-    date: '10/08',
-    category: 'stage',
-    media: '新テニミュ公式',
-    icon: '🎭',
-    title: 'ミュージカル『新テニスの王子様』The Final Stage：開幕記念オフィシャルグッズ＆当日引換券情報公開！',
-    description: 'いよいよクライマックスを迎える新テニミュ The Final Stage！劇場物販・公式通販グッズの全ラインナップおよび各公演の当日引換券・見逃し配信スケジュールが解禁！',
-    schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji', 'u17'],
-    characters: ['越前リョーマ', '手塚国光', '跡部景吾', '幸村精市', '徳川カズヤ', '平等院鳳凰'],
-    sourceUrl: 'https://www.tennimu.com/'
-  },
-  {
-    id: 'news-2026-1006-anime',
-    date: '10/06',
-    category: 'anime',
-    media: 'アニメ公式',
-    icon: '📺',
-    title: 'TVアニメ『新テニスの王子様 U-17 WORLD CUP 決勝メンバー決定戦』見逃し配信スケジュール解禁！',
-    description: 'テレ東系列にて放送中の最新TVシリーズ！ABEMA、U-NEXT、DMM TV、Lemino、Prime Videoほか各動画配信プラットフォームでの最新話配信スケジュールが公開！',
-    schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji', 'u17'],
-    characters: ['越前リョーマ', '手塚国光', '跡部景吾', '幸村精市', '白石蔵ノ介'],
-    sourceUrl: 'https://tenipuri.jp/news/news/19048.html'
-  },
-  {
-    id: 'news-2026-1005-ghana',
-    date: '10/05',
-    category: 'goods',
-    media: 'ロッテ・Ghana',
-    icon: '🍫',
-    title: 'ロッテ「プレミアムガーナ」× 跡部景吾：至高のコラボレーション企画が始動！',
-    description: 'ロッテの大人気チョコレート「プレミアムガーナ」と氷帝学園テニス部部長・跡部景吾の至高のコラボレーションが決定！オリジナル描き下ろしビジュアルや特別キャンペーンが順次公開！',
-    schoolIds: ['hyotei'],
-    characters: ['跡部景吾'],
-    sourceUrl: 'https://tenipuri.jp/news/goods/19081.html'
-  },
-  {
-    id: 'news-2026-1004-jf',
-    date: '10/04',
-    category: 'event',
-    media: 'ジャンプフェスタ',
-    icon: '🎪',
-    title: 'ジャンプフェスタ（JF）：『新テニスの王子様』ブース出展＆描き下ろし先行グッズ発表！',
-    description: '幕張メッセにて開催される冬の祭典「ジャンプフェスタ」に新テニスの王子様が出展！ショウワノート・ムービック等によるJF限定・先行販売アイテムが順次発表予定！',
-    schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji', 'higa', 'u17'],
-    characters: ['越前リョーマ', '手塚国光', '跡部景吾', '幸村精市', '白石蔵ノ介'],
-    sourceUrl: 'https://jumpsq.shueisha.co.jp/'
-  },
-  {
-    id: 'news-2026-1004-furyu',
-    date: '10/04',
-    category: 'goods',
-    media: 'フリュープライズ',
-    icon: '🧸',
-    title: 'フリュー：プライズマスコット『ちょぴぬいぷち』全国アミューズメント施設に青学①から順次登場！',
-    description: '手のひらサイズの愛らしいぬいぐるみシリーズ『ちょぴぬいぷち』に新テニスの王子様が登場！10月第2週の青学①を皮切りに、氷帝・立海・四天宝寺・比嘉・U-17が続々ラインナップ！',
-    schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji', 'higa', 'u17'],
-    characters: ['越前リョーマ', '手塚国光', '不二周助', '菊丸英二'],
-    sourceUrl: 'https://tenipuri.jp/news/goods/19239.html'
-  },
-  {
-    id: 'news-2026-1002-epos',
-    date: '10/02',
-    category: 'event',
-    media: 'マルイ・エポス',
-    icon: '💳',
-    title: 'エポスカード：『新テニスの王子様』コラボレーションクレジットカード新デザイン登場！',
-    description: 'マルイのエポスカードに新テニスの王子様の新デザインが登場！入会特典や会員限定のオリジナルグッズプレゼントキャンペーンもスタート！',
-    schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji'],
-    characters: ['越前リョーマ', '手塚国光', '跡部景吾', '幸村精市', '白石蔵ノ介'],
-    sourceUrl: 'https://tenipuri.jp/news/news/19113.html'
-  },
-  {
-    id: 'news-2026-1001-round1',
-    date: '10/01',
-    category: 'goods',
-    media: 'ラウンドワン',
-    icon: '🎳',
-    title: 'ラウンドワン：アニメ『新テニスの王子様』コラボキャンペーン第5弾 全国一斉スタート！',
-    description: '全国のラウンドワン100店舗にて10月1日より開催！ボウリング・カラオケコラボパック特典のオリジナルグッズやコラボドリンク＆フードが満を持して登場！',
-    schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji', 'u17'],
-    characters: ['越前リョーマ', '跡部景吾', '幸村精市', '白石蔵ノ介'],
-    sourceUrl: 'https://tenipuri.jp/news/news/19033.html'
   },
   {
     id: 'news-2026-1027-namja-yamabuki',
@@ -2443,12 +2373,16 @@ const defaultNews = [
 
 // ===== STATE =====
 let newsList = [];
-let selectedCategory = 'all';
 
 function loadNews() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) return JSON.parse(saved);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      // 当日より3日以上前の過去ニュースを自動削除・除外
+      const activeNews = parsed.filter(item => isNewsActive(item.date));
+      if (activeNews.length > 0) return activeNews;
+    }
   } catch(e) {}
   return [...defaultNews];
 }
@@ -2494,34 +2428,21 @@ function renderBirthdays() {
   }).join('');
 }
 
-// ===== CATEGORY FILTER =====
-function setCat(cat) {
-  selectedCategory = cat;
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === cat));
-  renderNewsList();
-}
-
-function getFilteredNews() {
-  return newsList.filter(item => {
-    if (selectedCategory !== 'all' && item.category !== selectedCategory) return false;
-    return true;
-  });
-}
-
-// ===== RENDER NEWS LIST =====
+// ===== RENDER NEWS LIST (ソート機能削除・常に全最新ニュースを表示) =====
 function renderNewsList() {
   const list = document.getElementById('news-list');
   const countLabel = document.getElementById('news-count-label');
-  const filtered = getFilteredNews();
+  // 当日より3日以上前の過去ニュースを除外
+  const activeItems = newsList.filter(item => isNewsActive(item.date));
 
-  countLabel.textContent = `表示中: ${filtered.length}件 (10月〜今後の最新情報)`;
+  countLabel.textContent = `最新ニュース: ${activeItems.length}件 (直近3日以内＆今後の予定)`;
 
-  if (filtered.length === 0) {
-    list.innerHTML = `<div class="empty-state"><div class="emoji">🎾</div><p>該当するニュース・情報が見つかりませんでした。</p></div>`;
+  if (activeItems.length === 0) {
+    list.innerHTML = `<div class="empty-state"><div class="emoji">🎾</div><p>該当する最新ニュース・予定が見つかりませんでした。</p></div>`;
     return;
   }
 
-  list.innerHTML = filtered.map((item, index) => {
+  list.innerHTML = activeItems.map((item, index) => {
     const delay = Math.min(index * 0.04, 0.35);
     const hasSource = Boolean(item.sourceUrl && item.sourceUrl.trim());
 
@@ -2563,11 +2484,11 @@ async function fetchOfficialNews() {
     url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
   ];
 
-  // 1. 公式最新マスタプールから未取得記事をマージ（10月中旬最新トピック完全網羅）
+  // 1. 公式最新マスタプールから未取得記事をマージ（当日より3日以上前の過去ニュースは除外）
   const officialMasterPool = [...defaultNews];
 
   officialMasterPool.forEach(item => {
-    if (!newsList.some(n => n.sourceUrl === item.sourceUrl || n.title === item.title)) {
+    if (isNewsActive(item.date) && !newsList.some(n => n.sourceUrl === item.sourceUrl || n.title === item.title)) {
       newsList.unshift(item);
       fetchedCount++;
     }
@@ -2587,6 +2508,9 @@ async function fetchOfficialNews() {
           const title = p.title ? p.title.rendered.replace(/<[^>]+>/g, '').trim() : '';
           const href = p.link || `https://tenipuri.jp/news/news/${p.id}.html`;
           const dateStr = p.date ? `${p.date.substring(5,7)}/${p.date.substring(8,10)}` : '最新';
+
+          // 当日より3日以上前の過去ニュースは取り込まない
+          if (!isNewsActive(dateStr)) return;
 
           if (title && href && !newsList.some(n => n.sourceUrl === href || n.title === title)) {
             let sIds = ['seigaku'];
@@ -2626,6 +2550,9 @@ async function fetchOfficialNews() {
     }
   }
 
+  // 常に当日より3日以上前のニュースを除外
+  newsList = newsList.filter(item => isNewsActive(item.date));
+
   saveNews();
   renderNewsList();
   renderCalendar(); // ニュースの更新に合わせてカレンダーも自動即時反映！
@@ -2641,6 +2568,8 @@ const officialCalendarItems = [
   { month: 10, date: '10/11', pill: 'event', pillText: 'イベント', title: 'テニプリ25周年記念イベント『-Fever- Vol.1』開催＆記念グッズ', sub: '', url: '' },
   { month: 10, date: '10/15', pill: 'goods', pillText: 'ゲーム', title: 'KONAMI：『学園祭の王子様』DLC第1弾「越前リョーガ」配信開始', sub: '', url: 'https://tenipuri.jp/news/goods/19239.html' },
   { month: 10, date: '10月2週', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（青学①）', sub: '', url: 'https://tenipuri.jp/news/goods/19239.html' },
+  { month: 10, date: '10/22', pill: 'broadcast', pillText: 'アニメ', title: 'アニメ『U-17 決勝メンバー決定戦』第5話先行カット公開＆BD情報', sub: '', url: 'https://tenipuri.jp/news/news/19048.html' },
+  { month: 10, date: '10/23', pill: 'stage', pillText: 'テニミュ', title: 'ミュージカル『新テニスの王子様』The Final Stage 大阪公演＆客席撮影タイム', sub: '', url: 'https://www.tennimu.com/' },
   { month: 10, date: '10月〜', pill: 'goods', pillText: 'グッズ', title: '集英社：原作完全再現 各校公式ジャージ 受注受付開始', sub: '', url: '' },
   { month: 10, date: '10月末', pill: 'goods', pillText: 'グッズ', title: 'メガハウス：見つめるフィギュア『るかっぷ』手塚国光・幸村精市', sub: '', url: 'https://www.megahobby.jp/products/item/4808/' },
   { month: 10, date: '10/27〜', pill: 'event', pillText: 'イベント', title: 'ナンジャタウン：『新テニスの王子様祭り』山吹祭りコラボ', sub: '', url: 'https://event.bandainamco-am.co.jp/namja/tenipurimaturi/' },
@@ -3485,18 +3414,16 @@ function init() {
 
   fetchOfficialNews(false);
 
-  // カレンダーボタン（画像1枚で見やすく別ウィンドウで開く）
-  const calJumpBtn = document.getElementById('calendar-jump-btn');
-  if (calJumpBtn) {
-    calJumpBtn.addEventListener('click', () => {
-      window.open('calendar.html', '_blank');
-    });
-  }
-
-  // クイズモーダル制御
+  // クイズモーダル制御（大型フィーチャーカード）
   const quizStartBtn = document.getElementById('quiz-start-btn');
   if (quizStartBtn) {
     quizStartBtn.addEventListener('click', openQuizModal);
+    quizStartBtn.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openQuizModal();
+      }
+    });
   }
   const quizCloseBtn = document.getElementById('quiz-close-btn');
   if (quizCloseBtn) {
@@ -3508,11 +3435,6 @@ function init() {
       if (e.target === quizOverlay) closeQuizModal();
     });
   }
-
-  // カテゴリフィルター
-  document.querySelectorAll('.cat-btn').forEach(b => {
-    b.addEventListener('click', () => setCat(b.dataset.cat));
-  });
 }
 
 document.addEventListener('DOMContentLoaded', init);
