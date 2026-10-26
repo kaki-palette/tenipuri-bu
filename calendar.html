@@ -22,6 +22,55 @@
       overflow-x: hidden;
     }
 
+    /* ===== テニプリ各校マルチカラーストライプ ===== */
+    .school-stripe-top {
+      height: 4px;
+      width: 100%;
+      background: linear-gradient(90deg, 
+        #1d4ed8 0%, #1d4ed8 14.3%,
+        #0284c7 14.3%, #0284c7 28.6%,
+        #ca8a04 28.6%, #ca8a04 42.9%,
+        #16a34a 42.9%, #16a34a 57.2%,
+        #9333ea 57.2%, #9333ea 71.5%,
+        #dc2626 71.5%, #dc2626 85.8%,
+        #1e293b 85.8%, #1e293b 100%
+      );
+    }
+    .school-stripe-side-left,
+    .school-stripe-side-right {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      z-index: 999;
+      pointer-events: none;
+    }
+    .school-stripe-side-left {
+      left: 0;
+      background: linear-gradient(180deg, 
+        #1d4ed8 0%, #1d4ed8 14.3%,
+        #0284c7 14.3%, #0284c7 28.6%,
+        #ca8a04 28.6%, #ca8a04 42.9%,
+        #16a34a 42.9%, #16a34a 57.2%,
+        #9333ea 57.2%, #9333ea 71.5%,
+        #dc2626 71.5%, #dc2626 85.8%,
+        #1e293b 85.8%, #1e293b 100%
+      );
+    }
+    .school-stripe-side-right {
+      right: 0;
+      background: linear-gradient(180deg, 
+        #1e293b 0%, #1e293b 14.3%,
+        #dc2626 14.3%, #dc2626 28.6%,
+        #9333ea 28.6%, #9333ea 42.9%,
+        #16a34a 42.9%, #16a34a 57.2%,
+        #ca8a04 57.2%, #ca8a04 71.5%,
+        #0284c7 71.5%, #0284c7 85.8%,
+        #1d4ed8 85.8%, #1d4ed8 100%
+      );
+    }
+    .text-chunk { display: inline-block; }
+
     /* 固定ツールバー */
     .cal-viewer-header {
       width: 100%;
@@ -400,6 +449,13 @@
   </style>
 </head>
 <body>
+  <!-- 画面両端のテニプリ各校カラーストライプ（額縁アクセント） -->
+  <div class="school-stripe-side-left"></div>
+  <div class="school-stripe-side-right"></div>
+
+  <!-- 上部カラーストライプ -->
+  <div class="school-stripe-top"></div>
+
   <!-- 上部固定ツールバー -->
   <div class="cal-viewer-header">
     <div class="cal-viewer-title">
@@ -426,7 +482,10 @@
         <div class="poster-head-left">
           <div class="poster-badge">2026 OCT — 2027 JAN</div>
           <h1>テニプリ 推し活カレンダー</h1>
-          <div class="poster-subtitle">各ニュース項目をクリックすると、公式の発表・特設ページへジャンプできます</div>
+          <div class="poster-subtitle">
+            <span class="text-chunk">各ニュース項目をクリックすると、</span>
+            <span class="text-chunk">公式の発表・特設ページへジャンプできます</span>
+          </div>
         </div>
         <svg viewBox="0 0 100 100" class="poster-ball-svg">
           <circle cx="50" cy="50" r="46" fill="#ccff00"/>

@@ -61,19 +61,86 @@
       background-attachment: fixed;
     }
 
-    /* 各校マルチカラーストライプライン（ロゴの放射ストライプを象徴） */
+    /* ===== テニプリ各校マルチカラーストライプ（プロデザイナー仕様の統一アクセント） ===== */
     .school-stripe-top {
       height: 4px;
       width: 100%;
       background: linear-gradient(90deg, 
-        #1d4ed8 0%, #1d4ed8 15%,
-        #0284c7 15%, #0284c7 30%,
-        #ca8a04 30%, #ca8a04 45%,
-        #16a34a 45%, #16a34a 60%,
-        #9333ea 60%, #9333ea 75%,
-        #dc2626 75%, #dc2626 90%,
-        #1e293b 90%, #1e293b 100%
+        #1d4ed8 0%, #1d4ed8 14.3%,
+        #0284c7 14.3%, #0284c7 28.6%,
+        #ca8a04 28.6%, #ca8a04 42.9%,
+        #16a34a 42.9%, #16a34a 57.2%,
+        #9333ea 57.2%, #9333ea 71.5%,
+        #dc2626 71.5%, #dc2626 85.8%,
+        #1e293b 85.8%, #1e293b 100%
       );
+    }
+
+    /* 画面両サイドの縦カラーストライプ（文章の邪魔にならない洗練された額縁アクセント） */
+    .school-stripe-side-left,
+    .school-stripe-side-right {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      z-index: 999;
+      pointer-events: none;
+    }
+    .school-stripe-side-left {
+      left: 0;
+      background: linear-gradient(180deg, 
+        #1d4ed8 0%, #1d4ed8 14.3%,
+        #0284c7 14.3%, #0284c7 28.6%,
+        #ca8a04 28.6%, #ca8a04 42.9%,
+        #16a34a 42.9%, #16a34a 57.2%,
+        #9333ea 57.2%, #9333ea 71.5%,
+        #dc2626 71.5%, #dc2626 85.8%,
+        #1e293b 85.8%, #1e293b 100%
+      );
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.05);
+    }
+    .school-stripe-side-right {
+      right: 0;
+      background: linear-gradient(180deg, 
+        #1e293b 0%, #1e293b 14.3%,
+        #dc2626 14.3%, #dc2626 28.6%,
+        #9333ea 28.6%, #9333ea 42.9%,
+        #16a34a 42.9%, #16a34a 57.2%,
+        #ca8a04 57.2%, #ca8a04 71.5%,
+        #0284c7 71.5%, #0284c7 85.8%,
+        #1d4ed8 85.8%, #1d4ed8 100%
+      );
+      box-shadow: -2px 0 8px rgba(0, 0, 0, 0.05);
+    }
+
+    /* セクション境界用スリムカラーストライプ */
+    .school-stripe-line {
+      height: 3px;
+      width: 100%;
+      background: linear-gradient(90deg, 
+        #1d4ed8 0%, #1d4ed8 14.3%,
+        #0284c7 14.3%, #0284c7 28.6%,
+        #ca8a04 28.6%, #ca8a04 42.9%,
+        #16a34a 42.9%, #16a34a 57.2%,
+        #9333ea 57.2%, #9333ea 71.5%,
+        #dc2626 71.5%, #dc2626 85.8%,
+        #1e293b 85.8%, #1e293b 100%
+      );
+      border-radius: 9999px;
+    }
+
+    /* 自然な文節単位改行ユーティリティ（スマホでも不自然な折り返しを防止） */
+    .text-chunk {
+      display: inline-block;
+      white-space: normal;
+    }
+    .pc-br {
+      display: inline;
+    }
+    @media (max-width: 640px) {
+      .pc-br {
+        display: none;
+      }
     }
 
     /* ===== HERO HEADER (コーポレート・公式紹介ホームページ風 フラッグシップスタイル) ===== */
@@ -630,33 +697,95 @@
     footer {
       background: #ffffff;
       border-top: 1px solid var(--border);
-      padding: 36px 20px;
+      padding: 40px 20px 48px;
       text-align: center;
+      position: relative;
     }
     .footer-logo {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.25rem;
+      font-size: 1.35rem;
       font-weight: 800;
       color: #0f172a;
       margin-bottom: 4px;
+      letter-spacing: 1px;
     }
     .footer-sub {
       font-family: 'Cormorant Garamond', serif;
       font-size: 0.95rem;
-      color: #ec4899;
-      margin-bottom: 12px;
+      color: var(--gold-deep);
+      margin-bottom: 16px;
       font-style: italic;
       font-weight: 600;
     }
-    .footer-text {
-      font-size: 0.75rem;
-      color: var(--text-muted);
+    .footer-lead-text {
+      font-size: 0.8rem;
+      color: var(--text-sub);
       line-height: 1.8;
-      max-width: 660px;
+      max-width: 680px;
+      margin: 0 auto 18px;
+      word-break: normal;
+      overflow-wrap: break-word;
+      line-break: strict;
+    }
+    .footer-links-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .footer-links-title i {
+      color: var(--gold-primary);
+    }
+    .footer-links-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 10px;
+      justify-content: center;
+      align-items: center;
+      max-width: 760px;
       margin: 0 auto;
     }
-    .footer-text a { color: #2563eb; text-decoration: none; font-weight: 600; }
-    .footer-text a:hover { text-decoration: underline; }
+    .footer-link-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #334155;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+    .footer-link-badge:hover {
+      background: #ffffff;
+      border-color: #38bdf8;
+      color: #0284c7;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.15);
+    }
+    .footer-link-badge i {
+      font-size: 0.72rem;
+      color: var(--gold-primary);
+    }
+    .footer-link-badge.avail:hover {
+      border-color: #f43f5e;
+      color: #e11d48;
+      box-shadow: 0 4px 12px rgba(225, 29, 72, 0.15);
+    }
+    .footer-copy {
+      margin-top: 24px;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
 
     /* TOAST & EMPTY STATE */
     .empty-state { text-align: center; padding: 48px 20px; color: var(--text-muted); }
@@ -1227,9 +1356,12 @@
     .cal-title-line {
       width: 250px;
       height: 4px;
-      background: #ccff00;
-      border-radius: 2px;
+      background: linear-gradient(90deg, 
+        #1d4ed8 0%, #0284c7 20%, #ca8a04 40%, #16a34a 60%, #9333ea 80%, #dc2626 100%
+      );
+      border-radius: 9999px;
       margin-top: 8px;
+      box-shadow: 0 0 10px rgba(204, 255, 0, 0.25);
     }
 
     /* テニスボールアイコン */
@@ -1872,7 +2004,11 @@
 </head>
 <body>
 
-<!-- 各校マルチカラーストライプバー -->
+<!-- 画面両端のテニプリ各校カラーストライプ（額縁アクセント） -->
+<div class="school-stripe-side-left"></div>
+<div class="school-stripe-side-right"></div>
+
+<!-- 各校マルチカラーストライプバー（トップ） -->
 <div class="school-stripe-top"></div>
 
 <!-- HERO HEADER (コーポレート・公式紹介ホームページ風 フラッグシップスタイル) -->
@@ -1891,15 +2027,16 @@
     </div>
     <h1 class="sr-only">テニプリ部 - 新テニスの王子様 公式情報＆推し活ポータル</h1>
 
-    <!-- コーポレートスローガン＆紹介文 -->
+    <!-- コーポレートスローガン＆紹介文（スマホでも自然な位置で改行） -->
     <div class="corporate-lead-box">
       <div class="corporate-slogan">
-        <span>新テニスの王子様 公式情報＆推し活ポータル</span>
+        <span class="text-chunk">新テニスの王子様</span>
+        <span class="text-chunk">公式情報＆推し活ポータル</span>
         <span class="slogan-tag">2026-2027</span>
       </div>
       <p class="corporate-desc">
-        新テニ・テニミュ・コラボ・グッズ・イベント・キャラクター誕生日の最新情報を網羅。<br>
-        すべてのテニプリファンへ、最前線の推し活スケジュールをお届けする総合情報アーカイブです。
+        <span class="text-chunk">新テニ・テニミュ・コラボ・グッズ・イベント・</span><span class="text-chunk">キャラクター誕生日の最新情報を網羅。</span><br class="pc-br">
+        <span class="text-chunk">すべてのテニプリファンへ、</span><span class="text-chunk">最前線の推し活スケジュールをお届けする</span><span class="text-chunk">総合情報アーカイブです。</span>
       </p>
     </div>
 
@@ -1913,7 +2050,10 @@
         <div class="hero-card-content">
           <div class="hero-card-badge">公式ポスター 1枚で確認</div>
           <h3 class="hero-card-title">📅 推し活カレンダーを見る</h3>
-          <p class="hero-card-desc">2026年秋〜2027年の最新推し活スケジュールを画像表示！各ニュースをクリックで公式情報元へ飛べます。</p>
+          <p class="hero-card-desc">
+            <span class="text-chunk">2026年秋〜2027年の最新推し活スケジュールを画像表示！</span>
+            <span class="text-chunk">各ニュースをクリックで公式情報元へ飛べます。</span>
+          </p>
         </div>
         <div class="hero-card-action">
           <span>開く</span>
@@ -1929,7 +2069,10 @@
         <div class="hero-card-content">
           <div class="hero-card-badge">全30問 / ランダム10問出題</div>
           <h3 class="hero-card-title">🎾 テニプリ ネタクイズに挑戦！</h3>
-          <p class="hero-card-desc">名言・珍場面・超絶技のディープなネタから厳選出題！あなたのテニプリ愛を今すぐテストしよう！</p>
+          <p class="hero-card-desc">
+            <span class="text-chunk">名言・珍場面・超絶技のディープなネタから厳選出題！</span>
+            <span class="text-chunk">あなたのテニプリ愛を今すぐテストしよう！</span>
+          </p>
         </div>
         <div class="hero-card-action">
           <span>挑戦する</span>
@@ -1956,18 +2099,23 @@
   </div>
 </header>
 
+<!-- セクション境界カラーストライプ -->
+<div class="school-stripe-line" style="opacity: 0.85;"></div>
+
 <!-- キャラ誕生日＆記念日カレンダーボード（各校独立カラー・手帳風カード） -->
 <div class="birthday-section">
   <div class="birthday-container">
     <div class="bday-header">
       <div class="bday-title"><i class="fa-solid fa-cake-candles"></i> 🎂 今月・近日誕生日のキャラクター</div>
-      <div class="bday-subtitle" id="current-month-label"></div>
     </div>
     <div class="bday-grid" id="birthday-grid">
       <!-- JSでカレンダーグリッドを一括動的生成 -->
     </div>
   </div>
 </div>
+
+<!-- セクション境界カラーストライプ -->
+<div class="school-stripe-line" style="opacity: 0.75;"></div>
 
 <!-- MAIN CONTENT -->
 <div class="page-shell">
@@ -2159,27 +2307,61 @@
     </div>
   </section>
 
-  <div class="section-meta-bar">
-    <span class="section-counter" id="news-count-label">Recent 3 Months</span>
+  <!-- ニュースセクション見出し＆カラーストライプアクセント -->
+  <div style="margin-top: 36px; margin-bottom: 16px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 8px;">
+      <h3 style="font-size: 1.12rem; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 8px; margin: 0;">
+        <i class="fa-solid fa-bullhorn" style="color: var(--gold-deep); font-size: 0.95rem;"></i>
+        <span>最新公式ニュース＆速報スケジュール</span>
+      </h3>
+      <span class="section-counter" id="news-count-label"></span>
+    </div>
+    <div class="school-stripe-line" style="height: 3px; opacity: 0.85;"></div>
   </div>
+
   <div class="day-events-list fan-event-list" id="news-list">
     <!-- JSで動的生成 -->
   </div>
 </div>
 
+<!-- セクション境界カラーストライプ -->
+<div class="school-stripe-line" style="opacity: 0.85;"></div>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">テニプリ部</div>
   <div class="footer-sub">Prince of Tennis Unofficial Fan Portal</div>
-  <div class="footer-text">
-    当サイトは『テニスの王子様』『新テニスの王子様』（© 許斐 剛／集英社）のファン応援情報まとめサイトです。<br>
-    各ニュースの「公式ソースへ」ボタンより公式サイトの個別詳細ページへ直接ジャンプできます。<br><br>
-    📌 公式リンク：
-    <a href="https://tenipuri.jp/news/" target="_blank" rel="noopener noreferrer">テニプリ公式NEWS</a> ／
-    <a href="https://www.tennimu.com/" target="_blank" rel="noopener noreferrer">テニミュ公式サイト</a> ／
-    <a href="https://twitter.com/shintenianime" target="_blank" rel="noopener noreferrer">アニメ公式X (@shintenianime)</a> ／
-    <a href="https://twitter.com/gravail" target="_blank" rel="noopener noreferrer">アベイル公式X (@gravail)</a>
+  
+  <p class="footer-lead-text">
+    <span class="text-chunk">当サイトは『テニスの王子様』『新テニスの王子様』</span><span class="text-chunk">（© 許斐 剛／集英社）のファン応援情報まとめサイトです。</span><br class="pc-br">
+    <span class="text-chunk">各ニュース記事の「公式ソースへ」ボタンより、</span><span class="text-chunk">各公式サイトの個別詳細ページへ直接アクセスいただけます。</span>
+  </p>
+
+  <div class="footer-links-title">
+    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+    <span>オフィシャル・関連公式リンク</span>
   </div>
+
+  <div class="footer-links-wrap">
+    <a class="footer-link-badge" href="https://tenipuri.jp/news/" target="_blank" rel="noopener noreferrer">
+      <i class="fa-solid fa-newspaper"></i>
+      <span>テニプリ公式NEWS</span>
+    </a>
+    <a class="footer-link-badge" href="https://www.tennimu.com/" target="_blank" rel="noopener noreferrer">
+      <i class="fa-solid fa-masks-theater"></i>
+      <span>テニミュ公式サイト</span>
+    </a>
+    <a class="footer-link-badge" href="https://twitter.com/shintenianime" target="_blank" rel="noopener noreferrer">
+      <i class="fa-brands fa-x-twitter"></i>
+      <span>アニメ公式X (@shintenianime)</span>
+    </a>
+    <a class="footer-link-badge avail" href="https://twitter.com/gravail" target="_blank" rel="noopener noreferrer">
+      <i class="fa-brands fa-x-twitter"></i>
+      <span>アベイル公式X (@gravail)</span>
+    </a>
+  </div>
+
+  <div class="footer-copy">© テニプリ部 All Rights Reserved.</div>
 </footer>
 
 <!-- QUIZ MODAL -->
@@ -2394,12 +2576,10 @@ function getSchool(id) { return schools.find(s => s.id === id); }
 // ===== RENDER BIRTHDAYS (独立カラー設定：学校選択の影響を一切受けない) =====
 function renderBirthdays() {
   const container = document.getElementById('birthday-grid');
-  const monthLabel = document.getElementById('current-month-label');
+  if (!container) return;
   const now = new Date();
   const currentMonth = now.getMonth() + 1;
   const currentDay = now.getDate();
-
-  monthLabel.textContent = `Current: ${currentMonth}月 / Pick Up`;
 
   const upcoming = characterBirthdays.filter(c => {
     return c.month === currentMonth || c.month === (currentMonth % 12 + 1);
