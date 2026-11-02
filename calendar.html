@@ -637,21 +637,11 @@
   <script>
     // ===== 最新カレンダーデータ（index.htmlと完全連動） =====
     const defaultCalendarItems = [
-      // 10 OCTOBER
-      { month: 10, date: '10/1〜', pill: 'collab', pillText: 'コラボ', title: 'ラウンドワン：新テニ コラボキャンペーン第5弾', url: 'https://tenipuri.jp/news/news/19033.html' },
-      { month: 10, date: '10/9', pill: 'goods', pillText: 'グッズ', title: 'ムービック：描き下ろしイラスト「寝起き」新作グッズ', url: 'https://tenipuri.jp/news/goods/18967.html' },
-      { month: 10, date: '10/9〜', pill: 'collab', pillText: 'コラボ', title: 'よこはまコスモワールド：新テニ コラボ第2弾＆限定チケット', url: 'https://tenipuri.jp/news/goods/19246.html' },
-      { month: 10, date: '10/10〜', pill: 'event', pillText: 'イベント', title: '公式ストア「テニプリスト」秋の紅葉狩り新作グッズ＆来店特典', url: 'https://tenipuri.jp/news/goods/19314.html' },
-      { month: 10, date: '10/11', pill: 'event', pillText: 'イベント', title: 'テニプリ25周年記念イベント『-Fever- Vol.1』開催＆記念グッズ', url: 'https://tenipuri.jp/news/category/goods/' },
-      { month: 10, date: '10/15', pill: 'goods', pillText: 'ゲーム', title: 'KONAMI：『学園祭の王子様』DLC第1弾「越前リョーガ」配信開始', url: 'https://tenipuri.jp/news/goods/19239.html' },
-      { month: 10, date: '10月2週', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（青学①）', url: 'https://charahiroba.com/' },
-      { month: 10, date: '10/22', pill: 'broadcast', pillText: 'アニメ', title: 'アニメ『U-17 決勝メンバー決定戦』第5話先行カット公開＆BD情報', url: 'https://tenipuri.jp/news/news/19048.html' },
-      { month: 10, date: '10/23', pill: 'stage', pillText: 'テニミュ', title: 'ミュージカル『新テニスの王子様』The Final Stage 大阪公演＆客席撮影タイム', url: 'https://www.tennimu.com/' },
-      { month: 10, date: '10/27〜', pill: 'goods', pillText: 'グッズ', title: 'ローソンプリント：『学プリ』『ドキサバ』新作ブロマイド第3弾（全45種）', url: 'https://lawson-print.com/' },
-      { month: 10, date: '10/27〜', pill: 'event', pillText: 'イベント', title: 'ナンジャタウン：『新テニスの王子様祭り』第6弾 山吹祭りコラボ', url: 'https://event.bandainamco-am.co.jp/namja/tenipurimaturi/' },
-      { month: 10, date: '10/28', pill: 'music', pillText: '音楽', title: '新TVアニメ OP曲 青酢「Walls And Bridges」＆ ED曲「金環蝕」CD発売', url: 'https://tenipuri.jp/news/goods/19048.html' },
-      { month: 10, date: '10/28', pill: 'goods', pillText: 'グッズ', title: 'メガハウス：『るかっぷ』越前リョーマ（日本代表ユニフォームver.）商品化', url: 'https://www.megahobby.jp/' },
-      { month: 10, date: '10月末', pill: 'goods', pillText: 'グッズ', title: 'メガハウス：見つめるフィギュア『るかっぷ』手塚国光・幸村精市', url: 'https://www.megahobby.jp/products/item/4808/' },
+      // 10 OCTOBER（現在も継続開催中・販売中のもののみ掲載。過去終了分は自動除外）
+      { month: 10, date: '10/27〜', pill: 'goods', pillText: 'グッズ', title: 'ローソンプリント：『学プリ』『ドキサバ』新作ブロマイド第3弾（〜12/28）', url: 'https://lawson-print.com/' },
+      { month: 10, date: '10/27〜', pill: 'event', pillText: 'イベント', title: 'ナンジャタウン：『新テニスの王子様祭り』山吹祭りコラボ（〜11/23）', url: 'https://event.bandainamco-am.co.jp/namja/tenipurimaturi/' },
+      { month: 10, date: '10月〜', pill: 'goods', pillText: 'グッズ', title: '集英社：原作完全再現 各校公式ジャージ 受注受付中', url: 'https://jumpcs.shueisha.co.jp/' },
+      { month: 10, date: '10月末', pill: 'goods', pillText: 'グッズ', title: 'メガハウス：見つめるフィギュア『るかっぷ』手塚国光・幸村精市 好評発売中', url: 'https://www.megahobby.jp/products/item/4808/' },
 
       // 11 NOVEMBER
       { month: 11, date: '11/4', pill: 'broadcast', pillText: 'アニメ', title: 'TVアニメ『U-17 決勝メンバー決定戦』第6話「やられたらやり返せ」放送', url: 'https://tenipuri.jp/' },
@@ -683,30 +673,19 @@
       const renderList = (items, targetId) => {
         const container = document.getElementById(targetId);
         if (!container) return;
-        container.innerHTML = items.map(item => {
-          const hasUrl = Boolean(item.url && item.url.trim());
-          if (hasUrl) {
-            return `
-              <a class="cal-row" href="${item.url}" target="_blank" rel="noopener noreferrer" title="${item.title} (公式ソースへジャンプ)">
-                <div class="cal-row-left">
-                  <span class="cal-date">${item.date}</span>
-                  <span class="cal-pill pill-${item.pill}">${item.pillText}</span>
-                  <span class="cal-title">${item.title}</span>
-                </div>
-                <i class="fa-solid fa-arrow-up-right-from-square cal-link-icon"></i>
-              </a>
-            `;
-          } else {
-            return `
-              <div class="cal-row static">
-                <div class="cal-row-left">
-                  <span class="cal-date">${item.date}</span>
-                  <span class="cal-pill pill-${item.pill}">${item.pillText}</span>
-                  <span class="cal-title">${item.title}</span>
-                </div>
+        // ソースURLのあるものだけを厳選表示
+        const validItems = items.filter(item => Boolean(item.url && item.url.trim()));
+        container.innerHTML = validItems.map(item => {
+          return `
+            <a class="cal-row" href="${item.url}" target="_blank" rel="noopener noreferrer" title="${item.title} (公式ソースへジャンプ)">
+              <div class="cal-row-left">
+                <span class="cal-date">${item.date}</span>
+                <span class="cal-pill pill-${item.pill}">${item.pillText}</span>
+                <span class="cal-title">${item.title}</span>
               </div>
-            `;
-          }
+              <i class="fa-solid fa-arrow-up-right-from-square cal-link-icon"></i>
+            </a>
+          `;
         }).join('');
       };
 

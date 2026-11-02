@@ -2149,20 +2149,13 @@
     <!-- 全月一目早見表（10月〜2027年1月の推し活が一瞬でわかる仕様） -->
     <div class="cal-glance-hint"><i class="fa-solid fa-arrows-left-right"></i> 月別ハイライト（タップで月切替・左右スワイプ可能）</div>
     <div class="cal-glance-strip" id="cal-glance-strip">
-      <div class="cal-glance-col active" data-jump="oct">
-        <span class="cal-glance-badge badge-oct">10 OCT</span>
-        <div class="cal-glance-highlights">
-          <span>ROUND1コラボ</span>
-          <span>テニプリスト</span>
-          <span>Fever vol.1</span>
-        </div>
-      </div>
-      <div class="cal-glance-col" data-jump="nov">
+      <div class="cal-glance-col active" data-jump="nov">
         <span class="cal-glance-badge badge-nov">11 NOV</span>
         <div class="cal-glance-highlights">
-          <span>ちょびぬい氷帝</span>
-          <span>Thank you祭</span>
-          <span>るかっぷ白石</span>
+          <span>アニメ第6話</span>
+          <span>新テニミュ凱旋</span>
+          <span>テニプリスト酉の市</span>
+          <span>アニメイト感謝祭</span>
         </div>
       </div>
       <div class="cal-glance-col" data-jump="dec">
@@ -2181,15 +2174,23 @@
           <span>FILAスニーカー</span>
         </div>
       </div>
+      <div class="cal-glance-col" data-jump="oct">
+        <span class="cal-glance-badge badge-oct">10 OCT</span>
+        <div class="cal-glance-highlights">
+          <span>山吹祭り開催中</span>
+          <span>学プリブロマイド</span>
+          <span>公式ジャージ</span>
+        </div>
+      </div>
     </div>
 
     <!-- 月別クイックタブ（スマホでスクロール不要・一目で全体把握） -->
     <div class="cal-quick-tabs" id="cal-quick-tabs">
       <button class="cal-qtab" data-target="all">ALL 全月</button>
-      <button class="cal-qtab active" data-target="oct">10 OCT</button>
-      <button class="cal-qtab" data-target="nov">11 NOV</button>
+      <button class="cal-qtab active" data-target="nov">11 NOV (当月)</button>
       <button class="cal-qtab" data-target="dec">12 DEC</button>
       <button class="cal-qtab" data-target="2027">2027年</button>
+      <button class="cal-qtab" data-target="oct">10 OCT</button>
     </div>
 
     <!-- カレンダーカード 2カラムグリッド -->
@@ -2440,13 +2441,13 @@ const characterBirthdays = [
 const categoryIcons = { anime:'📺', stage:'🎭', goods:'🛍️', event:'🏢' };
 const categoryLabels = { anime:'アニメ', stage:'テニミュ', goods:'グッズ・コラボ', event:'イベント・ライブ' };
 
-const STORAGE_KEY = 'tenipuri_news_v34_latest_nov01';
+const STORAGE_KEY = 'tenipuri_news_v35_nov02_strict';
 
 // ===== ニュース日付判定（当日より3日以上前の過去ニュースは自動削除・除外） =====
 function isNewsActive(dateStr) {
-  if (!dateStr) return true;
-  // 未来の予定表記（"予定", "11月", "12月", "1月", "2月" など）は常に保持
-  if (dateStr.includes('予定') || (dateStr.includes('月') && !dateStr.includes('/'))) return true;
+  if (!dateStr) return false;
+  // 未来の予定表記や月単体表記（"予定", "11月", "12月", "1月", "2月", "3月" など）は常に保持
+  if (dateStr.includes('予定') || dateStr.includes('〜') || (dateStr.includes('月') && !dateStr.includes('/'))) return true;
   
   const match = dateStr.match(/^(\d{1,2})\/(\d{1,2})/);
   if (!match) return true;
@@ -2455,13 +2456,20 @@ function isNewsActive(dateStr) {
   const d = parseInt(match[2], 10);
   
   const now = new Date();
-  const currentYear = now.getFullYear();
-  // 判定基準日
-  const targetDate = new Date(currentYear, m - 1, d);
-  const today = new Date(currentYear, now.getMonth(), now.getDate());
+  const currentMonth = now.getMonth() + 1; // 1-12
+  let targetYear = now.getFullYear();
+  
+  // もし現在の月が10〜12月で、記事の月が1〜4月の場合は来年（2027年）とみなす
+  if (currentMonth >= 10 && m <= 4) {
+    targetYear += 1;
+  }
+  
+  const targetDate = new Date(targetYear, m - 1, d);
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   
   const diffDays = Math.floor((today - targetDate) / (1000 * 60 * 60 * 24));
-  // 当日より3日以上前のニュースは除外（false）
+  // diffDays <= 0 は今日または未来の予定。
+  // diffDays > 0 は過去。3日以上前（diffDays >= 3）は除外。
   return diffDays < 3;
 }
 
@@ -2734,8 +2742,8 @@ function renderBirthdays() {
 function renderNewsList() {
   const list = document.getElementById('news-list');
   const countLabel = document.getElementById('news-count-label');
-  // 当日より3日以上前の過去ニュースを除外
-  const activeItems = newsList.filter(item => isNewsActive(item.date));
+  // 当日より3日以上前の過去ニュースを除外＆公式ソースURLのない記事は完全除外
+  const activeItems = newsList.filter(item => isNewsActive(item.date) && Boolean(item.sourceUrl && item.sourceUrl.trim()));
 
   countLabel.textContent = `最新ニュース: ${activeItems.length}件 (直近3日以内＆今後の予定)`;
 
@@ -2746,32 +2754,25 @@ function renderNewsList() {
 
   list.innerHTML = activeItems.map((item, index) => {
     const delay = Math.min(index * 0.04, 0.35);
-    const hasSource = Boolean(item.sourceUrl && item.sourceUrl.trim());
 
     return `
       <div class="day-event-card" style="border-left-color: var(--gold-primary); animation-delay: ${delay}s;">
         <div class="day-event-time">
           <span class="event-list-date">${item.date}</span>
-          <span class="event-list-media">${item.media || categoryLabels[item.category]}</span>
+          <span class="event-list-media">${item.media || categoryLabels[item.category] || '公式NEWS'}</span>
         </div>
         <div class="day-event-main">
-          ${hasSource ? `
-          <a class="news-title-link" href="${item.sourceUrl}" target="_blank" rel="noopener noreferrer">
+          <a class="news-title-link" href="${item.sourceUrl}" target="_blank" rel="noopener noreferrer" title="${item.title} (情報ソースへジャンプ)">
             <span>${item.icon || categoryIcons[item.category] || '📢'}</span>
             <span>${item.title}</span>
-          </a>` : `
-          <div class="news-title-static" style="color: #0f172a; font-size: 0.94rem; font-weight: 700; line-height: 1.5; display: inline-flex; align-items: center; gap: 8px;">
-            <span>${item.icon || categoryIcons[item.category] || '📢'}</span>
-            <span>${item.title}</span>
-          </div>`}
+          </a>
           <p>${item.description}</p>
         </div>
-        ${hasSource ? `
         <div class="day-event-right">
           <a class="source-jump-btn" href="${item.sourceUrl}" target="_blank" rel="noopener noreferrer">
             <i class="fa-solid fa-arrow-up-right-from-square"></i> 公式ソースへ
           </a>
-        </div>` : ''}
+        </div>
       </div>`;
   }).join('');
 }
@@ -2862,34 +2863,23 @@ async function fetchOfficialNews() {
 
 // ===== 添付画像完全再現：テニプリ 推し活カレンダー データベース ＆ レンダリング =====
 const officialCalendarItems = [
-  // 10 OCTOBER
-  { month: 10, date: '10/1〜', pill: 'collab', pillText: 'コラボ', title: 'ラウンドワン：新テニ コラボキャンペーン第5弾', sub: '', url: 'https://tenipuri.jp/news/news/19033.html' },
-  { month: 10, date: '10/9', pill: 'goods', pillText: 'グッズ', title: 'ムービック：描き下ろしイラスト「寝起き」新作グッズ', sub: '', url: 'https://tenipuri.jp/news/goods/18967.html' },
-  { month: 10, date: '10/9〜', pill: 'collab', pillText: 'コラボ', title: 'よこはまコスモワールド：新テニ コラボ第2弾＆限定チケット', sub: '', url: 'https://tenipuri.jp/news/goods/19246.html' },
-  { month: 10, date: '10/10〜', pill: 'event', pillText: 'イベント', title: '公式ストア「テニプリスト」秋の紅葉狩り新作グッズ＆来店特典', sub: '', url: 'https://tenipuri.jp/news/goods/19314.html' },
-  { month: 10, date: '10/11', pill: 'event', pillText: 'イベント', title: 'テニプリ25周年記念イベント『-Fever- Vol.1』開催＆記念グッズ', sub: '', url: 'https://tenipuri.jp/news/category/goods/' },
-  { month: 10, date: '10/15', pill: 'goods', pillText: 'ゲーム', title: 'KONAMI：『学園祭の王子様』DLC第1弾「越前リョーガ」配信開始', sub: '', url: 'https://tenipuri.jp/news/goods/19239.html' },
-  { month: 10, date: '10月2週', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（青学①）', sub: '', url: 'https://tenipuri.jp/news/goods/19239.html' },
-  { month: 10, date: '10/22', pill: 'broadcast', pillText: 'アニメ', title: 'アニメ『U-17 決勝メンバー決定戦』第5話先行カット公開＆BD情報', sub: '', url: 'https://tenipuri.jp/news/news/19048.html' },
-  { month: 10, date: '10/23', pill: 'stage', pillText: 'テニミュ', title: 'ミュージカル『新テニスの王子様』The Final Stage 大阪公演＆客席撮影タイム', sub: '', url: 'https://www.tennimu.com/' },
-  { month: 10, date: '10/27〜', pill: 'goods', pillText: 'グッズ', title: 'ローソンプリント：『学プリ』『ドキサバ』新作ブロマイド第3弾（全45種）', sub: '', url: 'https://lawson-print.com/' },
-  { month: 10, date: '10/27〜', pill: 'event', pillText: 'イベント', title: 'ナンジャタウン：『新テニスの王子様祭り』山吹祭りコラボ', sub: '', url: 'https://event.bandainamco-am.co.jp/namja/tenipurimaturi/' },
-  { month: 10, date: '10/28', pill: 'music', pillText: '音楽', title: '新TVアニメ OP曲 青酢「Walls And Bridges」＆ ED曲「金環蝕」CD発売', sub: '', url: 'https://tenipuri.jp/news/goods/19048.html' },
-  { month: 10, date: '10/28', pill: 'goods', pillText: 'グッズ', title: 'メガハウス：『るかっぷ』越前リョーマ（日本代表ユニフォームver.）商品化', sub: '', url: 'https://www.megahobby.jp/' },
-  { month: 10, date: '10月〜', pill: 'goods', pillText: 'グッズ', title: '集英社：原作完全再現 各校公式ジャージ 受注受付開始', sub: '', url: 'https://jumpcs.shueisha.co.jp/' },
-  { month: 10, date: '10月末', pill: 'goods', pillText: 'グッズ', title: 'メガハウス：見つめるフィギュア『るかっぷ』手塚国光・幸村精市', sub: '', url: 'https://www.megahobby.jp/products/item/4808/' },
+  // 10 OCTOBER（現在も継続開催中・販売中のもののみ掲載。過去終了分は自動除外）
+  { month: 10, date: '10/27〜', pill: 'goods', pillText: 'グッズ', title: 'ローソンプリント：『学プリ』『ドキサバ』新作ブロマイド第3弾（全45種）好評発売中', sub: '〜12/28', url: 'https://lawson-print.com/' },
+  { month: 10, date: '10/27〜', pill: 'event', pillText: 'イベント', title: 'ナンジャタウン：『新テニスの王子様祭り』山吹祭りコラボ 大好評開催中', sub: '〜11/23', url: 'https://event.bandainamco-am.co.jp/namja/tenipurimaturi/' },
+  { month: 10, date: '10月〜', pill: 'goods', pillText: 'グッズ', title: '集英社：原作完全再現 各校公式ジャージ 受注受付中', sub: '', url: 'https://jumpcs.shueisha.co.jp/' },
+  { month: 10, date: '10月末', pill: 'goods', pillText: 'グッズ', title: 'メガハウス：見つめるフィギュア『るかっぷ』手塚国光・幸村精市 好評発売中', sub: '', url: 'https://www.megahobby.jp/products/item/4808/' },
 
   // 11 NOVEMBER
-  { month: 11, date: '11/4', pill: 'broadcast', pillText: 'アニメ', title: 'TVアニメ『U-17 決勝メンバー決定戦』第6話「やられたらやり返せ」放送', sub: '', url: 'https://tenipuri.jp/' },
-  { month: 11, date: '11/6〜', pill: 'stage', pillText: 'テニミュ', title: 'ミュージカル『新テニスの王子様』The Final Stage 東京凱旋公演（〜11/15）', sub: '', url: 'https://www.tennimu.com/' },
-  { month: 11, date: '11/6〜', pill: 'collab', pillText: 'コラボ', title: 'アニメイトカフェGratte：リョーマ＆リョーガ「ゆるスタ」コラボ（〜11/29）', sub: '', url: 'https://www.animate.co.jp/gratte/' },
+  { month: 11, date: '11/4', pill: 'broadcast', pillText: 'アニメ', title: 'TVアニメ『U-17 決勝メンバー決定戦』第6話「やられたらやり返せ」放送', sub: 'テレ東ほか', url: 'https://tenipuri.jp/' },
+  { month: 11, date: '11/6〜', pill: 'stage', pillText: 'テニミュ', title: 'ミュージカル『新テニスの王子様』The Final Stage 東京凱旋公演（〜11/15）', sub: 'Kanadevia Hall', url: 'https://www.tennimu.com/' },
+  { month: 11, date: '11/6〜', pill: 'collab', pillText: 'コラボ', title: 'アニメイトカフェGratte：リョーマ＆リョーガ「ゆるスタ」コラボ（〜11/29）', sub: '全国11店舗', url: 'https://www.animate.co.jp/gratte/' },
   { month: 11, date: '11/7〜', pill: 'collab', pillText: 'コラボ', title: 'イオン限定：新テニ クリスマス「クッキー缶」（全5校）＆チョコインサブレ', sub: '', url: 'https://tenipuri.jp/' },
-  { month: 11, date: '11/10締切', pill: 'goods', pillText: 'グッズ', title: 'ラウンドワン：コラボ第5弾 事後通販 予約受付終了', sub: '', url: 'https://tenipuri.jp/news/news/19033.html' },
+  { month: 11, date: '11/10締切', pill: 'goods', pillText: 'グッズ', title: 'ラウンドワン：コラボ第5弾 事後通販 予約受付終了', sub: 'Anime Store.JP', url: 'https://tenipuri.jp/news/news/19033.html' },
   { month: 11, date: '11月2週', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（氷帝）', sub: '', url: 'https://charahiroba.com/' },
-  { month: 11, date: '11/14〜', pill: 'goods', pillText: 'グッズ', title: '公式ストア「テニプリスト」：新描き下ろし「酉の市ver.」新作グッズ', sub: '', url: 'https://tenipuri.jp/' },
-  { month: 11, date: '11/21〜', pill: 'event', pillText: 'イベント', title: 'アニメイト：『Thank you for Tennis』アニメ放送記念全国フェア（〜12/13）', sub: '', url: 'https://www.animate-onlineshop.jp/' },
+  { month: 11, date: '11/14〜', pill: 'goods', pillText: 'グッズ', title: '公式ストア「テニプリスト」：新描き下ろし「酉の市ver.」新作グッズ', sub: '新宿マルイアネックス', url: 'https://tenipuri.jp/' },
+  { month: 11, date: '11/21〜', pill: 'event', pillText: 'イベント', title: 'アニメイト：『Thank you for Tennis』アニメ放送記念全国フェア（〜12/13）', sub: '全国アニメイト', url: 'https://www.animate-onlineshop.jp/' },
   { month: 11, date: '11/21', pill: 'event', pillText: 'イベント', title: 'テニプリ25周年記念イベント『-Fever- Vol.2』開催（有明）', sub: '', url: 'https://tenipuri.jp/' },
-  { month: 11, date: '11/24〜', pill: 'event', pillText: 'イベント', title: 'ナンジャタウン：『新テニスの王子様祭り』第7弾 聖ルドルフ祭りコラボ', sub: '', url: 'https://event.bandainamco-am.co.jp/namja/tenipurimaturi/' },
+  { month: 11, date: '11/24〜', pill: 'event', pillText: 'イベント', title: 'ナンジャタウン：『新テニスの王子様祭り』第7弾 聖ルドルフ祭りコラボ', sub: '〜12/21', url: 'https://event.bandainamco-am.co.jp/namja/tenipurimaturi/' },
   { month: 11, date: '11/30', pill: 'goods', pillText: 'グッズ', title: 'ブシロード：『新テニ RisingBeat』ハロウィンVer.ジオラマアクスタ発売', sub: '', url: 'https://tenipuri.jp/' },
   { month: 11, date: '11月末', pill: 'goods', pillText: 'グッズ', title: 'メガハウス：人気ミニフィギュア『いるすた＆るかっぷ』不二周助・白石蔵ノ介', sub: '', url: 'https://tenipuri.jp/news/goods/19041.html' },
 
@@ -2915,16 +2905,18 @@ const officialCalendarItems = [
   { month: 3, date: '3月予定', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（U-17日本代表）', sub: '', url: 'https://charahiroba.com/' }
 ];
 
-// 表示中ニュースとスケジュールを自動統合
+// 表示中ニュースとスケジュールを自動統合（3日以上前の過去・URLのないものは完全除外）
 function buildCalendarMergedData() {
   const merged = [...officialCalendarItems];
 
   // 現在表示されているニュース(newsList)から自動的に日付と情報を読み取り、カレンダーへ同期
   newsList.forEach(news => {
-    let m = 9;
+    if (!news.sourceUrl || !news.sourceUrl.trim()) return; // URLのない記事は除外
+
+    let m = 11;
     if (news.date && news.date.includes('/')) {
       const parts = news.date.split('/');
-      m = parseInt(parts[0], 10) || 9;
+      m = parseInt(parts[0], 10) || 11;
     }
 
     let pill = 'goods';
@@ -2945,10 +2937,7 @@ function buildCalendarMergedData() {
     );
 
     if (!isDup && (m >= 10 || m <= 3)) {
-      // ニュースタイトルをシンプルに整形
       let cleanTitle = news.title.replace(/^.*?[：:](.*)$/, '$1').trim();
-      // 自然なタイトル全文を保持して表示
-      // cleanTitle is kept full
 
       merged.push({
         month: m,
@@ -2957,12 +2946,13 @@ function buildCalendarMergedData() {
         pillText: pillText,
         title: cleanTitle,
         sub: `(${news.media || '公式NEWS'})`,
-        url: news.sourceUrl || ''
+        url: news.sourceUrl
       });
     }
   });
 
-  return merged;
+  // 当日より3日以上前の過去アイテムを除外 ＆ ソースURLのないものは完全除外
+  return merged.filter(item => isNewsActive(item.date) && Boolean(item.url && item.url.trim()));
 }
 
 // 添付画像完全再現カレンダー描画
@@ -2974,38 +2964,33 @@ function renderCalendar() {
     if (!el) return;
 
     const list = allEvents.filter(e => e.month === monthNum);
+
+    if (list.length === 0) {
+      el.innerHTML = `
+        <div style="padding: 24px 16px; text-align: center; color: #94a3b8; font-size: 0.88rem;">
+          <i class="fa-solid fa-calendar-check" style="margin-right: 6px; color: var(--gold-primary);"></i>
+          当月以前の過去イベントは終了しました。今後の最新スケジュールをご覧ください。
+        </div>
+      `;
+      return;
+    }
+
     el.innerHTML = list.map(item => {
-      const hasUrl = Boolean(item.url && item.url.trim());
-      if (hasUrl) {
-        return `
-          <a class="cal-row" href="${item.url}" target="_blank" rel="noopener noreferrer" title="${item.title} (情報ソースへジャンプ)">
-            <div class="cal-row-left">
-              <span class="cal-date-text">${item.date}</span>
-              <span class="cal-tag-pill pill-${item.pill}">${item.pillText}</span>
-              <div class="cal-title-text">
-                ${item.title}${item.sub ? `<span class="cal-sub-text">${item.sub}</span>` : ''}
-              </div>
-            </div>
-            <i class="fa-solid fa-arrow-up-right-from-square cal-link-arrow"></i>
-          </a>
-        `;
-      } else {
-        return `
-          <div class="cal-row cal-row-static">
-            <div class="cal-row-left">
-              <span class="cal-date-text">${item.date}</span>
-              <span class="cal-tag-pill pill-${item.pill}">${item.pillText}</span>
-              <div class="cal-title-text">
-                ${item.title}${item.sub ? `<span class="cal-sub-text">${item.sub}</span>` : ''}
-              </div>
+      return `
+        <a class="cal-row" href="${item.url}" target="_blank" rel="noopener noreferrer" title="${item.title} (情報ソースへジャンプ)">
+          <div class="cal-row-left">
+            <span class="cal-date-text">${item.date}</span>
+            <span class="cal-tag-pill pill-${item.pill}">${item.pillText}</span>
+            <div class="cal-title-text">
+              ${item.title}${item.sub ? `<span class="cal-sub-text">${item.sub}</span>` : ''}
             </div>
           </div>
-        `;
-      }
+          <i class="fa-solid fa-arrow-up-right-from-square cal-link-arrow"></i>
+        </a>
+      `;
     }).join('');
   };
 
-  // 9月は表示対象外
   renderMonthList(10, 'cal-list-oct');
   renderMonthList(11, 'cal-list-nov');
   renderMonthList(12, 'cal-list-dec');
@@ -3075,9 +3060,9 @@ function initCalendarTabs() {
     });
   });
 
-  // 初期表示: スマホ環境(<=820px)ではスクロール不要で1画面に収まるよう当月(10月)を選択
+  // 初期表示: スマホ環境(<=820px)ではスクロール不要で1画面に収まるよう当月(11月)を選択
   if (window.innerWidth <= 820) {
-    switchCalendarMonth('oct');
+    switchCalendarMonth('nov');
   } else {
     switchCalendarMonth('all');
   }
