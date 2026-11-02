@@ -1394,6 +1394,7 @@
     }
     .pill-goods { background: #0d9488; }
     .pill-broadcast { background: #e11d48; }
+    .pill-stage { background: #9333ea; }
     .pill-event { background: #6366f1; }
     .pill-collab { background: #0284c7; }
     .pill-music { background: #ea580c; }
@@ -2124,7 +2125,7 @@
     <!-- ヘッダー -->
     <div class="cal-poster-header">
       <div class="cal-poster-title-area">
-        <div class="cal-header-sub">2026 OCT — 2027 JAN</div>
+        <div class="cal-header-sub">2026 NOV — 2027 MAR</div>
         <h2 class="cal-header-title">テニプリ 推し活カレンダー</h2>
         <div class="cal-title-line"></div>
       </div>
@@ -2140,17 +2141,18 @@
     <!-- 凡例ピルバー -->
     <div class="cal-legend-row">
       <span class="cal-legend-pill pill-goods">グッズ</span>
-      <span class="cal-legend-pill pill-broadcast">放送</span>
+      <span class="cal-legend-pill pill-broadcast">放送・アニメ</span>
+      <span class="cal-legend-pill pill-stage">テニミュ</span>
       <span class="cal-legend-pill pill-event">イベント</span>
       <span class="cal-legend-pill pill-collab">コラボ</span>
-      <span class="cal-legend-pill pill-music">アニメ・音楽</span>
+      <span class="cal-legend-pill pill-music">音楽</span>
     </div>
 
-    <!-- 全月一目早見表（10月〜2027年1月の推し活が一瞬でわかる仕様） -->
+    <!-- 全月一目早見表（11月〜2027年3月の推し活が一瞬でわかる仕様） -->
     <div class="cal-glance-hint"><i class="fa-solid fa-arrows-left-right"></i> 月別ハイライト（タップで月切替・左右スワイプ可能）</div>
     <div class="cal-glance-strip" id="cal-glance-strip">
       <div class="cal-glance-col active" data-jump="nov">
-        <span class="cal-glance-badge badge-nov">11 NOV</span>
+        <span class="cal-glance-badge badge-nov">11 NOV (当月)</span>
         <div class="cal-glance-highlights">
           <span>アニメ第6話</span>
           <span>新テニミュ凱旋</span>
@@ -2161,8 +2163,8 @@
       <div class="cal-glance-col" data-jump="dec">
         <span class="cal-glance-badge badge-dec">12 DEC</span>
         <div class="cal-glance-highlights">
-          <span>カルピンおうち</span>
-          <span>一番くじ</span>
+          <span>カルピンおうち3</span>
+          <span>一番くじ発売</span>
           <span>JF先行グッズ</span>
         </div>
       </div>
@@ -2170,16 +2172,16 @@
         <span class="cal-glance-badge badge-2027">2027年</span>
         <div class="cal-glance-highlights">
           <span>ぽわぬい発売</span>
-          <span>跡部フィギュア</span>
           <span>FILAスニーカー</span>
+          <span>跡部フィギュア</span>
         </div>
       </div>
       <div class="cal-glance-col" data-jump="oct">
         <span class="cal-glance-badge badge-oct">10 OCT</span>
         <div class="cal-glance-highlights">
-          <span>山吹祭り開催中</span>
+          <span>山吹祭り(開催中)</span>
           <span>学プリブロマイド</span>
-          <span>公式ジャージ</span>
+          <span>公式ジャージ受注</span>
         </div>
       </div>
     </div>
@@ -2190,23 +2192,12 @@
       <button class="cal-qtab active" data-target="nov">11 NOV (当月)</button>
       <button class="cal-qtab" data-target="dec">12 DEC</button>
       <button class="cal-qtab" data-target="2027">2027年</button>
-      <button class="cal-qtab" data-target="oct">10 OCT</button>
+      <button class="cal-qtab" data-target="oct">10 OCT (継続中)</button>
     </div>
 
-    <!-- カレンダーカード 2カラムグリッド -->
+    <!-- カレンダーカード 2カラムグリッド（11月を最優先・左上に配置） -->
     <div class="cal-cards-grid" id="cal-cards-grid">
-      <!-- 10 OCTOBER -->
-      <div class="cal-block-card" data-cal-month="oct">
-        <div class="cal-block-head head-oct">
-          <span class="cal-block-num">10</span>
-          <span class="cal-block-name name-oct">OCTOBER</span>
-        </div>
-        <div class="cal-block-list" id="cal-list-oct">
-          <!-- JSで描画 -->
-        </div>
-      </div>
-
-      <!-- 11 NOVEMBER -->
+      <!-- 11 NOVEMBER（主役） -->
       <div class="cal-block-card" data-cal-month="nov">
         <div class="cal-block-head head-nov">
           <span class="cal-block-num">11</span>
@@ -2224,6 +2215,17 @@
           <span class="cal-block-name name-dec">DECEMBER</span>
         </div>
         <div class="cal-block-list" id="cal-list-dec">
+          <!-- JSで描画 -->
+        </div>
+      </div>
+
+      <!-- 10 OCTOBER（継続中・アーカイブ） -->
+      <div class="cal-block-card" data-cal-month="oct">
+        <div class="cal-block-head head-oct">
+          <span class="cal-block-num">10</span>
+          <span class="cal-block-name name-oct">OCTOBER</span>
+        </div>
+        <div class="cal-block-list" id="cal-list-oct">
           <!-- JSで描画 -->
         </div>
       </div>
@@ -2441,7 +2443,7 @@ const characterBirthdays = [
 const categoryIcons = { anime:'📺', stage:'🎭', goods:'🛍️', event:'🏢' };
 const categoryLabels = { anime:'アニメ', stage:'テニミュ', goods:'グッズ・コラボ', event:'イベント・ライブ' };
 
-const STORAGE_KEY = 'tenipuri_news_v35_nov02_strict';
+const STORAGE_KEY = 'tenipuri_news_v37_perfect_nov02';
 
 // ===== ニュース日付判定（当日より3日以上前の過去ニュースは自動削除・除外） =====
 function isNewsActive(dateStr) {
@@ -2688,11 +2690,18 @@ let newsList = [];
 
 function loadNews() {
   try {
+    // 過去バージョンのキャッシュを自動完全破棄して最新データを強制ロード
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith('tenipuri_news_') && k !== STORAGE_KEY) {
+        localStorage.removeItem(k);
+      }
+    }
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
-      // 当日より3日以上前の過去ニュースを自動削除・除外
-      const activeNews = parsed.filter(item => isNewsActive(item.date));
+      // 当日より3日以上前の過去ニュースを除外＆公式ソースURLのあるもののみ保持
+      const activeNews = parsed.filter(item => isNewsActive(item.date) && Boolean(item.sourceUrl && item.sourceUrl.trim()));
       if (activeNews.length > 0) return activeNews;
     }
   } catch(e) {}
@@ -2912,6 +2921,7 @@ function buildCalendarMergedData() {
   // 現在表示されているニュース(newsList)から自動的に日付と情報を読み取り、カレンダーへ同期
   newsList.forEach(news => {
     if (!news.sourceUrl || !news.sourceUrl.trim()) return; // URLのない記事は除外
+    if (!isNewsActive(news.date)) return; // 3日以上前の過去ニュースはカレンダーにも追加しない
 
     let m = 11;
     if (news.date && news.date.includes('/')) {
@@ -2921,8 +2931,8 @@ function buildCalendarMergedData() {
 
     let pill = 'goods';
     let pillText = 'グッズ';
-    if (news.category === 'stage') { pill = 'broadcast'; pillText = 'テニミュ'; }
-    else if (news.category === 'anime') { pill = 'broadcast'; pillText = '放送'; }
+    if (news.category === 'stage') { pill = 'stage'; pillText = 'テニミュ'; }
+    else if (news.category === 'anime') { pill = 'broadcast'; pillText = 'アニメ'; }
     else if (news.category === 'event') { pill = 'event'; pillText = 'イベント'; }
     else if (news.title.includes('コラボ') || (news.media && news.media.includes('コラボ')) || news.title.includes('パシオス') || news.title.includes('ドン・キホーテ') || news.title.includes('ローソン')) {
       pill = 'collab'; pillText = 'コラボ';
