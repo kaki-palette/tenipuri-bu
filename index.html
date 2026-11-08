@@ -2154,8 +2154,9 @@
       <div class="cal-glance-col active" data-jump="nov">
         <span class="cal-glance-badge badge-nov">11 NOV (当月)</span>
         <div class="cal-glance-highlights">
-          <span>アニメ第6話</span>
-          <span>新テニミュ凱旋</span>
+          <span>新テニミュ東京凱旋</span>
+          <span>Gratteコラボ</span>
+          <span>イオン限定Xmas</span>
           <span>テニプリスト酉の市</span>
           <span>アニメイト感謝祭</span>
         </div>
@@ -2176,14 +2177,6 @@
           <span>跡部フィギュア</span>
         </div>
       </div>
-      <div class="cal-glance-col" data-jump="oct">
-        <span class="cal-glance-badge badge-oct">10 OCT</span>
-        <div class="cal-glance-highlights">
-          <span>山吹祭り(開催中)</span>
-          <span>学プリブロマイド</span>
-          <span>公式ジャージ受注</span>
-        </div>
-      </div>
     </div>
 
     <!-- 月別クイックタブ（スマホでスクロール不要・一目で全体把握） -->
@@ -2192,10 +2185,9 @@
       <button class="cal-qtab active" data-target="nov">11 NOV (当月)</button>
       <button class="cal-qtab" data-target="dec">12 DEC</button>
       <button class="cal-qtab" data-target="2027">2027年</button>
-      <button class="cal-qtab" data-target="oct">10 OCT (継続中)</button>
     </div>
 
-    <!-- カレンダーカード 2カラムグリッド（11月を最優先・左上に配置） -->
+    <!-- カレンダーカード 2カラムグリッド（11月・12月） -->
     <div class="cal-cards-grid" id="cal-cards-grid">
       <!-- 11 NOVEMBER（主役） -->
       <div class="cal-block-card" data-cal-month="nov">
@@ -2215,17 +2207,6 @@
           <span class="cal-block-name name-dec">DECEMBER</span>
         </div>
         <div class="cal-block-list" id="cal-list-dec">
-          <!-- JSで描画 -->
-        </div>
-      </div>
-
-      <!-- 10 OCTOBER（継続中・アーカイブ） -->
-      <div class="cal-block-card" data-cal-month="oct">
-        <div class="cal-block-head head-oct">
-          <span class="cal-block-num">10</span>
-          <span class="cal-block-name name-oct">OCTOBER</span>
-        </div>
-        <div class="cal-block-list" id="cal-list-oct">
           <!-- JSで描画 -->
         </div>
       </div>
@@ -2443,12 +2424,14 @@ const characterBirthdays = [
 const categoryIcons = { anime:'📺', stage:'🎭', goods:'🛍️', event:'🏢' };
 const categoryLabels = { anime:'アニメ', stage:'テニミュ', goods:'グッズ・コラボ', event:'イベント・ライブ' };
 
-const STORAGE_KEY = 'tenipuri_news_v37_perfect_nov02';
+const STORAGE_KEY = 'tenipuri_news_v38_detail_urls_nov08';
 
 // ===== ニュース日付判定（当日より3日以上前の過去ニュースは自動削除・除外） =====
 function isNewsActive(dateStr) {
   if (!dateStr) return false;
-  // 未来の予定表記や月単体表記（"予定", "11月", "12月", "1月", "2月", "3月" など）は常に保持
+  // 10月以前の過去情報は完全非表示・除外
+  if (dateStr.startsWith('10/') || dateStr.startsWith('9/') || dateStr.includes('10月') || dateStr.includes('9月')) return false;
+  // 未来の予定表記や月単体表記（"予定", "11月", "12月", "1月", "2月", "3月" など）は保持
   if (dateStr.includes('予定') || dateStr.includes('〜') || (dateStr.includes('月') && !dateStr.includes('/'))) return true;
   
   const match = dateStr.match(/^(\d{1,2})\/(\d{1,2})/);
@@ -2475,107 +2458,82 @@ function isNewsActive(dateStr) {
   return diffDays < 3;
 }
 
-// ===== 直近3日以内の最新ニュース＆今後の予定（当日より3日以上前の過去ニュースは自動除外済み） =====
+// ===== 直近3日以内の最新ニュース＆今後の予定（すべて個別詳細URL直リンク・10月完全除外） =====
 const defaultNews = [
-  // ===== 11/1 直近ニュース =====
   {
-    id: 'news-2026-1101-anime-ep6',
-    date: '11/4',
-    category: 'anime',
-    media: 'テレ東・公式',
-    icon: '📺',
-    title: 'TVアニメ『U-17 WORLD CUP 決勝メンバー決定戦』第6話「やられたらやり返せ」11/4放送！',
-    description: 'D2では"天衣無縫"を纏った金太郎が躍動！幸村＆柳の立海ペアが圧倒的コンビネーションで大曲＆金太郎ペアを追い詰める。金太郎の反撃はあるのか！？',
-    schoolIds: ['shitenhoji', 'rikkai', 'u17'],
-    characters: ['遠山金太郎', '幸村精市', '柳蓮二', '大曲竜次'],
-    sourceUrl: 'https://tenipuri.jp/'
-  },
-  {
-    id: 'news-2026-1101-tennimu-tokyo',
-    date: '11/6',
+    id: 'news-2026-1106-tennimu-tokyo',
+    date: '11/6〜',
     category: 'stage',
     media: 'テニミュ公式',
     icon: '🎭',
-    title: 'テニミュ『新テニスの王子様 The Final Stage』東京凱旋公演 11/6〜11/15開催！',
-    description: 'シリーズクライマックスの東京凱旋公演がKanadevia Hallにて開催！大千秋楽を含む全公演＆U-NEXT配信あり。S席9,500円/A席7,500円。東京ドームシティコラボフードも同時展開！',
+    title: 'テニミュ『新テニスの王子様 The Final Stage』東京凱旋公演 11/6〜11/15開幕！',
+    description: 'シリーズクライマックスの東京凱旋公演がKanadevia Hallにて上演中！大千秋楽を含む全公演ライブ配信・見逃し配信あり。東京ドームシティコラボフードも同時展開！',
     schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji', 'u17'],
     characters: ['越前リョーマ', '越前リョーガ', '手塚国光', '跡部景吾'],
-    sourceUrl: 'https://www.tennimu.com/'
+    sourceUrl: 'https://www.tennimu.com/tennimu2_2026/'
   },
   {
-    id: 'news-2026-1101-gratte-collab',
-    date: '11/6',
+    id: 'news-2026-1106-gratte-collab',
+    date: '11/6〜',
     category: 'goods',
     media: 'アニメイトカフェ',
     icon: '☕',
-    title: 'アニメイトGratte：「リョーマ＆リョーガ ゆるスタ」コラボ 11/6〜11/29 全国11店舗で開催！',
-    description: '池袋本店・秋葉原・横浜・名古屋・大阪日本橋など全国11店舗にてコラボラテ・クッキー・アイスを展開！アクリルコースター（全7種・550円）の有償特典も！',
+    title: 'アニメイトGratte：「リョーマ＆リョーガ ゆるスタ」コラボ 11/6〜11/29 全国11店舗で開催中！',
+    description: '池袋本店・秋葉原・横浜・名古屋・大阪日本橋など全国11店舗にてコラボラテ・クッキー・アイシングクッキーを展開！アクリルコースター（全7種・550円）の有償特典も！',
     schoolIds: ['seigaku', 'u17'],
     characters: ['越前リョーマ', '越前リョーガ'],
-    sourceUrl: 'https://www.animate.co.jp/gratte/'
+    sourceUrl: 'https://www.animate.co.jp/gratte/51043/'
   },
   {
-    id: 'news-2026-1101-aeon-xmas',
-    date: '11/7',
+    id: 'news-2026-1107-aeon-xmas',
+    date: '11/7〜',
     category: 'goods',
     media: 'イオン限定',
     icon: '🎄',
-    title: 'イオン限定：新テニプリ クリスマス「クッキー缶」（全5校）＆クリアカード付き「チョコインサブレ」11/7発売！',
-    description: '青学・氷帝・立海・比嘉・四天宝寺の5校デザインクッキー缶（各1,430円）＆マルチプレートコレクション復刻クリアカード付きチョコインサブレ（各770円）が全国イオンにて順次発売！',
+    title: 'イオン限定：新テニ クリスマス「クッキー缶」（全5校）＆クリアカード付き「チョコインサブレ」発売！',
+    description: '青学・氷帝・立海・比嘉・四天宝寺の5校デザインクッキー缶（各1,430円）＆マルチプレートコレクション復刻クリアカード付きチョコインサブレ（各770円）が全国イオンにて順次発売中！',
     schoolIds: ['seigaku', 'hyotei', 'rikkai', 'higa', 'shitenhoji'],
     characters: ['越前リョーマ', '跡部景吾', '幸村精市', '木手永四郎', '白石蔵ノ介'],
-    sourceUrl: 'https://tenipuri.jp/'
+    sourceUrl: 'https://tenipuri.jp/news/goods/19631.html'
   },
   {
-    id: 'news-2026-1101-namja-yamabuki-ongoing',
-    date: '11/1',
-    category: 'event',
-    media: 'ナンジャタウン',
-    icon: '🎪',
-    title: 'ナンジャタウン：『新テニスの王子様祭り』第6弾「山吹祭り」大好評開催中（〜11/23）！',
-    description: '池袋ナンジャタウンにて山吹中フィーチャーのコラボイベント開催中！千石・亜久津ら8名の描き下ろしイラストグッズ、ミニゲーム＆コラボフードが好評展開中！11/23まで！',
-    schoolIds: ['yamabuki'],
-    characters: ['千石清純', '亜久津仁', '南健太郎', '東方雅美'],
-    sourceUrl: 'https://event.bandainamco-am.co.jp/namja/tenipurimaturi/'
-  },
-  {
-    id: 'news-2026-1101-lawson-print',
-    date: '10/27〜',
-    category: 'goods',
-    media: 'ローソン',
-    icon: '📸',
-    title: 'ローソンプリント：『学園祭の王子様』『ドキドキサバイバル』新作ブロマイド第3弾（全45種）好評発売中！',
-    description: '全国のローソン店内マルチコピー機にて、『学プリ』『ドキサバ』の美麗スチルブロマイド第3弾が好評発売中。好きなキャラの絵柄を選んでプリント購入可能！',
-    schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji', 'higa'],
-    characters: ['越前リョーマ', '手塚国光', '跡部景吾', '幸村精市', '白石蔵ノ介', '木手永四郎'],
-    sourceUrl: 'https://lawson-print.com/'
-  },
-  {
-    id: 'news-2026-1101-round1-jigo',
+    id: 'news-2026-1110-round1-jigo',
     date: '11/10締切',
     category: 'goods',
     media: 'ラウンドワン',
     icon: '🎳',
-    title: 'ラウンドワン コラボ第5弾 事後通販：BIGアクスタ＆フレフレンズグッズ 11/10予約締切！',
+    title: 'ラウンドワン コラボ第5弾 事後通販：BIGアクスタ＆フレフレンズグッズ 11/10予約締切間近！',
     description: 'Anime Store.JPにて事後通販受付中！描き下ろしBIGアクリルスタンド（20名＋4名）、デフォルメ「フレフレンズ」シリーズの缶バッジ・アクスタ・ステッカーなど。',
     schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji'],
     characters: ['越前リョーマ', '手塚国光', '跡部景吾', '幸村精市'],
     sourceUrl: 'https://tenipuri.jp/news/news/19033.html'
   },
   {
-    id: 'news-2026-1101-chopinui-hyotei',
-    date: '11月',
+    id: 'news-2026-1111-anime-ep7',
+    date: '11/11',
+    category: 'anime',
+    media: 'アニメ公式',
+    icon: '📺',
+    title: 'TVアニメ『U-17 決勝メンバー決定戦』第7話 11/11(水)深夜24:00放送！あらすじ先行公開中',
+    description: 'テレ東ほかにて放送！激闘続く選抜マッチ。dアニメストア・U-NEXT等にて最速配信。あらすじ・場面カット公開中！',
+    schoolIds: ['seigaku', 'rikkai', 'u17'],
+    characters: ['越前リョーマ', '幸村精市', '手塚国光'],
+    sourceUrl: 'https://v-storage.jp/anime/tenipuri/242250/'
+  },
+  {
+    id: 'news-2026-1108-chopinui-hyotei',
+    date: '11月2週',
     category: 'goods',
     media: 'フリュー',
     icon: '🧸',
-    title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（氷帝）跡部・忍足・宍戸・鳳 11月順次登場！',
+    title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（氷帝）跡部・忍足・宍戸・鳳 順次登場！',
     description: '全国アミューズメント施設＆オンラインクレーンゲームに氷帝メンバーの「ちょぴぬいぷち」が登場！約10cmサイズ・ゴムひも付きでバッグにも取り付け可能！',
     schoolIds: ['hyotei'],
     characters: ['跡部景吾', '忍足侑士', '宍戸亮', '鳳長太郎'],
-    sourceUrl: 'https://charahiroba.com/'
+    sourceUrl: 'https://tenipuri.jp/news/16281.html'
   },
   {
-    id: 'news-2026-1101-tenipuristo-torinoichi',
+    id: 'news-2026-1114-tenipuristo-torinoichi',
     date: '11/14',
     category: 'goods',
     media: 'テニプリスト',
@@ -2584,22 +2542,10 @@ const defaultNews = [
     description: '橘・神尾・伊武・観月・不二裕太・千石・亜久津・壇の8名が「酉の市」姿で登場！アクスタ・キャラバッジ・アクリルお守り等の新作グッズ発売。2,200円毎にプロフィールカードプレゼント！',
     schoolIds: ['fudomine', 'rudolph', 'yamabuki'],
     characters: ['橘桔平', '神尾アキラ', '伊武深司', '観月はじめ', '不二裕太', '千石清純', '亜久津仁', '壇太一'],
-    sourceUrl: 'https://tenipuri.jp/'
+    sourceUrl: 'https://tenipuri.jp/news/news/17397.html'
   },
   {
-    id: 'news-2026-1101-risingbeat-halloween',
-    date: '11/30',
-    category: 'goods',
-    media: 'ブシロードクリエイティブ',
-    icon: '🎃',
-    title: '新テニプリ RisingBeat：ハロウィンVer.「ジオラマアクスタ」＆ホログラムビジュアルシート 11/30発売！',
-    description: 'テニラビのハロウィンイラスト使用グッズが登場！「Wisely Halloween ver.」（全7種）と「Enjoy Halloween ver.」（全10種）の2ライン展開。',
-    schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji', 'u17'],
-    characters: ['不二周助', '手塚国光', '跡部景吾', '白石蔵ノ介', '仁王雅治', '平等院鳳凰'],
-    sourceUrl: 'https://tenipuri.jp/'
-  },
-  {
-    id: 'news-2026-1101-fever-vol2',
+    id: 'news-2026-1121-fever-vol2',
     date: '11/21',
     category: 'event',
     media: '25周年記念',
@@ -2608,10 +2554,10 @@ const defaultNews = [
     description: 'esports TOKYO BAY studioにて昼夜2公演開催！手塚役・置鮎龍太郎、大石役・近藤孝行、不二役・甲斐田ゆき、橘役・川原慶久ら豪華声優陣によるトーク＆朗読劇＆ライブ！全席7,500円。',
     schoolIds: ['seigaku', 'fudomine', 'yamabuki'],
     characters: ['手塚国光', '大石秀一郎', '不二周助', '河村隆', '橘桔平', '神尾アキラ', '亜久津仁', '壇太一'],
-    sourceUrl: 'https://tenipuri.jp/'
+    sourceUrl: 'https://tenipuri25th-event.bitfan.id/'
   },
   {
-    id: 'news-2026-1101-animate-fair',
+    id: 'news-2026-1121-animate-fair',
     date: '11/21予定',
     category: 'event',
     media: 'アニメイト',
@@ -2620,10 +2566,10 @@ const defaultNews = [
     description: '全国アニメイト＆通販にて対象商品2,200円毎に描き下ろしイラストカード（全11種）プレゼント！新規アクスタ・ステッカー・クリアシート等も多数発売！12/13まで！',
     schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji'],
     characters: ['越前リョーマ', '手塚国光', '跡部景吾', '幸村精市', '白石蔵ノ介'],
-    sourceUrl: 'https://www.animate-onlineshop.jp/'
+    sourceUrl: 'https://www.animate-onlineshop.jp/contents/fair_event/detail.php?id=112330'
   },
   {
-    id: 'news-2026-1101-namja-rudolph',
+    id: 'news-2026-1124-namja-rudolph',
     date: '11/24予定',
     category: 'event',
     media: 'ナンジャタウン',
@@ -2635,18 +2581,42 @@ const defaultNews = [
     sourceUrl: 'https://event.bandainamco-am.co.jp/namja/tenipurimaturi/'
   },
   {
-    id: 'news-2026-1101-isuruta',
+    id: 'news-2026-1130-risingbeat-halloween',
+    date: '11/30',
+    category: 'goods',
+    media: 'ブシロードクリエイティブ',
+    icon: '🎃',
+    title: '新テニプリ RisingBeat：ハロウィンVer.「ジオラマアクスタ」＆ホログラムビジュアルシート 11/30発売！',
+    description: 'テニラビのハロウィンイラスト使用グッズが登場！「Wisely Halloween ver.」（全7種）と「Enjoy Halloween ver.」（全10種）の2ライン展開。',
+    schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji', 'u17'],
+    characters: ['不二周助', '手塚国光', '跡部景吾', '白石蔵ノ介', '仁王雅治', '平等院鳳凰'],
+    sourceUrl: 'https://tenipuri.jp/news/goods/13444.html'
+  },
+  {
+    id: 'news-2026-1130-isuruta',
     date: '11月末',
     category: 'goods',
     media: 'メガハウス',
     icon: '🎾',
-    title: 'メガハウス：人気ミニフィギュア『いるすた＆るかっぷ』不二周助・白石蔵ノ介 11月末発売！',
-    description: 'メガハウスの大人気フィギュアシリーズより不二周助＆白石蔵ノ介が新登場！「いるすた」と「るかっぷ」の2シリーズ展開。',
+    title: 'メガハウス：人気ミニフィギュア『るかっぷ＆いるすた』不二周助・白石蔵ノ介 11月末発売！',
+    description: 'メガハウスの大人気フィギュアシリーズより不二周助＆白石蔵ノ介が新登場！見上げるポーズが可愛い「るかっぷ」と「いるすた」の2シリーズ展開。',
     schoolIds: ['seigaku', 'shitenhoji'],
     characters: ['不二周助', '白石蔵ノ介'],
     sourceUrl: 'https://tenipuri.jp/news/goods/19041.html'
   },
   // ===== 12月以降の今後の予定 =====
+  {
+    id: 'news-2026-1210-calpin',
+    date: '12/10',
+    category: 'goods',
+    media: 'A-on STORE',
+    icon: '🐱',
+    title: '公式グッズ：越前家愛猫『カルピンとおうち時間 しりーず3』癒やしアイテム 12/10発売！',
+    description: 'A-on STORE限定！リョーマの愛猫カルピンの新作もこもこルームウェア＆癒やしグッズが登場！',
+    schoolIds: ['seigaku'],
+    characters: ['越前リョーマ'],
+    sourceUrl: 'https://a-onstore.jp/'
+  },
   {
     id: 'news-2026-1224-kuji',
     date: '12/24予定',
@@ -2657,7 +2627,7 @@ const defaultNews = [
     description: 'クリスマスイブに登場！1回800円。越前リョーマ・手塚国光のMASTERLISE EXPIECEフィギュア＆ラストワン賞は不二周助フィギュア！ミニストップ・書店・ホビーショップ等にて。',
     schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji', 'u17'],
     characters: ['越前リョーマ', '手塚国光', '不二周助'],
-    sourceUrl: 'https://1kuji.com/'
+    sourceUrl: 'https://1kuji.com/products/tenipuri2'
   },
   {
     id: 'news-2027-0101-powanui',
@@ -2678,10 +2648,10 @@ const defaultNews = [
     media: 'FILA',
     icon: '👟',
     title: 'FILA：アニメ25周年記念 コラボスニーカー（青学・氷帝・立海モデル）2027年2月発売！',
-    description: 'FILA×新テニスの王子様コラボ第2弾！越前リョーマ・跡部景吾・幸村精市が描き下ろしで着用する各校イメージの特製コラボスニーカーが発売決定！',
+    description: 'FILA×新テニスの王子様コラボ第2弾！越前リョーマ・跡部景吾・幸村精市が描き下ろしで着用する各校イメージの特製コラボスニーカーが発売決定！特設ページ公開中！',
     schoolIds: ['seigaku', 'hyotei', 'rikkai'],
     characters: ['越前リョーマ', '跡部景吾', '幸村精市'],
-    sourceUrl: 'https://store.fila.jp/'
+    sourceUrl: 'https://www.fila.jp/contents/feature/fila_tenipuri.html'
   }
 ];
 
@@ -2870,48 +2840,42 @@ async function fetchOfficialNews() {
   renderCalendar(); // ニュースの更新に合わせてカレンダーも自動即時反映！
 }
 
-// ===== 添付画像完全再現：テニプリ 推し活カレンダー データベース ＆ レンダリング =====
+// ===== テニプリ 推し活カレンダー データベース（全項目：公式詳細個別URL直リンク設定・10月完全除外） =====
 const officialCalendarItems = [
-  // 10 OCTOBER（現在も継続開催中・販売中のもののみ掲載。過去終了分は自動除外）
-  { month: 10, date: '10/27〜', pill: 'goods', pillText: 'グッズ', title: 'ローソンプリント：『学プリ』『ドキサバ』新作ブロマイド第3弾（全45種）好評発売中', sub: '〜12/28', url: 'https://lawson-print.com/' },
-  { month: 10, date: '10/27〜', pill: 'event', pillText: 'イベント', title: 'ナンジャタウン：『新テニスの王子様祭り』山吹祭りコラボ 大好評開催中', sub: '〜11/23', url: 'https://event.bandainamco-am.co.jp/namja/tenipurimaturi/' },
-  { month: 10, date: '10月〜', pill: 'goods', pillText: 'グッズ', title: '集英社：原作完全再現 各校公式ジャージ 受注受付中', sub: '', url: 'https://jumpcs.shueisha.co.jp/' },
-  { month: 10, date: '10月末', pill: 'goods', pillText: 'グッズ', title: 'メガハウス：見つめるフィギュア『るかっぷ』手塚国光・幸村精市 好評発売中', sub: '', url: 'https://www.megahobby.jp/products/item/4808/' },
-
   // 11 NOVEMBER
-  { month: 11, date: '11/4', pill: 'broadcast', pillText: 'アニメ', title: 'TVアニメ『U-17 決勝メンバー決定戦』第6話「やられたらやり返せ」放送', sub: 'テレ東ほか', url: 'https://tenipuri.jp/' },
-  { month: 11, date: '11/6〜', pill: 'stage', pillText: 'テニミュ', title: 'ミュージカル『新テニスの王子様』The Final Stage 東京凱旋公演（〜11/15）', sub: 'Kanadevia Hall', url: 'https://www.tennimu.com/' },
-  { month: 11, date: '11/6〜', pill: 'collab', pillText: 'コラボ', title: 'アニメイトカフェGratte：リョーマ＆リョーガ「ゆるスタ」コラボ（〜11/29）', sub: '全国11店舗', url: 'https://www.animate.co.jp/gratte/' },
-  { month: 11, date: '11/7〜', pill: 'collab', pillText: 'コラボ', title: 'イオン限定：新テニ クリスマス「クッキー缶」（全5校）＆チョコインサブレ', sub: '', url: 'https://tenipuri.jp/' },
+  { month: 11, date: '11/4', pill: 'broadcast', pillText: 'アニメ', title: 'TVアニメ『U-17 決勝メンバー決定戦』第6話「やられたらやり返せ」放送', sub: 'テレ東ほか', url: 'https://v-storage.jp/anime/tenipuri/242250/' },
+  { month: 11, date: '11/6〜', pill: 'stage', pillText: 'テニミュ', title: 'ミュージカル『新テニスの王子様』The Final Stage 東京凱旋公演（〜11/15）', sub: 'Kanadevia Hall', url: 'https://www.tennimu.com/tennimu2_2026/' },
+  { month: 11, date: '11/6〜', pill: 'collab', pillText: 'コラボ', title: 'アニメイトカフェGratte：リョーマ＆リョーガ「ゆるスタ」コラボ（〜11/29）', sub: '全国11店舗', url: 'https://www.animate.co.jp/gratte/51043/' },
+  { month: 11, date: '11/7〜', pill: 'collab', pillText: 'コラボ', title: 'イオン限定：新テニ クリスマス「クッキー缶」（全5校）＆チョコインサブレ', sub: '', url: 'https://tenipuri.jp/news/goods/19631.html' },
   { month: 11, date: '11/10締切', pill: 'goods', pillText: 'グッズ', title: 'ラウンドワン：コラボ第5弾 事後通販 予約受付終了', sub: 'Anime Store.JP', url: 'https://tenipuri.jp/news/news/19033.html' },
-  { month: 11, date: '11月2週', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（氷帝）', sub: '', url: 'https://charahiroba.com/' },
-  { month: 11, date: '11/14〜', pill: 'goods', pillText: 'グッズ', title: '公式ストア「テニプリスト」：新描き下ろし「酉の市ver.」新作グッズ', sub: '新宿マルイアネックス', url: 'https://tenipuri.jp/' },
-  { month: 11, date: '11/21〜', pill: 'event', pillText: 'イベント', title: 'アニメイト：『Thank you for Tennis』アニメ放送記念全国フェア（〜12/13）', sub: '全国アニメイト', url: 'https://www.animate-onlineshop.jp/' },
-  { month: 11, date: '11/21', pill: 'event', pillText: 'イベント', title: 'テニプリ25周年記念イベント『-Fever- Vol.2』開催（有明）', sub: '', url: 'https://tenipuri.jp/' },
+  { month: 11, date: '11月2週', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（氷帝）', sub: '', url: 'https://tenipuri.jp/news/16281.html' },
+  { month: 11, date: '11/14〜', pill: 'goods', pillText: 'グッズ', title: '公式ストア「テニプリスト」：新描き下ろし「酉の市ver.」新作グッズ', sub: '新宿マルイアネックス', url: 'https://tenipuri.jp/news/news/17397.html' },
+  { month: 11, date: '11/21〜', pill: 'event', pillText: 'イベント', title: 'アニメイト：『Thank you for Tennis』アニメ放送記念全国フェア（〜12/13）', sub: '全国アニメイト', url: 'https://www.animate-onlineshop.jp/contents/fair_event/detail.php?id=112330' },
+  { month: 11, date: '11/21', pill: 'event', pillText: 'イベント', title: 'テニプリ25周年記念イベント『-Fever- Vol.2』開催（有明）', sub: '', url: 'https://tenipuri25th-event.bitfan.id/' },
   { month: 11, date: '11/24〜', pill: 'event', pillText: 'イベント', title: 'ナンジャタウン：『新テニスの王子様祭り』第7弾 聖ルドルフ祭りコラボ', sub: '〜12/21', url: 'https://event.bandainamco-am.co.jp/namja/tenipurimaturi/' },
-  { month: 11, date: '11/30', pill: 'goods', pillText: 'グッズ', title: 'ブシロード：『新テニ RisingBeat』ハロウィンVer.ジオラマアクスタ発売', sub: '', url: 'https://tenipuri.jp/' },
+  { month: 11, date: '11/30', pill: 'goods', pillText: 'グッズ', title: 'ブシロード：『新テニ RisingBeat』ハロウィンVer.ジオラマアクスタ発売', sub: '', url: 'https://tenipuri.jp/news/goods/13444.html' },
   { month: 11, date: '11月末', pill: 'goods', pillText: 'グッズ', title: 'メガハウス：人気ミニフィギュア『いるすた＆るかっぷ』不二周助・白石蔵ノ介', sub: '', url: 'https://tenipuri.jp/news/goods/19041.html' },
 
   // 12 DECEMBER
   { month: 12, date: '12/10', pill: 'goods', pillText: 'グッズ', title: '公式グッズ：越前家愛猫『カルピンとおうち時間 しりーず3』癒やしアイテム', sub: '', url: 'https://a-onstore.jp/' },
-  { month: 12, date: '12月3週', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（立海）', sub: '', url: 'https://charahiroba.com/' },
+  { month: 12, date: '12月3週', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（立海）', sub: '', url: 'https://tenipuri.jp/news/16281.html' },
   { month: 12, date: '12/22〜', pill: 'event', pillText: 'イベント', title: 'ナンジャタウン：『新テニスの王子様祭り』不動峰祭りコラボ', sub: '', url: 'https://event.bandainamco-am.co.jp/namja/tenipurimaturi/' },
-  { month: 12, date: '12/24', pill: 'goods', pillText: 'グッズ', title: 'BANDAI SPIRITS：『一番くじ 新テニスの王子様 -オレは上に行くよ-』全国発売', sub: '', url: 'https://1kuji.com/' },
+  { month: 12, date: '12/24', pill: 'goods', pillText: 'グッズ', title: 'BANDAI SPIRITS：『一番くじ 新テニスの王子様 -オレは上に行くよ-』全国発売', sub: '', url: 'https://1kuji.com/products/tenipuri2' },
   { month: 12, date: '12月末', pill: 'goods', pillText: 'グッズ', title: 'ジャンプフェスタ：JF2027限定先行グッズ＆ちょこりんマスコット第2弾', sub: '', url: 'https://jumpsq.shueisha.co.jp/' },
 
   // 1 JANUARY (2027)
   { month: 1, date: '1月予定', pill: 'goods', pillText: 'グッズ', title: 'バンダイナムコヌイ：『ぽわぬい』手触り抜群のマスコット新発売', sub: '', url: 'https://tenipuri.jp/news/goods/19239.html' },
   { month: 1, date: '1月予定', pill: 'event', pillText: 'イベント', title: 'ナンジャタウン：『新テニスの王子様祭り』青学祭りコラボ', sub: '', url: 'https://event.bandainamco-am.co.jp/namja/tenipurimaturi/' },
-  { month: 1, date: '1月予定', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（四天宝寺）', sub: '', url: 'https://charahiroba.com/' },
+  { month: 1, date: '1月予定', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（四天宝寺）', sub: '', url: 'https://tenipuri.jp/news/16281.html' },
 
   // 2 FEBRUARY (2027)
-  { month: 2, date: '2月予定', pill: 'collab', pillText: 'コラボ', title: 'FILA：アニメ25周年記念 コラボレーションスニーカー（青学・氷帝・立海モデル）', sub: '', url: 'https://store.fila.jp/' },
+  { month: 2, date: '2月予定', pill: 'collab', pillText: 'コラボ', title: 'FILA：アニメ25周年記念 コラボレーションスニーカー（青学・氷帝・立海モデル）', sub: '', url: 'https://www.fila.jp/contents/feature/fila_tenipuri.html' },
   { month: 2, date: '2月予定', pill: 'goods', pillText: 'グッズ', title: 'メガハウス：跡部景吾 1/8スケール完成品フィギュア', sub: '', url: 'https://tenipuri.jp/news/goods/19014.html' },
   { month: 2, date: '2月予定', pill: 'goods', pillText: 'グッズ', title: 'メガハウス：人気ミニフィギュア『いるすた②』新発売', sub: '', url: 'https://tenipuri.jp/news/goods/19041.html' },
-  { month: 2, date: '2月予定', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（比嘉）', sub: '', url: 'https://charahiroba.com/' },
+  { month: 2, date: '2月予定', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（比嘉）', sub: '', url: 'https://tenipuri.jp/news/16281.html' },
 
   // 3 MARCH (2027)
-  { month: 3, date: '3月予定', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（U-17日本代表）', sub: '', url: 'https://charahiroba.com/' }
+  { month: 3, date: '3月予定', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（U-17日本代表）', sub: '', url: 'https://tenipuri.jp/news/16281.html' }
 ];
 
 // 表示中ニュースとスケジュールを自動統合（3日以上前の過去・URLのないものは完全除外）
@@ -3001,7 +2965,6 @@ function renderCalendar() {
     }).join('');
   };
 
-  renderMonthList(10, 'cal-list-oct');
   renderMonthList(11, 'cal-list-nov');
   renderMonthList(12, 'cal-list-dec');
 }
