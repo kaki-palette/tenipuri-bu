@@ -2424,7 +2424,7 @@ const characterBirthdays = [
 const categoryIcons = { anime:'📺', stage:'🎭', goods:'🛍️', event:'🏢' };
 const categoryLabels = { anime:'アニメ', stage:'テニミュ', goods:'グッズ・コラボ', event:'イベント・ライブ' };
 
-const STORAGE_KEY = 'tenipuri_news_v38_detail_urls_nov08';
+const STORAGE_KEY = 'tenipuri_news_v39_cheer_glanz_nov08';
 
 // ===== ニュース日付判定（当日より3日以上前の過去ニュースは自動削除・除外） =====
 function isNewsActive(dateStr) {
@@ -2471,6 +2471,18 @@ const defaultNews = [
     schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji', 'u17'],
     characters: ['越前リョーマ', '越前リョーガ', '手塚国光', '跡部景吾'],
     sourceUrl: 'https://www.tennimu.com/tennimu2_2026/'
+  },
+  {
+    id: 'news-2026-1106-feelmee-glanz',
+    date: '11/6〜',
+    category: 'goods',
+    media: 'FEEL MEE',
+    icon: '🎵',
+    title: 'FEEL MEE：TVアニメEDテーマ『GLANZ』（emBLEm=ADLER: 手塚国光・ボルク・Q・P）好評発売中！',
+    description: '『新テニスの王子様 U-17 WORLD CUP SEMIFINAL』エンディングテーマ！手塚国光（CV:置鮎龍太郎）らドイツ代表ユニットによる熱いロックナンバー！CD・配信展開中。',
+    schoolIds: ['seigaku', 'u17'],
+    characters: ['手塚国光'],
+    sourceUrl: 'http://feelmee.jp/index.php/item/product/1297'
   },
   {
     id: 'news-2026-1106-gratte-collab',
@@ -2545,6 +2557,18 @@ const defaultNews = [
     sourceUrl: 'https://tenipuri.jp/news/news/17397.html'
   },
   {
+    id: 'news-2026-1115-bandainamco-cheer',
+    date: '11/15〜',
+    category: 'event',
+    media: 'バンダイナムコ',
+    icon: '📣',
+    title: 'バンダイナムコ Cross Store：『新テニスの王子様 ～Cheer for the Prince～』11/15〜12/15池袋で開催！',
+    description: '池袋サンシャインシティにてエール（応援）をテーマにした大型コラボイベント！中学生14名＆高校生11名の新規描き下ろしグッズ、応援ミニゲーム、コラボフードを展開！',
+    schoolIds: ['seigaku', 'hyotei', 'rikkai', 'shitenhoji', 'u17'],
+    characters: ['越前リョーマ', '手塚国光', '跡部景吾', '幸村精市', '白石蔵ノ介', '徳川カズヤ'],
+    sourceUrl: 'https://event.bandainamco-am.co.jp/cx/tenipuri-ev/'
+  },
+  {
     id: 'news-2026-1121-fever-vol2',
     date: '11/21',
     category: 'event',
@@ -2615,7 +2639,7 @@ const defaultNews = [
     description: 'A-on STORE限定！リョーマの愛猫カルピンの新作もこもこルームウェア＆癒やしグッズが登場！',
     schoolIds: ['seigaku'],
     characters: ['越前リョーマ'],
-    sourceUrl: 'https://a-onstore.jp/'
+    sourceUrl: 'https://tenipuri.jp/news/goods/19112.html'
   },
   {
     id: 'news-2026-1224-kuji',
@@ -2845,11 +2869,13 @@ const officialCalendarItems = [
   // 11 NOVEMBER
   { month: 11, date: '11/4', pill: 'broadcast', pillText: 'アニメ', title: 'TVアニメ『U-17 決勝メンバー決定戦』第6話「やられたらやり返せ」放送', sub: 'テレ東ほか', url: 'https://v-storage.jp/anime/tenipuri/242250/' },
   { month: 11, date: '11/6〜', pill: 'stage', pillText: 'テニミュ', title: 'ミュージカル『新テニスの王子様』The Final Stage 東京凱旋公演（〜11/15）', sub: 'Kanadevia Hall', url: 'https://www.tennimu.com/tennimu2_2026/' },
+  { month: 11, date: '11/6〜', pill: 'music', pillText: '音楽', title: 'FEEL MEE：TVアニメEDテーマ『GLANZ』（emBLEm=ADLER: 手塚・ボルク・Q・P）発売', sub: 'CD好評発売中', url: 'http://feelmee.jp/index.php/item/product/1297' },
   { month: 11, date: '11/6〜', pill: 'collab', pillText: 'コラボ', title: 'アニメイトカフェGratte：リョーマ＆リョーガ「ゆるスタ」コラボ（〜11/29）', sub: '全国11店舗', url: 'https://www.animate.co.jp/gratte/51043/' },
   { month: 11, date: '11/7〜', pill: 'collab', pillText: 'コラボ', title: 'イオン限定：新テニ クリスマス「クッキー缶」（全5校）＆チョコインサブレ', sub: '', url: 'https://tenipuri.jp/news/goods/19631.html' },
   { month: 11, date: '11/10締切', pill: 'goods', pillText: 'グッズ', title: 'ラウンドワン：コラボ第5弾 事後通販 予約受付終了', sub: 'Anime Store.JP', url: 'https://tenipuri.jp/news/news/19033.html' },
   { month: 11, date: '11月2週', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（氷帝）', sub: '', url: 'https://tenipuri.jp/news/16281.html' },
   { month: 11, date: '11/14〜', pill: 'goods', pillText: 'グッズ', title: '公式ストア「テニプリスト」：新描き下ろし「酉の市ver.」新作グッズ', sub: '新宿マルイアネックス', url: 'https://tenipuri.jp/news/news/17397.html' },
+  { month: 11, date: '11/15〜', pill: 'event', pillText: 'イベント', title: 'バンダイナムコ Cross Store：『新テニ ～Cheer for the Prince～』応援コラボ', sub: '池袋（〜12/15）', url: 'https://event.bandainamco-am.co.jp/cx/tenipuri-ev/' },
   { month: 11, date: '11/21〜', pill: 'event', pillText: 'イベント', title: 'アニメイト：『Thank you for Tennis』アニメ放送記念全国フェア（〜12/13）', sub: '全国アニメイト', url: 'https://www.animate-onlineshop.jp/contents/fair_event/detail.php?id=112330' },
   { month: 11, date: '11/21', pill: 'event', pillText: 'イベント', title: 'テニプリ25周年記念イベント『-Fever- Vol.2』開催（有明）', sub: '', url: 'https://tenipuri25th-event.bitfan.id/' },
   { month: 11, date: '11/24〜', pill: 'event', pillText: 'イベント', title: 'ナンジャタウン：『新テニスの王子様祭り』第7弾 聖ルドルフ祭りコラボ', sub: '〜12/21', url: 'https://event.bandainamco-am.co.jp/namja/tenipurimaturi/' },
@@ -2857,7 +2883,7 @@ const officialCalendarItems = [
   { month: 11, date: '11月末', pill: 'goods', pillText: 'グッズ', title: 'メガハウス：人気ミニフィギュア『いるすた＆るかっぷ』不二周助・白石蔵ノ介', sub: '', url: 'https://tenipuri.jp/news/goods/19041.html' },
 
   // 12 DECEMBER
-  { month: 12, date: '12/10', pill: 'goods', pillText: 'グッズ', title: '公式グッズ：越前家愛猫『カルピンとおうち時間 しりーず3』癒やしアイテム', sub: '', url: 'https://a-onstore.jp/' },
+  { month: 12, date: '12/10', pill: 'goods', pillText: 'グッズ', title: '公式グッズ：越前家愛猫『カルピンとおうち時間 しりーず3』癒やしアイテム', sub: '', url: 'https://tenipuri.jp/news/goods/19112.html' },
   { month: 12, date: '12月3週', pill: 'goods', pillText: 'グッズ', title: 'フリュー：プライズマスコット『ちょぴぬいぷち』（立海）', sub: '', url: 'https://tenipuri.jp/news/16281.html' },
   { month: 12, date: '12/22〜', pill: 'event', pillText: 'イベント', title: 'ナンジャタウン：『新テニスの王子様祭り』不動峰祭りコラボ', sub: '', url: 'https://event.bandainamco-am.co.jp/namja/tenipurimaturi/' },
   { month: 12, date: '12/24', pill: 'goods', pillText: 'グッズ', title: 'BANDAI SPIRITS：『一番くじ 新テニスの王子様 -オレは上に行くよ-』全国発売', sub: '', url: 'https://1kuji.com/products/tenipuri2' },
